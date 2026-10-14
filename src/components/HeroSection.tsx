@@ -218,15 +218,11 @@ export default function HeroSection() {
           </p>
 
           {/* Status Badge */}
-          <div className="mt-3 sm:mt-4 inline-flex flex-wrap items-center justify-center gap-2 sm:gap-3 text-[11px] sm:text-sm font-mono text-purple-200 bg-black/80 px-4 sm:px-5 py-2 rounded-2xl border-2 border-black shadow-[3px_3px_0px_#000]">
+          <div className="mt-3 sm:mt-4 inline-flex items-center justify-center gap-2 text-[11px] sm:text-sm font-mono text-purple-200 bg-black/80 px-4 sm:px-5 py-2 rounded-2xl border-2 border-black shadow-[3px_3px_0px_#000]">
             <span className="flex items-center gap-1.5 text-amber-300 font-bold">
               <Calendar className="w-3.5 h-3.5 text-amber-400" />
               <span>{FEST_CONFIG.dateStatus}</span>
             </span>
-            <span className="text-white/40">•</span>
-            <span>{FEST_CONFIG.venueStatus}</span>
-            <span className="text-white/40">•</span>
-            <span className="text-emerald-400 font-bold">100% FREE PASSES</span>
           </div>
 
           {/* Call to Actions */}
