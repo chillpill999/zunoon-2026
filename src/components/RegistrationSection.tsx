@@ -5,6 +5,7 @@ import confetti from 'canvas-confetti';
 import { Ticket, CheckCircle2, User, Phone, Mail, Award, BookOpen, AlertCircle } from 'lucide-react';
 import DigitalPassCard, { PassData } from './DigitalPassCard';
 import { FEST_CONFIG } from '@/data/config';
+import ScrollReveal from '@/components/ScrollReveal';
 
 const BRANCHES = [
   'Computer Science & Engineering (CSE)',
@@ -105,17 +106,19 @@ export default function RegistrationSection() {
 
   return (
     <section id="register" className="py-20 px-4 sm:px-8 max-w-5xl mx-auto relative">
-      <div className="text-center mb-12">
-        <div className="inline-flex items-center gap-1.5 px-4 py-1 rounded-full bg-emerald-500/20 text-emerald-400 border border-emerald-500/40 text-xs font-mono font-bold tracking-widest uppercase mb-3">
-          <CheckCircle2 className="w-4 h-4" /> 100% FREE ENTRY & PARTICIPATION
+      <ScrollReveal direction="up" distance={24}>
+        <div className="text-center mb-12">
+          <div className="inline-flex items-center gap-1.5 px-4 py-1 rounded-full bg-emerald-500/20 text-emerald-400 border border-emerald-500/40 text-xs font-mono font-bold tracking-widest uppercase mb-3">
+            <CheckCircle2 className="w-4 h-4" /> 100% FREE ENTRY & PARTICIPATION
+          </div>
+          <h2 className="text-4xl sm:text-5xl md:text-6xl font-carter tracking-wide text-white drop-shadow-[4px_4px_0px_#000]">
+            CLAIM YOUR ATTENDANCE PASS
+          </h2>
+          <p className="font-chewy text-xl text-purple-200 mt-2 max-w-xl mx-auto">
+            Zero fees. Complete your details below to generate your official Zunoon digital attendance pass and QR entry code.
+          </p>
         </div>
-        <h2 className="text-4xl sm:text-5xl md:text-6xl font-carter tracking-wide text-white drop-shadow-[4px_4px_0px_#000]">
-          CLAIM YOUR ATTENDANCE PASS
-        </h2>
-        <p className="font-chewy text-xl text-purple-200 mt-2 max-w-xl mx-auto">
-          Zero fees. Complete your details below to generate your official Zunoon digital attendance pass and QR entry code.
-        </p>
-      </div>
+      </ScrollReveal>
 
       {existingPass ? (
         <div className="space-y-6">
@@ -135,7 +138,8 @@ export default function RegistrationSection() {
           />
         </div>
       ) : (
-        <div className="comic-box p-6 sm:p-10 rounded-3xl bg-[#170e35] max-w-2xl mx-auto relative">
+        <ScrollReveal direction="up" distance={30} delay={100}>
+          <div className="comic-box p-6 sm:p-10 rounded-3xl bg-[#170e35] max-w-2xl mx-auto relative">
           {error && (
             <div className="mb-6 p-4 rounded-2xl bg-rose-950/80 border-2 border-rose-500 text-rose-200 text-sm font-mono flex items-center gap-2">
               <AlertCircle className="w-5 h-5 text-rose-400 shrink-0" />
@@ -338,6 +342,7 @@ export default function RegistrationSection() {
             </div>
           </form>
         </div>
+      </ScrollReveal>
       )}
     </section>
   );

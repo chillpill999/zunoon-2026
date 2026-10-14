@@ -13,6 +13,7 @@ import {
   X
 } from 'lucide-react';
 import { FEST_CONFIG } from '@/data/config';
+import ScrollReveal from '@/components/ScrollReveal';
 
 interface CubeFaceData {
   id: string;
@@ -92,6 +93,18 @@ export default function CubeSection() {
     window.addEventListener('pointermove', onPointerMove);
     window.addEventListener('pointerup', onPointerUp);
 
+    let lastScrollY = typeof window !== 'undefined' ? window.scrollY : 0;
+    const onScroll = () => {
+      if (isDragging) return;
+      const currentScrollY = window.scrollY;
+      const scrollDiff = currentScrollY - lastScrollY;
+      lastScrollY = currentScrollY;
+      // Scroll velocity influence adds dynamic 3D reaction on mobile & PC scrolling
+      targetRotY += scrollDiff * 0.16;
+      targetRotX += Math.max(-15, Math.min(15, scrollDiff * 0.06));
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
+
     let animationId: number;
     const animate = () => {
       if (!isDragging) {
@@ -122,6 +135,7 @@ export default function CubeSection() {
       cube.removeEventListener('pointerdown', onPointerDown);
       window.removeEventListener('pointermove', onPointerMove);
       window.removeEventListener('pointerup', onPointerUp);
+      window.removeEventListener('scroll', onScroll);
       cancelAnimationFrame(animationId);
     };
   }, []);
@@ -231,7 +245,7 @@ export default function CubeSection() {
       <div className="absolute top-1/2 left-0 w-full h-[2px] bg-red-500 shadow-[0_0_20px_#ef4444,0_0_40px_#dc2626] pointer-events-none -translate-y-1/2 opacity-70 z-0" />
 
       {/* Top Header */}
-      <div className="relative z-10 text-center mb-16">
+      <ScrollReveal direction="up" distance={24} className="relative z-10 text-center mb-16">
         <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-purple-900/60 border border-purple-500/40 text-xs font-mono text-purple-200 tracking-widest uppercase mb-4 shadow-[2px_2px_0px_#000]">
           <Move3d className="w-3.5 h-3.5 text-amber-400" />
           INTERACTIVE 3D ALBUM
@@ -242,7 +256,7 @@ export default function CubeSection() {
         <p className="mt-2 text-sm sm:text-base font-chewy text-purple-200 max-w-lg mx-auto">
           Drag and rotate the 3D cube to discover each facet of the Zunoon Freshers Fest celebration.
         </p>
-      </div>
+      </ScrollReveal>
 
       {/* 3D Perspective Viewport */}
       <div

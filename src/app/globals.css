@@ -13,6 +13,7 @@
     touch-action: manipulation;
     -webkit-text-size-adjust: 100%;
     -webkit-tap-highlight-color: transparent;
+    -webkit-overflow-scrolling: touch;
   }
 
   body {
@@ -51,6 +52,9 @@
   display: flex;
   width: max-content;
   animation: marquee 25s linear infinite;
+  will-change: transform;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
 }
 
 .animate-marquee:hover {
@@ -69,6 +73,7 @@
 
 .animate-float {
   animation: float 4s ease-in-out infinite;
+  will-change: transform;
 }
 
 /* Retro angled sticker card styles */
