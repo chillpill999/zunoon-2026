@@ -1,6 +1,6 @@
 'use client';
 
-import { Clock, MapPin, Sparkles } from 'lucide-react';
+import { Clock, MapPin } from 'lucide-react';
 import { FEST_SCHEDULE } from '@/data/schedule';
 
 export default function ScheduleSection() {

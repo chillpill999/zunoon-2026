@@ -1,29 +1,39 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
-import Image from 'next/image';
-import { Sparkles, Move3d, Compass } from 'lucide-react';
+import { 
+  Move3d, 
+  Compass, 
+  Flame, 
+  Music, 
+  Crown, 
+  GraduationCap, 
+  Ticket,
+  ChevronRight,
+  X
+} from 'lucide-react';
+import { FEST_CONFIG } from '@/data/config';
 
-const CUBE_IMAGES = [
-  '/cube/img1.jpg',
-  '/cube/img2.jpg',
-  '/cube/img3.jpg',
-  '/cube/img4.jpg',
-  '/cube/img5.jpg',
-  '/cube/img6.jpg',
-  '/cube/img7.jpg',
-  '/cube/img8.jpg',
-  '/cube/img9.jpg',
-  '/cube/img10.jpg',
-  '/cube/img11.jpg',
-  '/cube/img12.jpg',
-  '/cube/img13.jpg',
-];
+interface CubeFaceData {
+  id: string;
+  name: string;
+  tag: string;
+  tagBg: string;
+  title: string;
+  subtitle: string;
+  description: string;
+  actionText: string;
+  actionHref: string;
+  gradient: string;
+  icon: any;
+  transform: string;
+  borderColor: string;
+}
 
 export default function CubeSection() {
   const containerRef = useRef<HTMLDivElement>(null);
   const cubeRef = useRef<HTMLDivElement>(null);
-  const [activeImage, setActiveImage] = useState<string | null>(null);
+  const [activeFace, setActiveFace] = useState<CubeFaceData | null>(null);
 
   useEffect(() => {
     const cube = cubeRef.current;
@@ -43,7 +53,6 @@ export default function CubeSection() {
     const dragSensitivity = 0.35;
     const lerpFactor = 0.08;
     const idleSpeedY = 0.25;
-    const idleSpeedX = 0.12;
     const dragThreshold = 6;
 
     const onPointerDown = (e: PointerEvent) => {
@@ -87,7 +96,7 @@ export default function CubeSection() {
     const animate = () => {
       if (!isDragging) {
         targetRotY += idleSpeedY;
-        targetRotX = Math.sin(Date.now() * 0.001) * 12; // gentle floating wobble
+        targetRotX = Math.sin(Date.now() * 0.001) * 10;
       }
 
       curRotY += (targetRotY - curRotY) * lerpFactor;
@@ -117,92 +126,198 @@ export default function CubeSection() {
     };
   }, []);
 
-  // 6 cube faces: Front, Back, Right, Left, Top, Bottom
-  // Each face size is 320px x 320px (half = 160px)
   const faceSize = 320;
   const half = faceSize / 2;
 
-  const faces = [
-    { name: 'Front', transform: `translateZ(${half}px)`, img: CUBE_IMAGES[0] },
-    { name: 'Back', transform: `rotateY(180deg) translateZ(${half}px)`, img: CUBE_IMAGES[1] },
-    { name: 'Right', transform: `rotateY(90deg) translateZ(${half}px)`, img: CUBE_IMAGES[2] },
-    { name: 'Left', transform: `rotateY(-90deg) translateZ(${half}px)`, img: CUBE_IMAGES[3] },
-    { name: 'Top', transform: `rotateX(90deg) translateZ(${half}px)`, img: CUBE_IMAGES[4] },
-    { name: 'Bottom', transform: `rotateX(-90deg) translateZ(${half}px)`, img: CUBE_IMAGES[5] },
+  const FACES: CubeFaceData[] = [
+    {
+      id: 'front',
+      name: 'Front',
+      tag: 'CENTRAL THEME',
+      tagBg: '#f59e0b',
+      title: 'ZUNOON 2026',
+      subtitle: 'The Freshers Odyssey',
+      description: 'The premier annual cultural welcome festival for LNJPIT Chapra newcomers.',
+      actionText: 'EXPLORE FEST',
+      actionHref: '#about',
+      gradient: 'from-amber-600 via-rose-700 to-purple-950',
+      borderColor: 'border-amber-400',
+      icon: Flame,
+      transform: `translateZ(${half}px)`,
+    },
+    {
+      id: 'back',
+      name: 'Back',
+      tag: 'CAMPUS VERSE',
+      tagBg: '#ec4899',
+      title: 'SAFAR VERSE',
+      subtitle: 'A New Chapter Begins',
+      description: 'Celebrate lifelong friendships, hostel camaraderie, and memories in the making.',
+      actionText: 'CAMPUS LIFE',
+      actionHref: '#about',
+      gradient: 'from-indigo-900 via-purple-900 to-pink-900',
+      borderColor: 'border-pink-400',
+      icon: Compass,
+      transform: `rotateY(180deg) translateZ(${half}px)`,
+    },
+    {
+      id: 'right',
+      name: 'Right',
+      tag: 'STAGE LIGHTS',
+      tagBg: '#3b82f6',
+      title: 'LIVE STAGES',
+      subtitle: 'Euphoria & High Voltage',
+      description: 'Acoustic harmonies, explosive hip-hop crew battles, and street play theatricals.',
+      actionText: 'VIEW ACTIVITIES',
+      actionHref: '#activities',
+      gradient: 'from-blue-600 via-indigo-700 to-purple-950',
+      borderColor: 'border-blue-400',
+      icon: Music,
+      transform: `rotateY(90deg) translateZ(${half}px)`,
+    },
+    {
+      id: 'left',
+      name: 'Left',
+      tag: 'SPOTLIGHT',
+      tagBg: '#10b981',
+      title: 'MR. & MS. FRESHERS',
+      subtitle: 'Command the Runway',
+      description: 'The most anticipated pageant of the semester. Walk with charisma, poise, and attitude.',
+      actionText: 'PAGEANT DETAILS',
+      actionHref: '#activities',
+      gradient: 'from-emerald-600 via-teal-700 to-cyan-950',
+      borderColor: 'border-emerald-400',
+      icon: Crown,
+      transform: `rotateY(-90deg) translateZ(${half}px)`,
+    },
+    {
+      id: 'top',
+      name: 'Top',
+      tag: 'CAMPUS PRIDE',
+      tagBg: '#8b5cf6',
+      title: 'BATCH 2026',
+      subtitle: 'LNJPIT Chapra Brotherhood',
+      description: 'CSE, CE, ME, EEE, FPP & M&C branches united under one sky.',
+      actionText: 'MEET TEAM',
+      actionHref: '#team',
+      gradient: 'from-purple-600 via-fuchsia-700 to-rose-950',
+      borderColor: 'border-purple-400',
+      icon: GraduationCap,
+      transform: `rotateX(90deg) translateZ(${half}px)`,
+    },
+    {
+      id: 'bottom',
+      name: 'Bottom',
+      tag: '100% FREE ENTRY',
+      tagBg: '#eab308',
+      title: 'GET FREE PASS',
+      subtitle: 'Instant QR Digital Pass',
+      description: 'Zero registration charges. No payment gateway needed. Secure your spot now.',
+      actionText: 'CLAIM PASS NOW',
+      actionHref: '#register',
+      gradient: 'from-amber-500 via-orange-600 to-red-900',
+      borderColor: 'border-yellow-400',
+      icon: Ticket,
+      transform: `rotateX(-90deg) translateZ(${half}px)`,
+    },
   ];
 
   return (
-    <section className="relative min-h-screen w-full bg-[#110123] overflow-hidden flex flex-col items-center justify-center py-20 px-4 select-none">
+    <section id="cube" className="relative min-h-screen w-full bg-[#110123] overflow-hidden flex flex-col items-center justify-center py-20 px-4 select-none">
       {/* Background Cosmic Starfield & Atmospheric Glow */}
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-purple-900/40 via-[#180332] to-[#0a0016] pointer-events-none" />
 
-      {/* Horizontal Glowing Red Laser Beam (Matching Frame 09) */}
+      {/* Horizontal Glowing Red Laser Beam */}
       <div className="absolute top-1/2 left-0 w-full h-[2px] bg-red-500 shadow-[0_0_20px_#ef4444,0_0_40px_#dc2626] pointer-events-none -translate-y-1/2 opacity-70 z-0" />
 
       {/* Top Header */}
       <div className="relative z-10 text-center mb-16">
         <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-purple-900/60 border border-purple-500/40 text-xs font-mono text-purple-200 tracking-widest uppercase mb-4 shadow-[2px_2px_0px_#000]">
           <Move3d className="w-3.5 h-3.5 text-amber-400" />
-          INTERACTIVE 3D EXPERIENCE
+          INTERACTIVE 3D ALBUM
         </span>
         <h2 className="text-4xl sm:text-6xl md:text-7xl font-carter tracking-wide text-white uppercase drop-shadow-[5px_5px_0px_#000]">
           StEP into the <span className="bg-gradient-to-r from-amber-300 via-rose-400 to-purple-400 bg-clip-text text-transparent">ZUNIVERSE</span>
         </h2>
         <p className="mt-2 text-sm sm:text-base font-chewy text-purple-200 max-w-lg mx-auto">
-          Drag and rotate the cube to explore unforgettable moments from festival stages and live concerts.
+          Drag and rotate the 3D cube to discover each facet of the Zunoon Freshers Fest celebration.
         </p>
       </div>
 
       {/* 3D Perspective Viewport */}
       <div
         ref={containerRef}
-        className="relative z-10 w-full max-w-lg h-[400px] sm:h-[480px] flex items-center justify-center cursor-grab active:cursor-grabbing"
+        className="relative z-10 w-full max-w-lg h-[360px] sm:h-[480px] flex items-center justify-center cursor-grab active:cursor-grabbing touch-none"
         style={{ perspective: '1100px' }}
       >
-        {/* The 3D CSS Cube */}
-        <div
-          ref={cubeRef}
-          className="relative"
-          style={{
-            width: `${faceSize}px`,
-            height: `${faceSize}px`,
-            transformStyle: 'preserve-3d',
-            transition: 'transform 0.05s linear',
-          }}
-        >
-          {faces.map((face, idx) => (
-            <div
-              key={face.name}
-              style={{
-                width: `${faceSize}px`,
-                height: `${faceSize}px`,
-                position: 'absolute',
-                transform: face.transform,
-                backfaceVisibility: 'hidden',
-              }}
-              className="rounded-3xl overflow-hidden border-4 border-amber-400/90 shadow-[0_0_30px_rgba(234,179,8,0.35)] bg-black group"
-              onClick={() => setActiveImage(face.img)}
-            >
-              <div className="relative w-full h-full">
-                <Image
-                  src={face.img}
-                  alt={`Fest Memory ${idx + 1}`}
-                  fill
-                  className="object-cover transition-transform duration-500 group-hover:scale-110"
-                />
-                {/* Halftone / Glow overlay */}
-                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-80 group-hover:opacity-40 transition-opacity" />
-                <div className="absolute bottom-3 left-3 right-3 flex items-center justify-between z-10">
-                  <span className="font-carter text-xs text-amber-300 tracking-wider uppercase drop-shadow-[2px_2px_0px_#000]">
-                    STAGE {idx + 1}
+        {/* Responsive Scaled Wrapper to fit perfectly on mobile */}
+        <div className="transform scale-[0.78] sm:scale-100 origin-center transition-transform">
+          {/* The 3D CSS Cube (Photoless, 100% Vector & Typography) */}
+          <div
+            ref={cubeRef}
+            className="relative"
+            style={{
+              width: `${faceSize}px`,
+              height: `${faceSize}px`,
+              transformStyle: 'preserve-3d',
+              transition: 'transform 0.05s linear',
+            }}
+          >
+          {FACES.map((face) => {
+            const FaceIcon = face.icon;
+            return (
+              <div
+                key={face.name}
+                style={{
+                  width: `${faceSize}px`,
+                  height: `${faceSize}px`,
+                  position: 'absolute',
+                  transform: face.transform,
+                  backfaceVisibility: 'hidden',
+                }}
+                className={`rounded-3xl overflow-hidden border-4 ${face.borderColor} shadow-[0_0_35px_rgba(0,0,0,0.8)] bg-black group p-5 cursor-pointer flex flex-col justify-between`}
+                onClick={() => setActiveFace(face)}
+              >
+                {/* Background Gradient Canvas with Halftone */}
+                <div className={`absolute inset-0 bg-gradient-to-br ${face.gradient} opacity-95`} />
+                <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.18)_1.5px,transparent_1.5px)] bg-[size:10px_10px] pointer-events-none" />
+
+                {/* Face Top Header */}
+                <div className="relative z-10 flex items-center justify-between">
+                  <span
+                    className="px-2.5 py-0.5 rounded-full text-black font-carter text-[10px] tracking-wider uppercase border border-black shadow-[2px_2px_0px_#000]"
+                    style={{ backgroundColor: face.tagBg }}
+                  >
+                    {face.tag}
                   </span>
-                  <span className="text-[10px] font-mono text-white/80 bg-black/60 px-2 py-0.5 rounded-full border border-white/20">
-                    CLICK TO ZOOM
+                  <div className="p-1.5 rounded-xl bg-black/50 border border-white/20 text-white shadow-[2px_2px_0px_#000]">
+                    <FaceIcon className="w-4 h-4 text-amber-300" />
+                  </div>
+                </div>
+
+                {/* Center Graphic Emblem */}
+                <div className="relative z-10 flex flex-col items-center justify-center my-auto text-center px-2">
+                  <h3 className="font-carter text-2xl sm:text-3xl text-white tracking-wide drop-shadow-[3px_3px_0px_#000]">
+                    {face.title}
+                  </h3>
+                  <p className="font-chewy text-sm sm:text-base text-amber-300 mt-1 drop-shadow-[1px_1px_0px_#000]">
+                    {face.subtitle}
+                  </p>
+                </div>
+
+                {/* Face Bottom Footer */}
+                <div className="relative z-10 flex items-center justify-between pt-2 border-t border-white/20">
+                  <span className="text-[10px] font-mono text-purple-200">
+                    LNJPIT CHAPRA
+                  </span>
+                  <span className="text-[10px] font-mono font-bold text-amber-300 bg-black/60 px-2 py-0.5 rounded-full border border-amber-400/40 group-hover:bg-amber-400 group-hover:text-black transition-colors">
+                    TAP TO EXPAND ↗
                   </span>
                 </div>
               </div>
-            </div>
-          ))}
+            );
+          })}
+        </div>
         </div>
       </div>
 
@@ -212,20 +327,64 @@ export default function CubeSection() {
         <span>DRAG TO ROTATE 360° IN ANY DIRECTION</span>
       </div>
 
-      {/* Zoom Modal if user clicks on a face */}
-      {activeImage && (
+      {/* Expanded Modal Details (Zero Photos, 100% On-Brand Information) */}
+      {activeFace && (
         <div
           className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/90 backdrop-blur-md p-4"
-          onClick={() => setActiveImage(null)}
+          onClick={() => setActiveFace(null)}
         >
-          <div className="relative max-w-2xl max-h-[80vh] w-full aspect-square rounded-3xl overflow-hidden border-4 border-amber-400 shadow-[8px_8px_0px_#000]">
-            <Image src={activeImage} alt="Expanded Fest Memory" fill className="object-cover" />
+          <div 
+            className="relative max-w-lg w-full rounded-3xl overflow-hidden border-4 border-amber-400 bg-[#160a2e] shadow-[10px_10px_0px_#000] p-6 sm:p-8"
+            onClick={(e) => e.stopPropagation()}
+          >
             <button
-              onClick={() => setActiveImage(null)}
-              className="absolute top-4 right-4 px-4 py-1.5 bg-rose-600 text-white font-carter text-sm rounded-xl border-2 border-black shadow-[2px_2px_0px_#000]"
+              onClick={() => setActiveFace(null)}
+              className="absolute top-4 right-4 p-2 bg-rose-600 hover:bg-rose-500 text-white rounded-xl border-2 border-black shadow-[2px_2px_0px_#000] transition-colors"
+              aria-label="Close modal"
             >
-              CLOSE ✕
+              <X className="w-4 h-4" />
             </button>
+
+            <div className="flex items-center gap-2 mb-3">
+              <span
+                className="px-3 py-1 rounded-full text-black font-carter text-xs tracking-wider uppercase border border-black shadow-[2px_2px_0px_#000]"
+                style={{ backgroundColor: activeFace.tagBg }}
+              >
+                {activeFace.tag}
+              </span>
+              <span className="text-xs font-mono text-purple-300">
+                {FEST_CONFIG.shortInstitution}
+              </span>
+            </div>
+
+            <h3 className="font-carter text-3xl sm:text-4xl text-white tracking-wide drop-shadow-[3px_3px_0px_#000]">
+              {activeFace.title}
+            </h3>
+            <p className="font-chewy text-lg text-amber-300 mt-1">
+              {activeFace.subtitle}
+            </p>
+
+            <p className="mt-4 text-sm font-sans text-purple-100 leading-relaxed border-t border-white/10 pt-4">
+              {activeFace.description}
+            </p>
+
+            <div className="mt-6 flex items-center justify-between gap-3">
+              <a
+                href={activeFace.actionHref}
+                onClick={() => setActiveFace(null)}
+                className="comic-btn px-6 py-2.5 rounded-xl bg-amber-400 hover:bg-amber-300 text-black font-carter text-xs sm:text-sm uppercase tracking-wide inline-flex items-center gap-2 shadow-[3px_3px_0px_#000]"
+              >
+                <span>{activeFace.actionText}</span>
+                <ChevronRight className="w-4 h-4" />
+              </a>
+
+              <button
+                onClick={() => setActiveFace(null)}
+                className="px-4 py-2 rounded-xl bg-white/10 hover:bg-white/20 text-white font-mono text-xs border border-white/20"
+              >
+                BACK TO CUBE
+              </button>
+            </div>
           </div>
         </div>
       )}

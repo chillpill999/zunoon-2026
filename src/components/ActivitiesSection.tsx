@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import { ACTIVITIES, ActivityItem } from '@/data/activities';
-import { Sparkles, Trophy, Users, Clock, MapPin, X, ArrowRight, CheckCircle2 } from 'lucide-react';
+import { Trophy, Users, Clock, MapPin, X, ArrowRight, CheckCircle2 } from 'lucide-react';
 
 const CATEGORIES = ['All', 'Pageant', 'Dance', 'Music', 'Dramatics', 'Gaming', 'Informal'];
 
@@ -57,8 +57,8 @@ export default function ActivitiesSection() {
         {filtered.map((item, idx) => (
           <div
             key={item.id}
-            className="comic-box p-6 rounded-3xl bg-[#160d33] flex flex-col justify-between hover:scale-[1.02] transition-transform relative group"
-            style={{ transform: `rotate(${idx % 2 === 0 ? '-1.5deg' : '1.5deg'})` }}
+            style={{ '--rot': `rotate(${idx % 2 === 0 ? '-1.5deg' : '1.5deg'})` } as React.CSSProperties}
+            className="comic-box p-6 rounded-3xl bg-[#160d33] flex flex-col justify-between [transform:none] md:[transform:var(--rot)] hover:scale-[1.02] transition-transform relative group"
           >
             <div>
               <div className="flex items-center justify-between mb-3">

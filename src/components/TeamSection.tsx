@@ -1,117 +1,69 @@
 'use client';
 
-import { useState } from 'react';
-import Image from 'next/image';
-import { Mail, Phone, Award, ShieldCheck, Heart, Sparkles, ExternalLink } from 'lucide-react';
+import { 
+  Users,
+  Award,
+  Heart,
+  Code2,
+  Compass,
+  Megaphone,
+  Clock
+} from 'lucide-react';
 import { FEST_CONFIG } from '@/data/config';
 
-type Category = 'all' | 'core' | 'advisors' | 'organizing' | 'leads';
-
-interface Member {
-  name: string;
-  role: string;
-  category: 'core' | 'advisors' | 'organizing' | 'leads';
-  branch: string;
+interface CommitteeWing {
+  title: string;
+  department: string;
   tag: string;
   tagColor: string;
-  image: string;
+  gradient: string;
+  icon: typeof Users;
   rotation: number;
 }
 
-const TEAM_MEMBERS: Member[] = [
+const COMMITTEE_WINGS: CommitteeWing[] = [
   {
-    name: 'Dr. B. K. Singh',
-    role: 'Chief Patron & Principal, LNJPIT',
-    category: 'advisors',
-    branch: 'Administration',
-    tag: 'CHIEF PATRON',
-    tagColor: '#f59e0b',
-    image: '/cube/img1.jpg',
+    title: 'Core Committee & Student General Secretary',
+    department: 'LNJPIT Student Council',
+    tag: 'EXECUTIVE LEAD',
+    tagColor: '#ec4899',
+    gradient: 'from-pink-500 via-rose-600 to-purple-700',
+    icon: Award,
     rotation: -2,
   },
   {
-    name: 'Prof. S. N. Sharma',
-    role: 'Convener, Cultural Affairs',
-    category: 'advisors',
-    branch: 'Faculty Council',
-    tag: 'CONVENER',
-    tagColor: '#3b82f6',
-    image: '/cube/img2.jpg',
-    rotation: 2.5,
+    title: 'Cultural Affairs & Stage Production',
+    department: 'Cultural Council',
+    tag: 'CULTURAL WING',
+    tagColor: '#10b981',
+    gradient: 'from-emerald-500 via-teal-600 to-cyan-700',
+    icon: Heart,
+    rotation: 2,
   },
   {
-    name: 'Aman Kumar Raj',
-    role: 'Overall Student General Secretary',
-    category: 'core',
-    branch: 'CSE (Computer Science)',
-    tag: 'STUDENT LEAD',
-    tagColor: '#ec4899',
-    image: '/cube/img3.jpg',
+    title: 'Technical Infrastructure & Web Architecture',
+    department: 'Digital Media & Tech',
+    tag: 'TECH CREW',
+    tagColor: '#06b6d4',
+    gradient: 'from-cyan-500 via-blue-600 to-indigo-800',
+    icon: Code2,
     rotation: -1.5,
   },
   {
-    name: 'Priya Kumari',
-    role: 'Head of Cultural & Stage Production',
-    category: 'core',
-    branch: 'FPP (Food Processing & Preservation)',
-    tag: 'CULTURAL HEAD',
-    tagColor: '#10b981',
-    image: '/cube/img4.jpg',
-    rotation: 3,
-  },
-  {
-    name: 'Rohan Verma',
-    role: 'Technical Lead & Web Architecture',
-    category: 'leads',
-    branch: 'M&C (Mathematics & Computing)',
-    tag: 'TECH LEAD',
-    tagColor: '#06b6d4',
-    image: '/cube/img5.jpg',
-    rotation: -2.5,
-  },
-  {
-    name: 'Vikash Kumar',
-    role: 'Logistics, Venue & Security Head',
-    category: 'organizing',
-    branch: 'ME (Mechanical Engg.)',
-    tag: 'LOGISTICS HEAD',
-    tagColor: '#8b5cf6',
-    image: '/cube/img6.jpg',
-    rotation: 1.8,
-  },
-  {
-    name: 'Anjali Singh',
-    role: 'Sponsorship & Public Relations Lead',
-    category: 'organizing',
-    branch: 'CE (Civil Engg.)',
-    tag: 'PR & SPONSORS',
+    title: 'Logistics, Hospitality & Public Relations',
+    department: 'Campus Operations',
+    tag: 'OPERATIONS',
     tagColor: '#f97316',
-    image: '/cube/img7.jpg',
-    rotation: -2,
-  },
-  {
-    name: 'Rahul Mishra',
-    role: 'Hospitality & Freshers Welcoming',
-    category: 'leads',
-    branch: 'EE (Electrical Engg.)',
-    tag: 'HOSPITALITY',
-    tagColor: '#eab308',
-    image: '/cube/img8.jpg',
-    rotation: 2.2,
+    gradient: 'from-orange-500 via-amber-600 to-red-700',
+    icon: Compass,
+    rotation: 2.5,
   },
 ];
 
 export default function TeamSection() {
-  const [activeTab, setActiveTab] = useState<Category>('all');
-
-  const filteredMembers =
-    activeTab === 'all'
-      ? TEAM_MEMBERS
-      : TEAM_MEMBERS.filter((m) => m.category === activeTab);
-
   return (
     <section id="team" className="relative py-24 px-4 sm:px-6 lg:px-8 bg-[#110626] overflow-hidden">
-      {/* Background Banner with Ornate Mandala Texture Matching Frame 10 */}
+      {/* Background Banner with Ornate Mandala Texture */}
       <div
         className="absolute inset-0 bg-cover bg-center opacity-30 pointer-events-none"
         style={{ backgroundImage: `url('/assets/bg_main.jpg')` }}
@@ -127,77 +79,96 @@ export default function TeamSection() {
             MEET THE <span className="text-amber-400">TEAM</span>
           </h2>
           <p className="font-chewy text-xl text-purple-200 mt-2 max-w-xl mx-auto">
-            Faculty mentors, student leads, and dedicated volunteers creating a memorable Freshers Fest at LNJPIT Chapra.
+            Faculty mentors, student leads, and dedicated committee creating a memorable Freshers Fest at {FEST_CONFIG.shortInstitution}.
           </p>
         </div>
 
-        {/* Filter Navigation Tabs Matching Frame 10 */}
-        <div className="flex flex-wrap items-center justify-center gap-3 sm:gap-4 mb-16">
-          {[
-            { id: 'all', label: 'ALL MEMBERS' },
-            { id: 'core', label: 'CORE COMMITTEE' },
-            { id: 'advisors', label: 'ADVISORS' },
-            { id: 'organizing', label: 'ORGANIZING CREW' },
-            { id: 'leads', label: 'STUDENT LEADS' },
-          ].map((tab) => (
-            <button
-              key={tab.id}
-              onClick={() => setActiveTab(tab.id as Category)}
-              className={`px-5 py-2.5 rounded-2xl font-carter text-xs sm:text-sm uppercase tracking-wider border-2 border-black transition-all cursor-pointer ${
-                activeTab === tab.id
-                  ? 'bg-amber-400 text-black shadow-[4px_4px_0px_#000] scale-105 -rotate-1'
-                  : 'bg-white/10 text-white hover:bg-white/20 shadow-[2px_2px_0px_#000]'
-              }`}
-            >
-              {tab.label}
-            </button>
-          ))}
+        {/* Central Spotlight Announcement Card */}
+        <div className="comic-box p-8 sm:p-12 rounded-3xl bg-[#1e1140] text-center max-w-3xl mx-auto mb-16 shadow-[8px_8px_0px_#000]">
+          <div className="w-20 h-20 rounded-2xl bg-amber-400 border-3 border-black text-black flex items-center justify-center mx-auto mb-6 shadow-[4px_4px_0px_#000] -rotate-6">
+            <Clock className="w-10 h-10" />
+          </div>
+
+          <span className="inline-block px-4 py-1 rounded-full bg-purple-900/60 border border-purple-500/40 text-xs font-mono text-amber-300 tracking-widest uppercase mb-3">
+            OFFICIAL ANNOUNCEMENT • {FEST_CONFIG.shortInstitution}
+          </span>
+
+          <h3 className="text-3xl sm:text-5xl md:text-6xl font-carter text-white tracking-wide uppercase drop-shadow-[4px_4px_0px_#000]">
+            TO BE DECIDED <span className="text-amber-400">SHORTLY</span>
+          </h3>
+
+          <p className="font-chewy text-lg sm:text-2xl text-purple-200 mt-4 leading-relaxed max-w-xl mx-auto">
+            The official organizing committee, student coordinators, and faculty advisors for ZUNOON 2026 are currently being finalized and will be revealed shortly!
+          </p>
+
+          <div className="mt-8 pt-6 border-t border-white/10 flex flex-wrap items-center justify-center gap-3 text-xs font-mono text-purple-300">
+            <span className="px-3.5 py-1.5 rounded-xl bg-black/40 border border-white/10">🎓 LNJPIT Chapra</span>
+            <span className="px-3.5 py-1.5 rounded-xl bg-black/40 border border-white/10">🎪 Batch 2026</span>
+            <span className="px-3.5 py-1.5 rounded-xl bg-amber-400/20 text-amber-300 border border-amber-400/40 font-bold">📢 Nominations In Progress</span>
+          </div>
         </div>
 
-        {/* Polaroid Style Tilted Grid Matching Frame 10 */}
+        {/* Committee Wings Roadmap Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-          {filteredMembers.map((m, idx) => (
-            <div
-              key={m.name}
-              style={{ transform: `rotate(${m.rotation}deg)` }}
-              className="comic-box p-4 rounded-3xl bg-[#1e1140] hover:rotate-0 hover:scale-105 transition-all group flex flex-col justify-between"
-            >
-              {/* Tape Sticker at Top */}
-              <div className="w-16 h-4 bg-amber-200/40 border border-black/50 -rotate-3 mx-auto -mt-6 mb-2 shadow-[1px_1px_0px_#000]" />
+          {COMMITTEE_WINGS.map((wing) => {
+            const IconComponent = wing.icon;
+            return (
+              <div
+                key={wing.title}
+                style={{ '--rot': `rotate(${wing.rotation}deg)` } as React.CSSProperties}
+                className="comic-box p-5 rounded-3xl bg-[#1e1140] [transform:none] sm:[transform:var(--rot)] hover:rotate-0 hover:scale-105 transition-all group flex flex-col justify-between"
+              >
+                {/* Tape Sticker at Top */}
+                <div className="w-16 h-4 bg-amber-200/40 border border-black/50 -rotate-3 mx-auto -mt-7 mb-3 shadow-[1px_1px_0px_#000]" />
 
-              {/* Photo Area */}
-              <div className="relative w-full aspect-square rounded-2xl overflow-hidden border-2 border-black mb-4 bg-zinc-900 shadow-[inset_0_0_20px_rgba(0,0,0,0.5)]">
-                <Image
-                  src={m.image}
-                  alt={m.name}
-                  fill
-                  className="object-cover transition-transform duration-500 group-hover:scale-110"
-                />
-                <div className="absolute top-2 left-2 z-10">
-                  <span
-                    className="px-2.5 py-0.5 rounded-full text-black font-carter text-[10px] tracking-wider uppercase border border-black shadow-[2px_2px_0px_#000]"
-                    style={{ backgroundColor: m.tagColor }}
-                  >
-                    {m.tag}
-                  </span>
+                {/* Stylized Avatar Badge Area */}
+                <div
+                  className={`relative w-full aspect-square rounded-2xl overflow-hidden border-3 border-black mb-4 bg-gradient-to-br ${wing.gradient} shadow-[inset_0_0_30px_rgba(0,0,0,0.6)] flex flex-col items-center justify-center p-4`}
+                >
+                  {/* Comic Halftone Pattern */}
+                  <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.18)_1.5px,transparent_1.5px)] bg-[size:10px_10px] pointer-events-none" />
+
+                  {/* Top Tag */}
+                  <div className="absolute top-2.5 left-2.5 z-10">
+                    <span
+                      className="px-2.5 py-0.5 rounded-full text-black font-carter text-[10px] tracking-wider uppercase border border-black shadow-[2px_2px_0px_#000]"
+                      style={{ backgroundColor: wing.tagColor }}
+                    >
+                      {wing.tag}
+                    </span>
+                  </div>
+
+                  {/* Center TBD Emblem */}
+                  <div className="relative z-10 flex flex-col items-center justify-center">
+                    <div className="w-20 h-20 rounded-full bg-black/40 border-3 border-amber-300 flex items-center justify-center shadow-[4px_4px_0px_#000] group-hover:scale-110 transition-transform">
+                      <span className="font-carter text-2xl sm:text-3xl text-white tracking-widest drop-shadow-[2px_2px_0px_#000]">
+                        TBD
+                      </span>
+                    </div>
+                  </div>
+
+                  {/* Bottom Icon Badge */}
+                  <div className="absolute bottom-2.5 right-2.5 z-10 p-1.5 rounded-xl bg-black/60 border border-white/20 text-white shadow-[2px_2px_0px_#000]">
+                    <IconComponent className="w-4 h-4 text-amber-300" />
+                  </div>
+                </div>
+
+                {/* Info Details */}
+                <div className="text-left px-1">
+                  <h3 className="font-carter text-xl text-amber-400 tracking-wide">
+                    To be decided shortly
+                  </h3>
+                  <p className="text-xs font-sans text-purple-200 mt-1 font-medium leading-relaxed">
+                    {wing.title}
+                  </p>
+                  <div className="mt-4 pt-3 border-t border-white/10 flex items-center justify-between text-[11px] font-mono text-purple-300">
+                    <span className="text-purple-300 font-bold">{wing.department}</span>
+                    <span className="text-white/60">LNJPIT</span>
+                  </div>
                 </div>
               </div>
-
-              {/* Info Details */}
-              <div className="text-left px-1">
-                <h3 className="font-carter text-xl text-white tracking-wide group-hover:text-amber-400 transition-colors">
-                  {m.name}
-                </h3>
-                <p className="text-xs font-sans text-purple-200 mt-1 font-medium">
-                  {m.role}
-                </p>
-                <div className="mt-3 pt-3 border-t border-white/10 flex items-center justify-between text-[11px] font-mono text-purple-300">
-                  <span className="text-amber-300">{m.branch}</span>
-                  <span className="text-white/60">LNJPIT</span>
-                </div>
-              </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
       </div>
     </section>

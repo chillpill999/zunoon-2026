@@ -58,23 +58,30 @@ export async function POST(request: Request) {
       try {
         const supabase = createClient(supabaseUrl, supabaseKey);
 
-        // Try inserting into profiles or Registration
-        await supabase.from('profiles').upsert(
+        // Persist directly to Supabase zunoon_registrations table
+        const { error: dbErr } = await supabase.from('zunoon_registrations').upsert(
           {
             id: admitId,
             full_name: attendeeRecord.fullName,
+            roll_number: attendeeRecord.rollNumber,
             email: attendeeRecord.email,
             phone: attendeeRecord.phone,
-            college_id: attendeeRecord.rollNumber,
-            college_name: 'LNJPIT Chapra',
             branch: attendeeRecord.branch,
-            role: 'attendee',
-            created_at: registeredAt,
+            batch_year: attendeeRecord.batchYear,
+            interests: attendeeRecord.interests,
+            mr_ms_freshers: attendeeRecord.participateMrMsFreshers,
+            status: 'CONFIRMED',
+            institution: attendeeRecord.institution,
+            qr_token: qrToken,
+            registered_at: registeredAt,
           },
-          { onConflict: 'email' }
+          { onConflict: 'id' }
         );
+
+        if (dbErr) {
+          console.warn('Supabase sync warning (pass remains valid):', dbErr);
+        }
       } catch (dbErr) {
-        // Log database error non-blockingly; local registration token remains 100% valid
         console.warn('Supabase sync warning (pass remains valid):', dbErr);
       }
     }

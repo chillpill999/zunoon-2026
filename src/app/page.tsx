@@ -11,7 +11,7 @@ import TeamSection from '@/components/TeamSection';
 
 export default function HomePage() {
   return (
-    <div className="relative overflow-hidden bg-[#070210]">
+    <div className="relative bg-[#070210]">
       {/* 1. CINEMATIC HERO & SCROLL-SCRUBBED TRUCK/CASSETTE ODYSSEY (Frames 04, 05, 06, 07) */}
       <HeroSection />
 

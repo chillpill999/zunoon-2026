@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { Mail, Phone, MapPin, Heart, Sparkles, GraduationCap } from 'lucide-react';
+import { Mail, Phone, MapPin, Heart, Ticket, GraduationCap } from 'lucide-react';
 import { FEST_CONFIG } from '@/data/config';
 
 export default function Footer() {
@@ -105,7 +105,7 @@ export default function Footer() {
           <p className="font-carter text-base sm:text-lg text-amber-400 tracking-wide">Admission Policy</p>
           <div className="p-4 rounded-2xl bg-[#140b2e] border-2 border-black text-xs font-mono text-purple-200/90 space-y-2 shadow-[3px_3px_0px_#000]">
             <p className="text-emerald-400 font-bold flex items-center gap-1.5">
-              <Sparkles className="w-3.5 h-3.5" /> 100% Free Festival
+              <Ticket className="w-3.5 h-3.5" /> 100% Free Festival
             </p>
             <p className="text-[11px] leading-relaxed">
               No payment or paid passes exist. Generate your free digital pass and present your LNJPIT ID card at the gate.
@@ -130,8 +130,16 @@ export default function Footer() {
 
       <div className="max-w-7xl mx-auto pt-6 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between text-xs text-purple-300/70 gap-3">
         <p>© 2026 ZUNOON • {FEST_CONFIG.institution}, Chapra. All rights reserved.</p>
-        <p className="flex items-center gap-1">
-          Crafted with <Heart className="w-3.5 h-3.5 text-rose-500 fill-rose-500" /> by LNJPIT Student Council
+        <p className="flex items-center gap-1.5">
+          Made with <Heart className="w-3.5 h-3.5 text-rose-500 fill-rose-500" /> of{' '}
+          <a
+            href="https://www.instagram.com/hothlali_department/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-amber-400 hover:text-amber-300 font-bold underline underline-offset-2 transition-colors"
+          >
+            hothlali department
+          </a>
         </p>
       </div>
     </footer>

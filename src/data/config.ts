@@ -48,7 +48,7 @@ export const FEST_CONFIG: FestConfig = {
     campusAddress: "LNJPIT Campus, Near ITI, Silao - Chapra Road, Chapra, Bihar 841302"
   },
   socials: {
-    instagram: "https://instagram.com/zunoon_lnjpit",
+    instagram: "https://www.instagram.com/hothlali_department/",
     youtube: "https://youtube.com/@zunoon_lnjpit"
   }
 };

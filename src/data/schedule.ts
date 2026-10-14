@@ -74,7 +74,7 @@ export const FEST_SCHEDULE: ScheduleSlot[] = [
   },
   {
     time: "07:30 PM - 10:00 PM",
-    title: "The Euphoria: Star DJ Night & Celebration",
+    title: "The Euphoria: Live DJ Night & Celebration",
     category: "Concert",
     venue: "Open Air Amphitheatre Ground",
     description: "High-energy festival closing party with live DJ mixing, bass drops, and batch celebration under the stars.",

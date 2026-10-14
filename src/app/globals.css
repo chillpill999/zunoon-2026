@@ -8,11 +8,20 @@
     --border-accent: rgba(255, 255, 255, 0.15);
   }
 
+  html {
+    scroll-behavior: smooth;
+    touch-action: manipulation;
+    -webkit-text-size-adjust: 100%;
+    -webkit-tap-highlight-color: transparent;
+  }
+
   body {
     background-color: var(--bg-dark);
     color: #ffffff;
     font-family: var(--font-sans), system-ui, sans-serif;
     overflow-x: hidden;
+    min-height: 100vh;
+    min-height: 100dvh;
   }
 }
 

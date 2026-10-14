@@ -12,7 +12,7 @@ export const FAQS: FaqItem[] = [
   },
   {
     question: "Who is eligible to compete in Mr. & Ms. Freshers?",
-    answer: "Mr. & Ms. Freshers is exclusively open to all newly admitted 1st Year (Fresher) students across all engineering branches (CSE, Civil, Mechanical, Electrical, FPP, M&C) of LNJPIT Chapra. You can indicate your interest directly on the registration form.",
+    answer: "Mr. & Ms. Freshers is exclusively open to all newly admitted 1st Year (Fresher) students across all engineering branches (CSE, Civil, Mechanical, EEE, FPP, M&C) of LNJPIT Chapra. You can indicate your interest directly on the registration form.",
     tag: "Eligibility"
   },
   {

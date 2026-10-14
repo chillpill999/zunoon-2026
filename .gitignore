@@ -39,3 +39,12 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# video processing scratch & diagnostic assets
+/public/video_backups/
+/public/video_frames/
+/public/*raw*.mp4
+/public/*orig*.mp4
+/scripts/
+.playwright-mcp/
+

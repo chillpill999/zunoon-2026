@@ -1,7 +1,7 @@
 'use client';
 
 import Image from 'next/image';
-import { Sparkles, Trophy, Users, Heart, MapPin, Bus, GraduationCap, Flame } from 'lucide-react';
+import { Ticket, CheckCircle2, Trophy, Users, Heart, MapPin, Bus, GraduationCap, Flame } from 'lucide-react';
 import { FEST_CONFIG } from '@/data/config';
 
 export default function AboutSection() {
@@ -57,7 +57,7 @@ export default function AboutSection() {
                   href="#register"
                   className="comic-btn px-6 py-2.5 rounded-xl bg-amber-400 hover:bg-amber-300 text-black font-carter text-sm uppercase tracking-wide inline-flex items-center gap-2 -rotate-1"
                 >
-                  <Sparkles className="w-4 h-4" />
+                  <Ticket className="w-4 h-4" />
                   <span>CLAIM FREE PASS</span>
                 </a>
               </div>
@@ -69,7 +69,7 @@ export default function AboutSection() {
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 mb-16">
           <div className="comic-box p-6 rounded-3xl bg-[#1b103c] text-center -rotate-2 hover:rotate-0 transition-transform">
             <span className="text-4xl sm:text-5xl font-carter text-amber-400 drop-shadow-[3px_3px_0px_#000] block">
-              2,500+
+              500+
             </span>
             <span className="font-carter text-xs sm:text-sm text-white tracking-wider uppercase mt-2 block">
               STUDENT FOOTFALL
@@ -119,7 +119,7 @@ export default function AboutSection() {
         {/* Editorial Twin Cards: About LNJPIT Chapra & About The Theme */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           {/* Card 1: About LNJPIT Chapra */}
-          <div className="comic-box p-8 rounded-3xl bg-[#170e35] relative overflow-hidden -rotate-1">
+          <div className="comic-box p-6 sm:p-8 rounded-3xl bg-[#170e35] relative overflow-hidden rotate-0 md:-rotate-1">
             <div className="flex items-center gap-3 mb-4">
               <div className="w-12 h-12 rounded-2xl bg-amber-400 text-black border-2 border-black flex items-center justify-center font-carter text-xl shadow-[3px_3px_0px_#000]">
                 <GraduationCap className="w-6 h-6" />
@@ -135,7 +135,7 @@ export default function AboutSection() {
             </div>
             <p className="text-xs sm:text-sm font-sans text-purple-100/90 leading-relaxed">
               Established by the Government of Bihar under the Department of Science, Technology and Technical Education,{' '}
-              <strong>Loknayak Jai Prakash Institute of Technology (LNJPIT)</strong> stands as a premier beacon of technical education in the Saran division. Named in honor of the revolutionary freedom fighter Loknayak Jai Prakash Narayan, the campus nurtures future innovators, engineers, and cultural leaders across branches including CSE, CE, ME, EE, Food Processing & Preservation (FPP), and Mathematics & Computing (M&C).
+              <strong>Loknayak Jai Prakash Institute of Technology (LNJPIT)</strong> stands as a premier beacon of technical education in the Saran division. Named in honor of the revolutionary freedom fighter Loknayak Jai Prakash Narayan, the campus nurtures future innovators, engineers, and cultural leaders across branches including CSE, CE, ME, EEE, Food Processing & Preservation (FPP), and Mathematics & Computing (M&C).
             </p>
             <div className="mt-5 pt-4 border-t border-white/10 flex items-center justify-between text-xs font-mono text-purple-300">
               <span className="flex items-center gap-1.5">
@@ -146,7 +146,7 @@ export default function AboutSection() {
           </div>
 
           {/* Card 2: About THEME - Safar: Freshers Verse */}
-          <div className="comic-box p-8 rounded-3xl bg-[#170e35] relative overflow-hidden rotate-1">
+          <div className="comic-box p-6 sm:p-8 rounded-3xl bg-[#170e35] relative overflow-hidden rotate-0 md:rotate-1">
             <div className="flex items-center gap-3 mb-4">
               <div className="w-12 h-12 rounded-2xl bg-rose-500 text-white border-2 border-black flex items-center justify-center font-carter text-xl shadow-[3px_3px_0px_#000]">
                 <Flame className="w-6 h-6" />
@@ -165,7 +165,7 @@ export default function AboutSection() {
             </p>
             <div className="mt-5 pt-4 border-t border-white/10 flex items-center justify-between text-xs font-mono text-purple-300">
               <span className="flex items-center gap-1.5">
-                <Sparkles className="w-3.5 h-3.5 text-rose-400" /> 100% Free Admission
+                <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400" /> 100% Free Admission
               </span>
               <span className="text-rose-400">LNJPIT Cultural Council</span>
             </div>

@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import confetti from 'canvas-confetti';
-import { Sparkles, CheckCircle2, User, Phone, Mail, Award, BookOpen, AlertCircle } from 'lucide-react';
+import { Ticket, CheckCircle2, User, Phone, Mail, Award, BookOpen, AlertCircle } from 'lucide-react';
 import DigitalPassCard, { PassData } from './DigitalPassCard';
 import { FEST_CONFIG } from '@/data/config';
 
@@ -10,7 +10,7 @@ const BRANCHES = [
   'Computer Science & Engineering (CSE)',
   'Civil Engineering (CE)',
   'Mechanical Engineering (ME)',
-  'Electrical Engineering (EE)',
+  'Electrical & Electronics Engineering (EEE)',
   'Food Processing & Preservation (FPP)',
   'Mathematics & Computing (M&C)',
 ];
@@ -153,10 +153,12 @@ export default function RegistrationSection() {
                 <input
                   type="text"
                   required
+                  autoComplete="name"
+                  autoCapitalize="words"
                   placeholder="e.g. Rahul Sharma"
                   value={formData.fullName}
                   onChange={(e) => setFormData({ ...formData, fullName: e.target.value })}
-                  className="w-full px-4 py-3 bg-[#0d0722] border-2 border-black rounded-xl text-white text-sm focus:border-amber-400 focus:outline-none shadow-[3px_3px_0px_#000]"
+                  className="w-full px-4 py-3 bg-[#0d0722] border-2 border-black rounded-xl text-white text-base sm:text-sm focus:border-amber-400 focus:outline-none shadow-[3px_3px_0px_#000]"
                 />
                 <User className="w-4 h-4 text-purple-400 absolute right-3.5 top-3.5" />
               </div>
@@ -172,10 +174,12 @@ export default function RegistrationSection() {
                   <input
                     type="text"
                     required
+                    inputMode="text"
+                    autoCapitalize="characters"
                     placeholder="e.g. 24105123045"
                     value={formData.rollNumber}
                     onChange={(e) => setFormData({ ...formData, rollNumber: e.target.value })}
-                    className="w-full px-4 py-3 bg-[#0d0722] border-2 border-black rounded-xl text-white text-sm focus:border-amber-400 focus:outline-none shadow-[3px_3px_0px_#000]"
+                    className="w-full px-4 py-3 bg-[#0d0722] border-2 border-black rounded-xl text-white text-base sm:text-sm focus:border-amber-400 focus:outline-none shadow-[3px_3px_0px_#000]"
                   />
                   <BookOpen className="w-4 h-4 text-purple-400 absolute right-3.5 top-3.5" />
                 </div>
@@ -189,10 +193,14 @@ export default function RegistrationSection() {
                   <input
                     type="tel"
                     required
+                    inputMode="tel"
+                    autoComplete="tel"
+                    pattern="[0-9]{10}"
+                    title="10-digit mobile number"
                     placeholder="e.g. 9876543210"
                     value={formData.phone}
                     onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                    className="w-full px-4 py-3 bg-[#0d0722] border-2 border-black rounded-xl text-white text-sm focus:border-amber-400 focus:outline-none shadow-[3px_3px_0px_#000]"
+                    className="w-full px-4 py-3 bg-[#0d0722] border-2 border-black rounded-xl text-white text-base sm:text-sm focus:border-amber-400 focus:outline-none shadow-[3px_3px_0px_#000]"
                   />
                   <Phone className="w-4 h-4 text-purple-400 absolute right-3.5 top-3.5" />
                 </div>
@@ -208,10 +216,12 @@ export default function RegistrationSection() {
                 <input
                   type="email"
                   required
+                  inputMode="email"
+                  autoComplete="email"
                   placeholder="e.g. student@gmail.com"
                   value={formData.email}
                   onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                  className="w-full px-4 py-3 bg-[#0d0722] border-2 border-black rounded-xl text-white text-sm focus:border-amber-400 focus:outline-none shadow-[3px_3px_0px_#000]"
+                  className="w-full px-4 py-3 bg-[#0d0722] border-2 border-black rounded-xl text-white text-base sm:text-sm focus:border-amber-400 focus:outline-none shadow-[3px_3px_0px_#000]"
                 />
                 <Mail className="w-4 h-4 text-purple-400 absolute right-3.5 top-3.5" />
               </div>
@@ -225,7 +235,7 @@ export default function RegistrationSection() {
               <select
                 value={formData.branch}
                 onChange={(e) => setFormData({ ...formData, branch: e.target.value })}
-                className="w-full px-4 py-3 bg-[#0d0722] border-2 border-black rounded-xl text-white text-sm focus:border-amber-400 focus:outline-none shadow-[3px_3px_0px_#000]"
+                className="w-full px-4 py-3 bg-[#0d0722] border-2 border-black rounded-xl text-white text-base sm:text-sm focus:border-amber-400 focus:outline-none shadow-[3px_3px_0px_#000]"
               >
                 {BRANCHES.map((b) => (
                   <option key={b} value={b} className="bg-[#12092b]">
@@ -243,7 +253,7 @@ export default function RegistrationSection() {
               <select
                 value={formData.batchYear}
                 onChange={(e) => setFormData({ ...formData, batchYear: e.target.value })}
-                className="w-full px-4 py-3 bg-[#0d0722] border-2 border-black rounded-xl text-white text-sm focus:border-amber-400 focus:outline-none shadow-[3px_3px_0px_#000]"
+                className="w-full px-4 py-3 bg-[#0d0722] border-2 border-black rounded-xl text-white text-base sm:text-sm focus:border-amber-400 focus:outline-none shadow-[3px_3px_0px_#000]"
               >
                 {BATCHES.map((by) => (
                   <option key={by} value={by} className="bg-[#12092b]">
@@ -264,7 +274,7 @@ export default function RegistrationSection() {
                 />
                 <div className="text-xs">
                   <span className="font-carter text-amber-300 text-sm tracking-wide block">
-                    ★ Nominate me for Mr. & Ms. Freshers Pageant
+                    Nominate me for Mr. & Ms. Freshers Pageant
                   </span>
                   <span className="text-purple-200/80 font-sans">
                     I would like to participate in the talent, ramp walk, and personality pageant rounds.
@@ -317,7 +327,7 @@ export default function RegistrationSection() {
                   <span>Generating Attendance Pass...</span>
                 ) : (
                   <>
-                    <Sparkles className="w-5 h-5" />
+                    <Ticket className="w-5 h-5" />
                     <span>Generate Free Attendance Pass</span>
                   </>
                 )}

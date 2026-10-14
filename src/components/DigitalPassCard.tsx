@@ -1,7 +1,7 @@
 'use client';
 
 import { useRef } from 'react';
-import { Download, Sparkles, CheckCircle2, ShieldCheck, MapPin, Calendar } from 'lucide-react';
+import { Download, Ticket, CheckCircle2, ShieldCheck, MapPin, Calendar } from 'lucide-react';
 import { FEST_CONFIG } from '@/data/config';
 
 export interface PassData {
@@ -46,7 +46,7 @@ export default function DigitalPassCard({ pass, onReset }: { pass: PassData; onR
         {/* Fest Header */}
         <div className="text-center mt-2 pb-4 border-b-2 border-dashed border-white/20">
           <div className="inline-flex items-center gap-1.5 px-3 py-0.5 rounded-full bg-amber-400 text-black font-carter text-[10px] tracking-widest uppercase border border-black shadow-[2px_2px_0px_#000] mb-1.5">
-            <Sparkles className="w-3 h-3" /> OFFICIAL ATTENDANCE PASS
+            <Ticket className="w-3 h-3" /> OFFICIAL ATTENDANCE PASS
           </div>
           <h3 className="font-carter text-3xl sm:text-4xl text-white tracking-wide uppercase drop-shadow-[2px_2px_0px_#000]">
             ZUN<span className="text-amber-400">OO</span>N
@@ -103,7 +103,7 @@ export default function DigitalPassCard({ pass, onReset }: { pass: PassData; onR
           {pass.participateMrMsFreshers && (
             <div className="pt-2 border-t border-white/10 flex justify-between items-center text-amber-400">
               <span>SPECIAL CONTEST</span>
-              <span className="font-bold">★ MR/MS FRESHERS</span>
+              <span className="font-bold">MR/MS FRESHERS CONTESTANT</span>
             </div>
           )}
         </div>

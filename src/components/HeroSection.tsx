@@ -5,7 +5,7 @@ import Link from 'next/link';
 import {
   Calendar,
   MapPin,
-  Sparkles,
+  Ticket,
   Trophy,
   ArrowRight,
   Play,
@@ -22,6 +22,27 @@ export default function HeroSection() {
   const [scrollProgress, setScrollProgress] = useState(0);
   const [isMobile, setIsMobile] = useState(false);
   const [videoLoaded, setVideoLoaded] = useState(false);
+  const [blobSrc, setBlobSrc] = useState<string | null>(null);
+
+  useEffect(() => {
+    let active = true;
+    const target = isMobile ? '/home_mob.mp4' : '/home.mp4';
+    fetch(target)
+      .then((res) => res.blob())
+      .then((blob) => {
+        if (!active) return;
+        const url = URL.createObjectURL(blob);
+        setBlobSrc(url);
+      })
+      .catch((err) => {
+        console.warn('Video blob preload error, fallback to stream:', err);
+      });
+
+    return () => {
+      active = false;
+      if (blobSrc) URL.revokeObjectURL(blobSrc);
+    };
+  }, [isMobile]);
 
   useEffect(() => {
     const checkMobile = () => {
@@ -105,12 +126,12 @@ export default function HeroSection() {
       className="relative w-full"
       style={{ height: isMobile ? '280vh' : '420vh', backgroundColor: '#000000' }}
     >
-      {/* Sticky Pinned Viewport Container */}
-      <div className="sticky top-0 left-0 w-full h-screen overflow-hidden flex flex-col items-center justify-center">
+      {/* Sticky Pinned Viewport Container (100dvh for mobile address bar stability) */}
+      <div className="sticky top-0 left-0 w-full h-screen min-h-[100dvh] overflow-hidden flex flex-col items-center justify-center">
         {/* Cinematic Scroll-Scrubbed Video Element */}
         <video
           ref={videoRef}
-          src={videoSrc}
+          src={blobSrc || videoSrc}
           muted
           playsInline
           preload="auto"
@@ -140,27 +161,27 @@ export default function HeroSection() {
           </div>
 
           {/* College & Edition Pill */}
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-black/60 border-2 border-amber-400/80 backdrop-blur-md mb-4 shadow-[3px_3px_0px_#000] -rotate-1">
-            <MapPin className="w-3.5 h-3.5 text-amber-400" />
-            <span className="font-carter text-xs sm:text-sm text-amber-300 tracking-wider uppercase">
-              {FEST_CONFIG.institution} • {FEST_CONFIG.location}
+          <div className="inline-flex items-center gap-2 px-3.5 sm:px-4 py-1.5 rounded-full bg-black/60 border-2 border-amber-400/80 backdrop-blur-md mb-3 sm:mb-4 shadow-[3px_3px_0px_#000] -rotate-1 max-w-[92vw]">
+            <MapPin className="w-3.5 h-3.5 text-amber-400 shrink-0" />
+            <span className="font-carter text-[11px] sm:text-sm text-amber-300 tracking-wider uppercase truncate">
+              {FEST_CONFIG.shortInstitution} • {FEST_CONFIG.location}
             </span>
           </div>
 
           {/* Grand 3D Festival Title */}
-          <h1 className="text-6xl sm:text-8xl md:text-9xl font-carter tracking-wide text-white drop-shadow-[8px_8px_0px_#000000] uppercase leading-none select-none">
+          <h1 className="text-5xl sm:text-8xl md:text-9xl font-carter tracking-wide text-white drop-shadow-[6px_6px_0px_#000000] sm:drop-shadow-[8px_8px_0px_#000000] uppercase leading-none select-none">
             ZUN<span className="text-amber-400">OO</span>N
           </h1>
 
           {/* Tagline */}
-          <p className="mt-3 text-lg sm:text-2xl md:text-3xl font-chewy text-amber-200 tracking-wide max-w-2xl drop-shadow-[2px_2px_0px_#000]">
+          <p className="mt-2.5 sm:mt-3 text-base sm:text-2xl md:text-3xl font-chewy text-amber-200 tracking-wide max-w-2xl drop-shadow-[2px_2px_0px_#000]">
             {FEST_CONFIG.tagline}
           </p>
 
           {/* Status Badge */}
-          <div className="mt-4 inline-flex flex-wrap items-center justify-center gap-3 text-xs sm:text-sm font-mono text-purple-200 bg-black/75 px-5 py-2 rounded-2xl border-2 border-black shadow-[3px_3px_0px_#000]">
+          <div className="mt-3 sm:mt-4 inline-flex flex-wrap items-center justify-center gap-2 sm:gap-3 text-[11px] sm:text-sm font-mono text-purple-200 bg-black/75 px-4 sm:px-5 py-2 rounded-2xl border-2 border-black shadow-[3px_3px_0px_#000]">
             <span className="flex items-center gap-1.5 text-amber-300 font-bold">
-              <Calendar className="w-4 h-4 text-amber-400" />
+              <Calendar className="w-3.5 h-3.5 text-amber-400" />
               <span>{FEST_CONFIG.dateStatus}</span>
             </span>
             <span className="text-white/40">•</span>
@@ -169,22 +190,22 @@ export default function HeroSection() {
             <span className="text-emerald-400 font-bold">100% FREE PASSES</span>
           </div>
 
-          {/* Call to Actions */}
-          <div className="mt-8 flex flex-wrap items-center justify-center gap-3 sm:gap-5">
+          {/* Mobile Optimized Call to Actions */}
+          <div className="mt-6 sm:mt-8 flex flex-col sm:flex-row items-stretch sm:items-center justify-center gap-2.5 sm:gap-4 w-full sm:w-auto max-w-xs sm:max-w-none">
             <a
               href="#register"
-              className="comic-btn px-7 py-3.5 rounded-2xl bg-amber-400 hover:bg-amber-300 text-black font-carter text-base sm:text-lg uppercase tracking-wide flex items-center gap-2 -rotate-2"
+              className="comic-btn px-6 py-3 sm:px-7 sm:py-3.5 rounded-2xl bg-amber-400 hover:bg-amber-300 text-black font-carter text-sm sm:text-lg uppercase tracking-wide flex items-center justify-center gap-2 -rotate-1 sm:-rotate-2 min-h-[48px]"
             >
-              <Sparkles className="w-5 h-5" />
+              <Ticket className="w-5 h-5 shrink-0" />
               <span>GET FREE PASS</span>
             </a>
 
             <a
               href="#about"
-              className="comic-btn px-7 py-3.5 rounded-2xl bg-rose-600 hover:bg-rose-500 text-white font-carter text-base sm:text-lg uppercase tracking-wide flex items-center gap-2 rotate-2"
+              className="comic-btn px-6 py-3 sm:px-7 sm:py-3.5 rounded-2xl bg-rose-600 hover:bg-rose-500 text-white font-carter text-sm sm:text-lg uppercase tracking-wide flex items-center justify-center gap-2 rotate-1 sm:rotate-2 min-h-[48px]"
             >
               <span>EXPLORE FEST</span>
-              <ArrowRight className="w-5 h-5" />
+              <ArrowRight className="w-5 h-5 shrink-0" />
             </a>
 
             <button
@@ -192,9 +213,9 @@ export default function HeroSection() {
                 sessionStorage.removeItem('zunoon_intro_seen');
                 window.dispatchEvent(new CustomEvent('replay-zunoon-intro'));
               }}
-              className="comic-btn px-5 py-3.5 rounded-2xl bg-indigo-600 hover:bg-indigo-500 text-white font-carter text-sm sm:text-base uppercase tracking-wide flex items-center gap-2 -rotate-1 cursor-pointer"
+              className="comic-btn px-5 py-3 sm:py-3.5 rounded-2xl bg-indigo-600 hover:bg-indigo-500 text-white font-carter text-xs sm:text-base uppercase tracking-wide flex items-center justify-center gap-2 -rotate-1 cursor-pointer min-h-[44px]"
             >
-              <Play className="w-4 h-4 fill-white" />
+              <Play className="w-4 h-4 fill-white shrink-0" />
               <span>REPLAY INTRO</span>
             </button>
           </div>

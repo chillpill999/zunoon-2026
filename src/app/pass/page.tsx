@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { Ticket, Sparkles, ArrowLeft, AlertCircle } from 'lucide-react';
+import { Ticket, ArrowLeft, AlertCircle } from 'lucide-react';
 import DigitalPassCard, { PassData } from '@/components/DigitalPassCard';
 
 export default function PassPage() {
@@ -23,7 +23,7 @@ export default function PassPage() {
   }, []);
 
   return (
-    <div className="min-h-[80vh] px-4 py-12 max-w-4xl mx-auto flex flex-col items-center justify-center">
+    <div className="min-h-[80vh] px-4 pt-28 pb-16 max-w-4xl mx-auto flex flex-col items-center justify-center">
       <div className="mb-6 self-start">
         <Link
           href="/"
@@ -74,7 +74,7 @@ export default function PassPage() {
               href="/#register"
               className="comic-btn inline-flex items-center gap-2 px-6 py-3 bg-amber-400 hover:bg-amber-300 text-black font-carter text-base rounded-xl uppercase tracking-wide"
             >
-              <Sparkles className="w-4 h-4" />
+              <Ticket className="w-4 h-4" />
               <span>Claim Free Pass Now</span>
             </Link>
           </div>
