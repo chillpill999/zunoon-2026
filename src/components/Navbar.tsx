@@ -26,7 +26,12 @@ export default function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 bg-[#090514]/90 backdrop-blur-md border-b-2 border-black/80 px-4 sm:px-8 py-3 transition-all">
+    <header className="fixed top-0 left-0 right-0 z-50 bg-[#0a0618]/70 backdrop-blur-xl backdrop-saturate-150 border-b border-cyan-400/30 shadow-[0_4px_30px_rgba(0,0,0,0.5),0_1px_15px_rgba(6,182,212,0.25)] px-4 sm:px-8 py-3 transition-all relative">
+      {/* Top subtle specular glass rim highlight */}
+      <div className="absolute inset-x-0 top-0 h-[1px] bg-gradient-to-r from-transparent via-white/30 to-transparent pointer-events-none" />
+      {/* Radiant glowing bottom edge */}
+      <div className="absolute inset-x-0 -bottom-[1px] h-[2px] bg-gradient-to-r from-transparent via-cyan-400 to-transparent shadow-[0_0_12px_#06b6d4,0_0_24px_#06b6d4] pointer-events-none" />
+
       <div className="max-w-7xl mx-auto flex items-center justify-between">
         {/* Brand Logo & Institution Badge */}
         <Link href="/" className="flex items-center gap-2.5 group">
@@ -105,7 +110,7 @@ export default function Navbar() {
             onClick={() => setMobileOpen(false)}
             aria-hidden="true"
           />
-          <div className="relative z-50 lg:hidden mt-3 bg-[#130b2c] border-2 border-black rounded-2xl p-4 shadow-[4px_4px_0px_#000] flex flex-col gap-2.5 animate-in fade-in slide-in-from-top-2 duration-200">
+          <div className="relative z-50 lg:hidden mt-3 bg-[#130b2c]/80 backdrop-blur-xl border border-cyan-400/40 rounded-2xl p-4 shadow-[0_8px_32px_rgba(0,0,0,0.6),0_0_20px_rgba(6,182,212,0.25)] flex flex-col gap-2.5 animate-in fade-in slide-in-from-top-2 duration-200">
             {NAV_ITEMS.map((item) => (
               <Link
                 key={item.label}
