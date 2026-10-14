@@ -13,12 +13,26 @@ import {
 } from 'lucide-react';
 import { FEST_CONFIG } from '@/data/config';
 
+let cachedMobBlobUrl: string | null = null;
+let cachedDeskBlobUrl: string | null = null;
+
 export default function HeroSection() {
   const containerRef = useRef<HTMLDivElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
   const [scrollProgress, setScrollProgress] = useState(0);
-  const [isMobile, setIsMobile] = useState(false);
-  const [blobSrc, setBlobSrc] = useState<string | null>(null);
+  const [isMobile, setIsMobile] = useState(() => {
+    if (typeof window !== 'undefined') {
+      return window.innerWidth < 800;
+    }
+    return false;
+  });
+  const [blobSrc, setBlobSrc] = useState<string | null>(() => {
+    if (typeof window !== 'undefined') {
+      const mob = window.innerWidth < 800;
+      return mob ? cachedMobBlobUrl : cachedDeskBlobUrl;
+    }
+    return null;
+  });
 
   // Detect screen size for adaptive asset selection
   useEffect(() => {
@@ -34,11 +48,23 @@ export default function HeroSection() {
   useEffect(() => {
     let active = true;
     const target = isMobile ? '/home_mob.mp4' : '/home.mp4';
+    const existingCache = isMobile ? cachedMobBlobUrl : cachedDeskBlobUrl;
+
+    if (existingCache) {
+      setBlobSrc(existingCache);
+      return;
+    }
+
     fetch(target)
       .then((res) => res.blob())
       .then((blob) => {
         if (!active) return;
         const url = URL.createObjectURL(blob);
+        if (isMobile) {
+          cachedMobBlobUrl = url;
+        } else {
+          cachedDeskBlobUrl = url;
+        }
         setBlobSrc(url);
       })
       .catch((err) => {
@@ -47,9 +73,21 @@ export default function HeroSection() {
 
     return () => {
       active = false;
-      if (blobSrc) URL.revokeObjectURL(blobSrc);
     };
   }, [isMobile]);
+
+  // Seamlessly transition video src to blob URL without resetting currentTime
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video || !blobSrc) return;
+    if (video.src !== blobSrc) {
+      const currentTime = video.currentTime;
+      video.src = blobSrc;
+      if (Number.isFinite(currentTime) && currentTime > 0) {
+        video.currentTime = currentTime;
+      }
+    }
+  }, [blobSrc]);
 
   // Unified 60fps Scroll-Scrubbing Controller for Mobile & Desktop
   useEffect(() => {
@@ -131,6 +169,7 @@ export default function HeroSection() {
         <video
           ref={videoRef}
           src={blobSrc || fallbackSrc}
+          poster={isMobile ? '/hero_poster_mob.jpg' : '/hero_poster.jpg'}
           muted
           playsInline
           preload="auto"

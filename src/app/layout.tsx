@@ -54,6 +54,34 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className={`${carterOne.variable} ${chewy.variable} ${spaceGrotesk.variable}`}>
+      <head>
+        <link
+          rel="preload"
+          href="/hero_poster_mob.jpg"
+          as="image"
+          media="(max-width: 799px)"
+        />
+        <link
+          rel="preload"
+          href="/hero_poster.jpg"
+          as="image"
+          media="(min-width: 800px)"
+        />
+        <link
+          rel="preload"
+          href="/home_mob.mp4"
+          as="video"
+          type="video/mp4"
+          media="(max-width: 799px)"
+        />
+        <link
+          rel="preload"
+          href="/home.mp4"
+          as="video"
+          type="video/mp4"
+          media="(min-width: 800px)"
+        />
+      </head>
       <body className="min-h-screen bg-[#0a0618] text-white flex flex-col selection:bg-amber-400 selection:text-black">
         <Preloader />
         <Navbar />

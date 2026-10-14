@@ -261,7 +261,12 @@ const FLOATING_WORDS: FloatingWord[] = [
 
 export default function Preloader() {
   const [stage, setStage] = useState<Stage>('wordmark');
-  const [isMobile, setIsMobile] = useState(false);
+  const [isMobile, setIsMobile] = useState(() => {
+    if (typeof window !== 'undefined') {
+      return window.innerWidth < 800;
+    }
+    return false;
+  });
   const [buttonHovered, setButtonHovered] = useState(false);
   const [isTransitioningOut, setIsTransitioningOut] = useState(false);
   const [pointerOffset, setPointerOffset] = useState({ x: 0, y: 0 });
