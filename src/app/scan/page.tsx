@@ -1,22 +1,50 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState, useCallback } from 'react';
 import Link from 'next/link';
-import { ArrowLeft, Camera, CheckCircle2, XCircle, RefreshCw, ShieldCheck, Search, Volume2, VolumeX } from 'lucide-react';
+import {
+  ArrowLeft,
+  Camera,
+  CheckCircle2,
+  XCircle,
+  AlertTriangle,
+  ShieldCheck,
+  Search,
+  Volume2,
+  VolumeX,
+  Lock,
+  Unlock,
+  LogOut,
+  KeyRound,
+} from 'lucide-react';
 import { FEST_CONFIG } from '@/data/config';
+
+interface AttendeeInfo {
+  admitId?: string;
+  fullName?: string;
+  rollNumber?: string;
+  branch?: string;
+  batchYear?: string;
+  attendedAt?: string;
+}
 
 interface ScanResult {
   valid: boolean;
-  name?: string;
-  rollNumber?: string;
-  admitId?: string;
-  timestamp?: string;
+  reason: 'VERIFIED' | 'ALREADY_CHECKED_IN' | 'NOT_FOUND' | 'ERROR';
+  message: string;
+  attendee?: AttendeeInfo;
   rawText: string;
   timeScanned: string;
 }
 
 export default function GateScanPage() {
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [pinInput, setPinInput] = useState('');
+  const [authError, setAuthError] = useState<string | null>(null);
+  const [authLoading, setAuthLoading] = useState(false);
+
   const [scannerStarted, setScannerStarted] = useState(false);
+  const [verifying, setVerifying] = useState(false);
   const [lastResult, setLastResult] = useState<ScanResult | null>(null);
   const [scanHistory, setScanHistory] = useState<ScanResult[]>([]);
   const [manualCode, setManualCode] = useState('');
@@ -26,100 +54,164 @@ export default function GateScanPage() {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const html5QrCodeRef = useRef<any>(null);
 
-  // Play audio beep using Web Audio API
-  const playBeep = (isSuccess: boolean) => {
+  // Check stored staff session
+  useEffect(() => {
+    try {
+      const storedPin = sessionStorage.getItem('zunoon_staff_pin');
+      if (storedPin) {
+        setPinInput(storedPin);
+        setIsAuthenticated(true);
+      }
+    } catch {
+      // Session storage unavailable
+    }
+  }, []);
+
+  // Web Audio chime player
+  const playBeep = useCallback((type: 'success' | 'duplicate' | 'error') => {
     if (!soundEnabled || typeof window === 'undefined') return;
     try {
-      const ctx = new (window.AudioContext || (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext)();
+      const AudioCtx = window.AudioContext || (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext;
+      const ctx = new AudioCtx();
       const osc = ctx.createOscillator();
       const gain = ctx.createGain();
       osc.connect(gain);
       gain.connect(ctx.destination);
 
-      if (isSuccess) {
+      if (type === 'success') {
         osc.frequency.setValueAtTime(587.33, ctx.currentTime); // D5
         osc.frequency.setValueAtTime(880, ctx.currentTime + 0.1); // A5
-        gain.gain.setValueAtTime(0.2, ctx.currentTime);
-        gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.25);
-        osc.start(ctx.currentTime);
-        osc.stop(ctx.currentTime + 0.25);
-      } else {
-        osc.frequency.setValueAtTime(220, ctx.currentTime); // A3
-        osc.frequency.setValueAtTime(164.81, ctx.currentTime + 0.12); // E3
-        gain.gain.setValueAtTime(0.3, ctx.currentTime);
+        gain.gain.setValueAtTime(0.25, ctx.currentTime);
         gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.3);
         osc.start(ctx.currentTime);
         osc.stop(ctx.currentTime + 0.3);
+      } else if (type === 'duplicate') {
+        osc.frequency.setValueAtTime(440, ctx.currentTime);
+        osc.frequency.setValueAtTime(330, ctx.currentTime + 0.12);
+        gain.gain.setValueAtTime(0.3, ctx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.35);
+        osc.start(ctx.currentTime);
+        osc.stop(ctx.currentTime + 0.35);
+      } else {
+        osc.frequency.setValueAtTime(220, ctx.currentTime); // A3
+        osc.frequency.setValueAtTime(164.81, ctx.currentTime + 0.12); // E3
+        gain.gain.setValueAtTime(0.35, ctx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.35);
+        osc.start(ctx.currentTime);
+        osc.stop(ctx.currentTime + 0.35);
       }
     } catch {
-      // Audio context might be restricted before interaction
+      // Audio restricted before interaction
+    }
+  }, [soundEnabled]);
+
+  // Authenticate Staff Passcode
+  const handleAuthSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setAuthError(null);
+    setAuthLoading(true);
+
+    try {
+      const res = await fetch('/api/scan/verify', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ pin: pinInput, action: 'authenticate' }),
+      });
+
+      const data = await res.json();
+
+      if (!res.ok || !data.success) {
+        throw new Error(data.message || 'Invalid staff passcode.');
+      }
+
+      sessionStorage.setItem('zunoon_staff_pin', pinInput);
+      setIsAuthenticated(true);
+    } catch (err: unknown) {
+      if (err instanceof Error) {
+        setAuthError(err.message);
+      } else {
+        setAuthError('Authentication failed. Please verify credentials.');
+      }
+    } finally {
+      setAuthLoading(false);
     }
   };
 
-  const parseScannedText = (text: string): ScanResult => {
+  const handleSignOut = () => {
+    stopScanner();
+    sessionStorage.removeItem('zunoon_staff_pin');
+    setPinInput('');
+    setIsAuthenticated(false);
+    setLastResult(null);
+  };
+
+  // Server-side Pass Verification
+  const verifyPassWithServer = async (token: string) => {
+    if (verifying) return;
+    setVerifying(true);
+    setErrorMsg(null);
+
     const now = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' });
 
-    // Try decoding base64 generated by ZUNOON
     try {
-      const decoded = atob(text);
-      if (decoded.includes('LNJPIT_ZUNOON_ATTENDANCE')) {
-        const parts = decoded.split(':');
-        const roll = parts[0] || 'Unknown Roll';
-        const name = parts[1] || 'Attendee';
-        const ts = parts[2] ? new Date(Number(parts[2])).toLocaleString() : 'Recent';
-        return {
-          valid: true,
-          name,
-          rollNumber: roll,
-          timestamp: ts,
-          rawText: text,
-          timeScanned: now,
-        };
+      const currentPin = sessionStorage.getItem('zunoon_staff_pin') || pinInput;
+      const res = await fetch('/api/scan/verify', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ pin: currentPin, token }),
+      });
+
+      const data = await res.json();
+
+      if (res.status === 401) {
+        // Session expired or invalidated
+        setIsAuthenticated(false);
+        sessionStorage.removeItem('zunoon_staff_pin');
+        throw new Error('Staff authorization expired. Please log in again.');
       }
-    } catch {
-      // Not base64
-    }
 
-    // Try checking colon-separated format (admitId:rollNumber)
-    if (text.startsWith('ZN-2026-')) {
-      const parts = text.split(':');
-      return {
-        valid: true,
-        admitId: parts[0],
-        rollNumber: parts[1] || 'Registered Student',
-        name: 'LNJPIT Student',
+      const result: ScanResult = {
+        valid: Boolean(data.valid),
+        reason: data.reason || (data.valid ? 'VERIFIED' : 'NOT_FOUND'),
+        message: data.message || (data.valid ? 'Entry granted.' : 'Invalid pass.'),
+        attendee: data.attendee,
+        rawText: token,
         timeScanned: now,
-        rawText: text,
       };
-    }
 
-    // If it mentions ZUNOON or has reasonable ID format
-    if (text.toUpperCase().includes('ZUNOON') || text.startsWith('ZN-')) {
-      return {
-        valid: true,
-        name: 'ZUNOON Attendee',
-        rollNumber: text,
+      setLastResult(result);
+      setScanHistory((prev) => [result, ...prev.slice(0, 29)]);
+
+      if (result.valid) {
+        playBeep('success');
+        if (typeof navigator !== 'undefined' && 'vibrate' in navigator) {
+          navigator.vibrate([100, 50, 100]);
+        }
+      } else if (result.reason === 'ALREADY_CHECKED_IN') {
+        playBeep('duplicate');
+        if (typeof navigator !== 'undefined' && 'vibrate' in navigator) {
+          navigator.vibrate([200, 100, 200]);
+        }
+      } else {
+        playBeep('error');
+        if (typeof navigator !== 'undefined' && 'vibrate' in navigator) {
+          navigator.vibrate([300]);
+        }
+      }
+    } catch (err: unknown) {
+      const errorText = err instanceof Error ? err.message : 'Network error during verification';
+      setErrorMsg(errorText);
+      const failedResult: ScanResult = {
+        valid: false,
+        reason: 'ERROR',
+        message: errorText,
+        rawText: token,
         timeScanned: now,
-        rawText: text,
       };
-    }
-
-    // Invalid format
-    return {
-      valid: false,
-      rawText: text,
-      timeScanned: now,
-    };
-  };
-
-  const handleScanSuccess = (decodedText: string) => {
-    const result = parseScannedText(decodedText);
-    setLastResult(result);
-    setScanHistory((prev) => [result, ...prev.slice(0, 24)]);
-    playBeep(result.valid);
-
-    if (typeof navigator !== 'undefined' && 'vibrate' in navigator) {
-      navigator.vibrate(result.valid ? [100, 50, 100] : [300]);
+      setLastResult(failedResult);
+      playBeep('error');
+    } finally {
+      setVerifying(false);
     }
   };
 
@@ -140,7 +232,7 @@ export default function GateScanPage() {
           qrbox: { width: 250, height: 250 },
         },
         (decodedText: string) => {
-          handleScanSuccess(decodedText);
+          verifyPassWithServer(decodedText);
         },
         () => {
           // ignore scan frame errors
@@ -149,7 +241,7 @@ export default function GateScanPage() {
       setScannerStarted(true);
     } catch (err: unknown) {
       console.error('Failed to start camera scanner:', err);
-      setErrorMsg('Camera access denied or unavailable. You can use manual entry or upload below.');
+      setErrorMsg('Camera access denied or unavailable. Use manual code check-in below.');
       setScannerStarted(false);
     }
   };
@@ -176,13 +268,93 @@ export default function GateScanPage() {
   const handleManualSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!manualCode.trim()) return;
-    const result = parseScannedText(manualCode.trim());
-    setLastResult(result);
-    setScanHistory((prev) => [result, ...prev.slice(0, 24)]);
-    playBeep(result.valid);
+    verifyPassWithServer(manualCode.trim());
     setManualCode('');
   };
 
+  // SCREEN 1: Staff Passcode Authentication Barrier
+  if (!isAuthenticated) {
+    return (
+      <div className="min-h-screen bg-[#070312] text-white pt-28 pb-16 px-4 flex flex-col items-center justify-center relative overflow-hidden">
+        <div className="fixed inset-0 bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(120,40,200,0.25),rgba(255,255,255,0))] pointer-events-none" />
+
+        <div className="w-full max-w-md mx-auto relative z-10">
+          <div className="mb-6">
+            <Link
+              href="/"
+              className="inline-flex items-center gap-2 px-3 py-1.5 rounded-xl bg-white/10 hover:bg-white/20 text-xs font-mono border border-white/20 transition-colors"
+            >
+              <ArrowLeft className="w-3.5 h-3.5" /> Back to Home
+            </Link>
+          </div>
+
+          <div className="comic-box p-8 rounded-3xl bg-[#150a30] text-center shadow-[8px_8px_0px_#000]">
+            <div className="w-16 h-16 rounded-2xl bg-amber-400 text-black border-3 border-black flex items-center justify-center mx-auto mb-5 shadow-[4px_4px_0px_#000] -rotate-3">
+              <KeyRound className="w-8 h-8" />
+            </div>
+
+            <span className="px-3 py-1 rounded-full bg-rose-600/30 text-rose-300 border border-rose-500/40 text-[10px] font-mono font-bold tracking-widest uppercase">
+              RESTRICTED GATE ACCESS
+            </span>
+
+            <h1 className="font-carter text-2xl sm:text-3xl text-white tracking-wide uppercase mt-3">
+              VOLUNTEER SCANNER
+            </h1>
+
+            <p className="text-xs text-purple-200/80 mt-2 font-mono">
+              Authorized gate staff credentials required to verify festival attendee passes.
+            </p>
+
+            {authError && (
+              <div className="mt-4 p-3 rounded-xl bg-rose-950/80 border border-rose-500 text-rose-200 text-xs font-mono text-left">
+                {authError}
+              </div>
+            )}
+
+            <form onSubmit={handleAuthSubmit} className="mt-6 space-y-4">
+              <div>
+                <label className="block text-xs font-mono text-amber-300 uppercase font-bold text-left mb-1.5">
+                  Staff Passcode:
+                </label>
+                <div className="relative">
+                  <input
+                    type="password"
+                    required
+                    value={pinInput}
+                    onChange={(e) => setPinInput(e.target.value)}
+                    placeholder="Enter Gate Passcode"
+                    className="w-full px-4 py-3 bg-black/60 border-2 border-black rounded-xl text-white text-sm font-mono focus:border-amber-400 focus:outline-none shadow-[3px_3px_0px_#000]"
+                  />
+                  <Lock className="w-4 h-4 text-purple-400 absolute right-3.5 top-3.5" />
+                </div>
+              </div>
+
+              <button
+                type="submit"
+                disabled={authLoading}
+                className="comic-btn w-full py-3.5 bg-amber-400 hover:bg-amber-300 disabled:opacity-50 text-black font-carter text-sm uppercase rounded-xl tracking-wide shadow-[4px_4px_0px_#000] flex items-center justify-center gap-2"
+              >
+                {authLoading ? (
+                  <span>Verifying Credentials...</span>
+                ) : (
+                  <>
+                    <Unlock className="w-4 h-4" />
+                    <span>Unlock Scanner</span>
+                  </>
+                )}
+              </button>
+            </form>
+
+            <div className="mt-6 pt-4 border-t border-white/10 text-[11px] font-mono text-purple-300/70">
+              {FEST_CONFIG.institution} • Gate Security
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // SCREEN 2: Authenticated Scanner Interface
   return (
     <div className="min-h-screen bg-[#070312] text-white pt-24 pb-16 px-4 sm:px-6 relative overflow-x-hidden">
       {/* Background Ambience */}
@@ -205,16 +377,21 @@ export default function GateScanPage() {
             >
               {soundEnabled ? <Volume2 className="w-4 h-4 text-amber-400" /> : <VolumeX className="w-4 h-4 text-purple-400" />}
             </button>
-            <span className="text-xs font-mono text-emerald-400 bg-emerald-950/60 border border-emerald-500/40 px-2.5 py-1 rounded-lg flex items-center gap-1.5">
-              <span className="w-2 h-2 rounded-full bg-emerald-400 animate-ping" /> GATE PORTAL
-            </span>
+            <button
+              onClick={handleSignOut}
+              className="px-3 py-1.5 rounded-xl bg-rose-600/30 hover:bg-rose-600/50 text-rose-300 border border-rose-500/40 text-xs font-mono flex items-center gap-1.5 transition-colors"
+              title="Lock Scanner Session"
+            >
+              <LogOut className="w-3.5 h-3.5" />
+              <span>Lock</span>
+            </button>
           </div>
         </div>
 
         {/* Title */}
         <div className="text-center mb-8">
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-400 text-black font-carter text-xs uppercase border-2 border-black shadow-[3px_3px_0px_#000] -rotate-2 mb-3">
-            <ShieldCheck className="w-3.5 h-3.5" /> Volunteer Gate Access
+          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-400 text-black font-carter text-xs uppercase border-2 border-black shadow-[3px_3px_0px_#000] -rotate-2 mb-3">
+            <ShieldCheck className="w-3.5 h-3.5" /> Gate Staff Authenticated
           </div>
           <h1 className="font-carter text-3xl sm:text-4xl text-white tracking-wide uppercase drop-shadow-[2px_2px_0px_#000]">
             ZUNOON <span className="text-amber-400">ENTRY SCANNER</span>
@@ -225,11 +402,20 @@ export default function GateScanPage() {
         </div>
 
         {/* Active Scan Result Banner */}
-        {lastResult && (
+        {verifying && (
+          <div className="mb-6 p-4 rounded-2xl bg-amber-950/80 border-2 border-amber-400 text-amber-200 text-xs font-mono flex items-center justify-center gap-2">
+            <span className="w-2.5 h-2.5 rounded-full bg-amber-400 animate-ping" />
+            <span>Verifying pass against LNJPIT festival database...</span>
+          </div>
+        )}
+
+        {lastResult && !verifying && (
           <div
             className={`mb-8 p-6 rounded-3xl border-4 border-black shadow-[6px_6px_0px_#000] transition-all animate-in fade-in zoom-in-95 duration-200 ${
               lastResult.valid
                 ? 'bg-gradient-to-br from-emerald-900/90 to-emerald-950 border-emerald-400/80 text-white'
+                : lastResult.reason === 'ALREADY_CHECKED_IN'
+                ? 'bg-gradient-to-br from-amber-950 to-orange-950 border-amber-400/90 text-white'
                 : 'bg-gradient-to-br from-rose-950 to-red-950 border-rose-500/80 text-white'
             }`}
           >
@@ -237,12 +423,18 @@ export default function GateScanPage() {
               <div className="flex items-center gap-3">
                 {lastResult.valid ? (
                   <CheckCircle2 className="w-10 h-10 text-emerald-400 shrink-0" />
+                ) : lastResult.reason === 'ALREADY_CHECKED_IN' ? (
+                  <AlertTriangle className="w-10 h-10 text-amber-400 shrink-0" />
                 ) : (
                   <XCircle className="w-10 h-10 text-rose-400 shrink-0" />
                 )}
                 <div>
                   <h2 className="font-carter text-2xl tracking-wide uppercase">
-                    {lastResult.valid ? 'ENTRY PERMITTED' : 'INVALID PASS'}
+                    {lastResult.valid
+                      ? 'ENTRY PERMITTED'
+                      : lastResult.reason === 'ALREADY_CHECKED_IN'
+                      ? 'DUPLICATE ENTRY'
+                      : 'INVALID PASS'}
                   </h2>
                   <p className="text-xs font-mono text-white/80">
                     Scanned at {lastResult.timeScanned} • Gate 1
@@ -257,26 +449,36 @@ export default function GateScanPage() {
               </button>
             </div>
 
-            {lastResult.valid ? (
+            {/* Attendee Info Card */}
+            {lastResult.attendee ? (
               <div className="mt-4 pt-4 border-t border-white/20 grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm font-mono">
                 <div className="bg-black/30 p-3 rounded-xl border border-white/10">
-                  <span className="text-emerald-300 text-xs block">STUDENT NAME</span>
-                  <span className="font-carter text-base text-white">{lastResult.name}</span>
+                  <span className="text-purple-300 text-xs block">STUDENT NAME</span>
+                  <span className="font-carter text-base text-white">{lastResult.attendee.fullName}</span>
                 </div>
                 <div className="bg-black/30 p-3 rounded-xl border border-white/10">
-                  <span className="text-emerald-300 text-xs block">ROLL NUMBER</span>
-                  <span className="font-bold text-amber-300">{lastResult.rollNumber}</span>
+                  <span className="text-purple-300 text-xs block">ROLL NUMBER</span>
+                  <span className="font-bold text-amber-300">{lastResult.attendee.rollNumber}</span>
                 </div>
-                {lastResult.admitId && (
-                  <div className="bg-black/30 p-3 rounded-xl border border-white/10 sm:col-span-2">
-                    <span className="text-emerald-300 text-xs block">ADMIT ID</span>
-                    <span className="text-white">{lastResult.admitId}</span>
+                {lastResult.attendee.branch && (
+                  <div className="bg-black/30 p-3 rounded-xl border border-white/10">
+                    <span className="text-purple-300 text-xs block">DEPARTMENT</span>
+                    <span className="text-white text-xs">{lastResult.attendee.branch}</span>
                   </div>
                 )}
+                {lastResult.attendee.admitId && (
+                  <div className="bg-black/30 p-3 rounded-xl border border-white/10">
+                    <span className="text-purple-300 text-xs block">ADMIT ID</span>
+                    <span className="text-white">{lastResult.attendee.admitId}</span>
+                  </div>
+                )}
+                <div className="sm:col-span-2 text-xs font-mono pt-1 text-white/90">
+                  {lastResult.message}
+                </div>
               </div>
             ) : (
               <div className="mt-4 text-xs font-mono text-rose-200">
-                This QR code does not match LNJPIT ZUNOON pass format. Please direct attendee to the on-campus Helpdesk.
+                {lastResult.message} Direct attendee to the LNJPIT Cultural Council Helpdesk.
               </div>
             )}
           </div>
@@ -340,12 +542,13 @@ export default function GateScanPage() {
                 type="text"
                 value={manualCode}
                 onChange={(e) => setManualCode(e.target.value)}
-                placeholder="e.g. 23/CS/042 or ZN-2026-XXXXX"
+                placeholder="e.g. 24105123045 or ZN-2026-XXXXX"
                 className="flex-1 bg-black/60 border-2 border-black rounded-xl px-4 py-2.5 text-xs font-mono text-white placeholder-purple-400/50 focus:outline-none focus:border-amber-400"
               />
               <button
                 type="submit"
-                className="px-4 py-2.5 bg-purple-600 hover:bg-purple-500 text-white font-carter text-xs uppercase rounded-xl border-2 border-black shadow-[3px_3px_0px_#000] flex items-center gap-1.5"
+                disabled={verifying}
+                className="px-4 py-2.5 bg-purple-600 hover:bg-purple-500 disabled:opacity-50 text-white font-carter text-xs uppercase rounded-xl border-2 border-black shadow-[3px_3px_0px_#000] flex items-center gap-1.5"
               >
                 <Search className="w-3.5 h-3.5" />
                 <span>Verify</span>
@@ -372,12 +575,18 @@ export default function GateScanPage() {
                   <div className="flex items-center gap-2">
                     {item.valid ? (
                       <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
+                    ) : item.reason === 'ALREADY_CHECKED_IN' ? (
+                      <AlertTriangle className="w-4 h-4 text-amber-400 shrink-0" />
                     ) : (
                       <XCircle className="w-4 h-4 text-rose-400 shrink-0" />
                     )}
                     <div>
-                      <span className="font-bold text-white mr-2">{item.name || 'Unknown'}</span>
-                      <span className="text-purple-300">{item.rollNumber || item.rawText.slice(0, 16)}</span>
+                      <span className="font-bold text-white mr-2">
+                        {item.attendee?.fullName || 'Unknown'}
+                      </span>
+                      <span className="text-purple-300">
+                        {item.attendee?.rollNumber || item.rawText.slice(0, 16)}
+                      </span>
                     </div>
                   </div>
                   <span className="text-purple-400 text-[10px]">{item.timeScanned}</span>

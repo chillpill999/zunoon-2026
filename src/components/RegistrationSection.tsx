@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import confetti from 'canvas-confetti';
-import { Ticket, CheckCircle2, User, Phone, Mail, Award, BookOpen, AlertCircle } from 'lucide-react';
+import { Ticket, CheckCircle2, User, Phone, Mail, Award, BookOpen, AlertCircle, ShieldCheck, Lock } from 'lucide-react';
 import DigitalPassCard, { PassData } from './DigitalPassCard';
 import { FEST_CONFIG } from '@/data/config';
 import ScrollReveal from '@/components/ScrollReveal';
@@ -344,6 +344,44 @@ export default function RegistrationSection() {
         </div>
       </ScrollReveal>
       )}
+
+      {/* Registration Data Privacy Notice */}
+      <ScrollReveal direction="up" distance={20} delay={150}>
+        <div className="mt-12 p-6 sm:p-7 rounded-3xl bg-[#130b2c] border-2 border-white/15 max-w-2xl mx-auto shadow-[4px_4px_0px_#000]">
+          <div className="flex items-start gap-3.5">
+            <div className="p-2.5 rounded-2xl bg-purple-900/60 border border-purple-400/40 text-amber-400 shrink-0 mt-0.5 shadow-[2px_2px_0px_#000]">
+              <ShieldCheck className="w-5 h-5" />
+            </div>
+            <div className="space-y-2 text-left">
+              <div className="flex flex-wrap items-center gap-2">
+                <span className="font-carter text-sm sm:text-base text-white tracking-wide">
+                  REGISTRATION DATA PRIVACY NOTICE
+                </span>
+                <span className="text-[10px] font-mono text-emerald-400 bg-emerald-950/60 border border-emerald-500/40 px-2 py-0.5 rounded">
+                  LNJPIT SECURE
+                </span>
+              </div>
+              <p className="text-xs text-purple-200/90 font-sans leading-relaxed">
+                We respect your personal privacy. Registration details are collected strictly for event organization and campus admission:
+              </p>
+              <ul className="text-xs font-mono text-purple-300/80 space-y-1.5 list-disc pl-4 pt-1">
+                <li>
+                  <strong className="text-amber-300">Data Collected:</strong> Name, LNJPIT Roll Number, WhatsApp Contact, Email, and Department.
+                </li>
+                <li>
+                  <strong className="text-amber-300">Purpose:</strong> Issuing your personalized digital gate pass, verifying batch eligibility, and event updates.
+                </li>
+                <li>
+                  <strong className="text-amber-300">Access Control:</strong> Restricted solely to authorized LNJPIT Student Council faculty coordinators and gate marshals. No public attendee directories.
+                </li>
+                <li>
+                  <strong className="text-amber-300">Retention:</strong> Securely stored in our protected database for the 2026 fest session only; never shared or sold to third parties.
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </ScrollReveal>
     </section>
   );
 }

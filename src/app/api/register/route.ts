@@ -1,7 +1,16 @@
 import { NextResponse } from 'next/server';
 import { createClient } from '@supabase/supabase-js';
 
-// Fallback in-memory / crypto generator for attendance pass
+// Recognized LNJPIT Branches
+const VALID_BRANCHES = [
+  'Computer Science & Engineering (CSE)',
+  'Civil Engineering (CE)',
+  'Mechanical Engineering (ME)',
+  'Electrical & Electronics Engineering (EEE)',
+  'Food Processing & Preservation (FPP)',
+  'Mathematics & Computing (M&C)',
+];
+
 function generatePassToken(roll: string, name: string): string {
   const timestamp = Date.now();
   const raw = `${roll}:${name}:${timestamp}:LNJPIT_ZUNOON_ATTENDANCE`;
@@ -22,27 +31,59 @@ export async function POST(request: Request) {
     const body = await request.json();
     const { fullName, rollNumber, email, phone, branch, batchYear, interests, participateMrMsFreshers } = body;
 
-    // Validation
-    if (!fullName || !rollNumber || !email || !phone || !branch) {
+    // Strict validation
+    if (!fullName || typeof fullName !== 'string' || fullName.trim().length < 2) {
       return NextResponse.json(
-        { success: false, message: 'All required fields (Full Name, Roll No, Email, Phone, Branch) must be provided.' },
+        { success: false, message: 'Please provide a valid full name (minimum 2 characters).' },
+        { status: 400 }
+      );
+    }
+
+    if (!rollNumber || typeof rollNumber !== 'string' || rollNumber.trim().length < 4) {
+      return NextResponse.json(
+        { success: false, message: 'Please provide a valid LNJPIT Roll / Registration Number.' },
+        { status: 400 }
+      );
+    }
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!email || typeof email !== 'string' || !emailRegex.test(email.trim())) {
+      return NextResponse.json(
+        { success: false, message: 'Please provide a valid email address.' },
+        { status: 400 }
+      );
+    }
+
+    const cleanPhone = (phone || '').toString().trim().replace(/[\s-]/g, '');
+    const phoneRegex = /^[6-9]\d{9}$/;
+    if (!phoneRegex.test(cleanPhone)) {
+      return NextResponse.json(
+        { success: false, message: 'Please enter a valid 10-digit Indian WhatsApp mobile number.' },
+        { status: 400 }
+      );
+    }
+
+    if (!branch || !VALID_BRANCHES.includes(branch)) {
+      return NextResponse.json(
+        { success: false, message: 'Please select an authorized LNJPIT engineering department.' },
         { status: 400 }
       );
     }
 
     const admitId = generateAdmitId();
-    const qrToken = generatePassToken(rollNumber, fullName);
+    const normalizedRoll = rollNumber.trim().toUpperCase();
+    const qrToken = generatePassToken(normalizedRoll, fullName.trim());
     const registeredAt = new Date().toISOString();
 
     const attendeeRecord = {
       admitId,
       fullName: fullName.trim(),
-      rollNumber: rollNumber.trim().toUpperCase(),
+      rollNumber: normalizedRoll,
       email: email.trim().toLowerCase(),
-      phone: phone.trim(),
+      phone: cleanPhone,
       branch,
-      batchYear: batchYear || '1st Year (2026-2030)',
-      interests: interests || [],
+      batchYear: batchYear || '1st Year / Fresher (Batch 2026)',
+      interests: Array.isArray(interests) ? interests : [],
       participateMrMsFreshers: Boolean(participateMrMsFreshers),
       registeredAt,
       status: 'CONFIRMED',
@@ -50,7 +91,7 @@ export async function POST(request: Request) {
       qrToken,
     };
 
-    // Attempt to persist to Supabase if configured
+    // Supabase persistence
     const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
     const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
 
@@ -58,31 +99,78 @@ export async function POST(request: Request) {
       try {
         const supabase = createClient(supabaseUrl, supabaseKey);
 
-        // Persist directly to Supabase zunoon_registrations table
-        const { error: dbErr } = await supabase.from('zunoon_registrations').upsert(
-          {
-            id: admitId,
-            full_name: attendeeRecord.fullName,
-            roll_number: attendeeRecord.rollNumber,
-            email: attendeeRecord.email,
-            phone: attendeeRecord.phone,
-            branch: attendeeRecord.branch,
-            batch_year: attendeeRecord.batchYear,
-            interests: attendeeRecord.interests,
-            mr_ms_freshers: attendeeRecord.participateMrMsFreshers,
-            status: 'CONFIRMED',
-            institution: attendeeRecord.institution,
-            qr_token: qrToken,
-            registered_at: registeredAt,
-          },
-          { onConflict: 'id' }
-        );
+        // Check if this roll number has already been registered
+        const { data: existingRows } = await supabase
+          .from('zunoon_registrations')
+          .select('id, full_name, roll_number, branch, batch_year, qr_token, registered_at, phone, email')
+          .eq('roll_number', normalizedRoll)
+          .limit(1);
+
+        if (existingRows && existingRows.length > 0) {
+          const existing = existingRows[0];
+          // If phone or email matches, return existing pass
+          if (existing.phone === cleanPhone || existing.email === attendeeRecord.email) {
+            return NextResponse.json({
+              success: true,
+              message: 'Existing attendance pass retrieved for your registered roll number.',
+              pass: {
+                admitId: existing.id,
+                fullName: existing.full_name,
+                rollNumber: existing.roll_number,
+                email: existing.email,
+                phone: existing.phone,
+                branch: existing.branch,
+                batchYear: existing.batch_year,
+                interests: attendeeRecord.interests,
+                participateMrMsFreshers: attendeeRecord.participateMrMsFreshers,
+                registeredAt: existing.registered_at,
+                status: 'CONFIRMED',
+                institution: 'LNJPIT Chapra',
+                qrToken: existing.qr_token,
+              },
+            });
+          } else {
+            return NextResponse.json(
+              {
+                success: false,
+                message: 'This Roll Number is already registered with a different contact. If this is an error, please contact the LNJPIT Cultural Council Helpdesk.',
+              },
+              { status: 409 }
+            );
+          }
+        }
+
+        // Insert new record into zunoon_registrations
+        const { error: dbErr } = await supabase.from('zunoon_registrations').insert({
+          id: admitId,
+          full_name: attendeeRecord.fullName,
+          roll_number: attendeeRecord.rollNumber,
+          email: attendeeRecord.email,
+          phone: attendeeRecord.phone,
+          branch: attendeeRecord.branch,
+          batch_year: attendeeRecord.batchYear,
+          interests: attendeeRecord.interests,
+          mr_ms_freshers: attendeeRecord.participateMrMsFreshers,
+          status: 'CONFIRMED',
+          institution: attendeeRecord.institution,
+          qr_token: qrToken,
+          registered_at: registeredAt,
+          attended: false,
+        });
 
         if (dbErr) {
-          console.warn('Supabase sync warning (pass remains valid):', dbErr);
+          console.error('Supabase registration insert error:', dbErr);
+          return NextResponse.json(
+            { success: false, message: 'Database connection failed. Please try again shortly.' },
+            { status: 500 }
+          );
         }
       } catch (dbErr) {
-        console.warn('Supabase sync warning (pass remains valid):', dbErr);
+        console.error('Database connection error:', dbErr);
+        return NextResponse.json(
+          { success: false, message: 'Service temporarily unavailable. Please retry in a few moments.' },
+          { status: 500 }
+        );
       }
     }
 

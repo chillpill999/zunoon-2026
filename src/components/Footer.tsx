@@ -131,15 +131,10 @@ export default function Footer() {
       <div className="max-w-7xl mx-auto pt-6 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between text-xs text-purple-300/70 gap-3">
         <p>© 2026 ZUNOON • {FEST_CONFIG.institution}, Chapra. All rights reserved.</p>
         <p className="flex items-center gap-1.5">
-          Made with <Heart className="w-3.5 h-3.5 text-rose-500 fill-rose-500" /> of{' '}
-          <a
-            href="https://www.instagram.com/hothlali_department/"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-amber-400 hover:text-amber-300 font-bold underline underline-offset-2 transition-colors"
-          >
-            hothlali department
-          </a>
+          Organized with <Heart className="w-3.5 h-3.5 text-rose-500 fill-rose-500" /> by{' '}
+          <span className="text-amber-400 font-bold">
+            LNJPIT Student Council & Cultural Committee
+          </span>
         </p>
       </div>
     </footer>

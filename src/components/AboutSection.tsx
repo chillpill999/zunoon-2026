@@ -70,18 +70,18 @@ export default function AboutSection() {
           </div>
         </ScrollReveal>
 
-        {/* 4 Grand Festival Key Stats (Framed Desi Badges matching Frame 12) */}
+        {/* 4 Grand Festival Key Stats (Verified LNJPIT Facts) */}
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 mb-16">
           <ScrollReveal direction="up" delay={50} rotate={-2}>
             <div className="comic-box p-6 rounded-3xl bg-[#1b103c] text-center hover:rotate-0 transition-transform">
               <span className="text-4xl sm:text-5xl font-carter text-amber-400 drop-shadow-[3px_3px_0px_#000] block">
-                500+
+                {FEST_CONFIG.stats.freshersFootfall.value}
               </span>
               <span className="font-carter text-xs sm:text-sm text-white tracking-wider uppercase mt-2 block">
-                STUDENT FOOTFALL
+                {FEST_CONFIG.stats.freshersFootfall.label}
               </span>
               <span className="text-[11px] font-mono text-purple-300 mt-1 block">
-                Freshers & Seniors
+                {FEST_CONFIG.stats.freshersFootfall.subtext}
               </span>
             </div>
           </ScrollReveal>
@@ -89,13 +89,13 @@ export default function AboutSection() {
           <ScrollReveal direction="up" delay={120} rotate={2}>
             <div className="comic-box p-6 rounded-3xl bg-[#1b103c] text-center hover:rotate-0 transition-transform">
               <span className="text-4xl sm:text-5xl font-carter text-rose-500 drop-shadow-[3px_3px_0px_#000] block">
-                20+
+                {FEST_CONFIG.stats.departments.value}
               </span>
               <span className="font-carter text-xs sm:text-sm text-white tracking-wider uppercase mt-2 block">
-                EVENTS & STAGES
+                {FEST_CONFIG.stats.departments.label}
               </span>
               <span className="text-[11px] font-mono text-purple-300 mt-1 block">
-                Music, Dance & Drama
+                {FEST_CONFIG.stats.departments.subtext}
               </span>
             </div>
           </ScrollReveal>
@@ -103,13 +103,13 @@ export default function AboutSection() {
           <ScrollReveal direction="up" delay={190} rotate={-1}>
             <div className="comic-box p-6 rounded-3xl bg-[#1b103c] text-center hover:rotate-0 transition-transform">
               <span className="text-4xl sm:text-5xl font-carter text-emerald-400 drop-shadow-[3px_3px_0px_#000] block">
-                ₹0
+                {FEST_CONFIG.stats.entryFee.value}
               </span>
               <span className="font-carter text-xs sm:text-sm text-white tracking-wider uppercase mt-2 block">
-                100% FREE ENTRY
+                {FEST_CONFIG.stats.entryFee.label}
               </span>
               <span className="text-[11px] font-mono text-purple-300 mt-1 block">
-                Zero Registration Fee
+                {FEST_CONFIG.stats.entryFee.subtext}
               </span>
             </div>
           </ScrollReveal>
@@ -117,13 +117,13 @@ export default function AboutSection() {
           <ScrollReveal direction="up" delay={260} rotate={1}>
             <div className="comic-box p-6 rounded-3xl bg-[#1b103c] text-center hover:rotate-0 transition-transform">
               <span className="text-4xl sm:text-5xl font-carter text-cyan-400 drop-shadow-[3px_3px_0px_#000] block">
-                ∞
+                {FEST_CONFIG.stats.venueCampus.value}
               </span>
               <span className="font-carter text-xs sm:text-sm text-white tracking-wider uppercase mt-2 block">
-                ENDLESS MEMORIES
+                {FEST_CONFIG.stats.venueCampus.label}
               </span>
               <span className="text-[11px] font-mono text-purple-300 mt-1 block">
-                One Campus Spirit
+                {FEST_CONFIG.stats.venueCampus.subtext}
               </span>
             </div>
           </ScrollReveal>

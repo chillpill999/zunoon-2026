@@ -251,7 +251,7 @@ export default function CubeSection() {
           INTERACTIVE 3D ALBUM
         </span>
         <h2 className="text-4xl sm:text-6xl md:text-7xl font-carter tracking-wide text-white uppercase drop-shadow-[5px_5px_0px_#000]">
-          StEP into the <span className="bg-gradient-to-r from-amber-300 via-rose-400 to-purple-400 bg-clip-text text-transparent">ZUNIVERSE</span>
+          STEP INTO THE <span className="bg-gradient-to-r from-amber-300 via-rose-400 to-purple-400 bg-clip-text text-transparent">ZUNIVERSE</span>
         </h2>
         <p className="mt-2 text-sm sm:text-base font-chewy text-purple-200 max-w-lg mx-auto">
           Drag and rotate the 3D cube to discover each facet of the Zunoon Freshers Fest celebration.

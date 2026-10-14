@@ -4,7 +4,7 @@ export interface ScheduleSlot {
   category: string;
   venue: string;
   description: string;
-  status: "Confirmed" | "Tentative";
+  status: "Proposed" | "Approved";
   color: string;
 }
 
@@ -15,7 +15,7 @@ export const FEST_SCHEDULE: ScheduleSlot[] = [
     category: "Formal",
     venue: "Main Auditorium",
     description: "Welcome address by Honorable Principal, HODs, Student Council speech, and auspicious Saraswati Vandana.",
-    status: "Confirmed",
+    status: "Proposed",
     color: "#f59e0b"
   },
   {
@@ -24,7 +24,7 @@ export const FEST_SCHEDULE: ScheduleSlot[] = [
     category: "Dramatics",
     venue: "Central Quad Lawn",
     description: "High-intensity street plays presented by diverse departments tackling social realism and student life.",
-    status: "Confirmed",
+    status: "Proposed",
     color: "#ef4444"
   },
   {
@@ -33,7 +33,7 @@ export const FEST_SCHEDULE: ScheduleSlot[] = [
     category: "Music",
     venue: "Auditorium Acoustic Arena",
     description: "Acoustic covers, classical melodies, and soulful renditions competing for the Voice of LNJPIT trophy.",
-    status: "Confirmed",
+    status: "Proposed",
     color: "#3b82f6"
   },
   {
@@ -42,7 +42,7 @@ export const FEST_SCHEDULE: ScheduleSlot[] = [
     category: "Informal",
     venue: "Campus Ground & Canteen Area",
     description: "Branch interaction circles, photo booth, and informal acoustic guitar jamming on the lawn.",
-    status: "Confirmed",
+    status: "Proposed",
     color: "#06b6d4"
   },
   {
@@ -51,7 +51,7 @@ export const FEST_SCHEDULE: ScheduleSlot[] = [
     category: "Dance",
     venue: "Auditorium Main Stage",
     description: "Electrifying solo, duo, and group dance battles spanning hip-hop, contemporary, and Bollywood.",
-    status: "Confirmed",
+    status: "Proposed",
     color: "#ec4899"
   },
   {
@@ -60,7 +60,7 @@ export const FEST_SCHEDULE: ScheduleSlot[] = [
     category: "Pageant",
     venue: "Auditorium Stage",
     description: "Ramp walk, talent exhibition, and rapid-fire judge interactions to crown the freshers monarchs.",
-    status: "Confirmed",
+    status: "Proposed",
     color: "#f59e0b"
   },
   {
@@ -69,7 +69,7 @@ export const FEST_SCHEDULE: ScheduleSlot[] = [
     category: "Ceremony",
     venue: "Auditorium Stage",
     description: "Honoring winners across all categories, departmental trophies, and token of gratitude to faculty guides.",
-    status: "Confirmed",
+    status: "Proposed",
     color: "#10b981"
   },
   {
@@ -78,7 +78,7 @@ export const FEST_SCHEDULE: ScheduleSlot[] = [
     category: "Concert",
     venue: "Open Air Amphitheatre Ground",
     description: "High-energy festival closing party with live DJ mixing, bass drops, and batch celebration under the stars.",
-    status: "Confirmed",
+    status: "Proposed",
     color: "#f43f5e"
   }
 ];

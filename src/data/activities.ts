@@ -4,7 +4,7 @@ export interface ActivityItem {
   category: "Pageant" | "Music" | "Dance" | "Dramatics" | "Gaming" | "Literary" | "Informal";
   badge: string;
   color: string;
-  status: "Confirmed" | "Draft";
+  status: "Proposed" | "Approved";
   venue: string;
   timeSlot: string;
   isTeam: boolean;
@@ -22,11 +22,11 @@ export const ACTIVITIES: ActivityItem[] = [
     category: "Pageant",
     badge: "SIGNATURE EVENT",
     color: "#f59e0b", // Amber
-    status: "Confirmed",
+    status: "Proposed",
     venue: "Main Auditorium Stage",
     timeSlot: "Evening Grand Slot",
     isTeam: false,
-    description: "The most prestigious title of Zunoon! A three-stage showdown testing personality, style, confidence, quick wit, and stage charisma.",
+    description: "The most prestigious title of Zunoon! A three-stage showcase testing personality, style, confidence, quick wit, and stage charisma.",
     rules: [
       "Open exclusively to 1st Year (Freshers) students of LNJPIT Chapra.",
       "Round 1: Traditional / Western Ramp Walk & Personal Introduction (1 minute).",
@@ -35,8 +35,8 @@ export const ACTIVITIES: ActivityItem[] = [
       "Judging criteria: Elegance, stage presence, spontaneous wit, and audience connection."
     ],
     coordinators: [
-      { name: "Aman Kumar", phone: "+91 9122001122" },
-      { name: "Pooja Sharma", phone: "+91 9835003344" }
+      { name: "Cultural Committee Desk", phone: "+91 9122334455" },
+      { name: "Student Council Secretariat", phone: "zunoon.lnjpit@gmail.com" }
     ]
   },
   {
@@ -45,7 +45,7 @@ export const ACTIVITIES: ActivityItem[] = [
     category: "Dance",
     badge: "SOLO & DUO",
     color: "#ec4899", // Pink
-    status: "Confirmed",
+    status: "Proposed",
     venue: "Auditorium Main Stage",
     timeSlot: "Afternoon Slot",
     isTeam: true,
@@ -59,7 +59,7 @@ export const ACTIVITIES: ActivityItem[] = [
       "Judging criteria: Choreography, rhythm sync, energy, expressions, and stage coverage."
     ],
     coordinators: [
-      { name: "Rahul Verma", phone: "+91 9470112233" }
+      { name: "Dance & Stage Wing Desk", phone: "zunoon.lnjpit@gmail.com" }
     ]
   },
   {
@@ -68,7 +68,7 @@ export const ACTIVITIES: ActivityItem[] = [
     category: "Music",
     badge: "SINGING",
     color: "#3b82f6", // Blue
-    status: "Confirmed",
+    status: "Proposed",
     venue: "Auditorium Acoustic Arena",
     timeSlot: "Mid-day Slot",
     isTeam: false,
@@ -79,7 +79,7 @@ export const ACTIVITIES: ActivityItem[] = [
       "Judging criteria: Sur, taal, vocal range, clarity, and overall stage presentation."
     ],
     coordinators: [
-      { name: "Sneha Sinha", phone: "+91 9934223344" }
+      { name: "Music Society Desk", phone: "zunoon.lnjpit@gmail.com" }
     ]
   },
   {
@@ -88,7 +88,7 @@ export const ACTIVITIES: ActivityItem[] = [
     category: "Dramatics",
     badge: "GROUP DRAMA",
     color: "#ef4444", // Red
-    status: "Confirmed",
+    status: "Proposed",
     venue: "Central Quadrangle / Lawn",
     timeSlot: "Morning Slot",
     isTeam: true,
@@ -102,7 +102,7 @@ export const ACTIVITIES: ActivityItem[] = [
       "Script must be original or appropriately adapted. Decorum must be strictly maintained."
     ],
     coordinators: [
-      { name: "Vikram Raj", phone: "+91 9122889900" }
+      { name: "Dramatics Wing Desk", phone: "zunoon.lnjpit@gmail.com" }
     ]
   },
   {
@@ -111,7 +111,7 @@ export const ACTIVITIES: ActivityItem[] = [
     category: "Literary",
     badge: "COMEDY & POETRY",
     color: "#8b5cf6", // Violet
-    status: "Confirmed",
+    status: "Proposed",
     venue: "Seminar Hall 1",
     timeSlot: "Afternoon Slot",
     isTeam: false,
@@ -122,7 +122,7 @@ export const ACTIVITIES: ActivityItem[] = [
       "Original material earns bonus scoring from the student audience vote."
     ],
     coordinators: [
-      { name: "Aditya Mishra", phone: "+91 9835778899" }
+      { name: "Literary Committee Desk", phone: "zunoon.lnjpit@gmail.com" }
     ]
   },
   {
@@ -131,7 +131,7 @@ export const ACTIVITIES: ActivityItem[] = [
     category: "Gaming",
     badge: "ESPORTS",
     color: "#10b981", // Emerald
-    status: "Draft",
+    status: "Proposed",
     venue: "Computer Center / Room 204",
     timeSlot: "Parallel Sessions",
     isTeam: true,
@@ -145,7 +145,7 @@ export const ACTIVITIES: ActivityItem[] = [
       "Emulators and iPad/tablet aspect ratio triggers are strictly prohibited."
     ],
     coordinators: [
-      { name: "Rohit Kumar", phone: "+91 9122445566" }
+      { name: "Gaming & LAN Desk", phone: "zunoon.lnjpit@gmail.com" }
     ]
   },
   {
@@ -154,7 +154,7 @@ export const ACTIVITIES: ActivityItem[] = [
     category: "Informal",
     badge: "OPEN FOR ALL",
     color: "#06b6d4", // Cyan
-    status: "Confirmed",
+    status: "Proposed",
     venue: "Sports Ground Lawn",
     timeSlot: "All-Day Interactive",
     isTeam: true,
@@ -167,7 +167,7 @@ export const ACTIVITIES: ActivityItem[] = [
       "Instant spot merchandise and celebration prizes awarded on completion."
     ],
     coordinators: [
-      { name: "Kunal Pandey", phone: "+91 9835990011" }
+      { name: "Student Council Volunteers Desk", phone: "zunoon.lnjpit@gmail.com" }
     ]
   },
   {
@@ -176,7 +176,7 @@ export const ACTIVITIES: ActivityItem[] = [
     category: "Music",
     badge: "GRAND FINALE",
     color: "#f43f5e", // Rose
-    status: "Confirmed",
+    status: "Proposed",
     venue: "Open Air Amphitheatre Ground",
     timeSlot: "Night Grand Finale (7:00 PM onwards)",
     isTeam: false,
@@ -187,7 +187,7 @@ export const ACTIVITIES: ActivityItem[] = [
       "Strict campus security and discipline enforced by student council and faculty marshals."
     ],
     coordinators: [
-      { name: "Zunoon Core Team", phone: "+91 9122334455" }
+      { name: "Zunoon Central Control Desk", phone: "+91 9122334455" }
     ]
   }
 ];

@@ -80,12 +80,12 @@ export default function ActivitiesSection() {
                     </span>
                     <span
                       className={`text-[10px] font-mono px-2 py-0.5 rounded-md border ${
-                        item.status === 'Confirmed'
+                        item.status === 'Approved'
                           ? 'bg-emerald-950/60 text-emerald-400 border-emerald-500/40'
-                          : 'bg-amber-950/60 text-amber-400 border-amber-500/40'
+                          : 'bg-amber-950/60 text-amber-300 border-amber-500/40'
                       }`}
                     >
-                      {item.status}
+                      {item.status === 'Approved' ? 'CONFIRMED' : 'PROPOSED'}
                     </span>
                   </div>
 
