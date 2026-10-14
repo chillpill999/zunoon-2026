@@ -129,6 +129,7 @@ export const FEST_CONFIG: FestConfig = {
   },
 
   socials: {
+    instagram: "https://www.instagram.com/hothlali_department/",
     youtube: "https://youtube.com/@zunoon_lnjpit",
   },
 };
