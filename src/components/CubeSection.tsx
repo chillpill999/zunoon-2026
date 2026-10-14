@@ -149,7 +149,7 @@ export default function CubeSection() {
       name: 'Front',
       tag: 'CENTRAL THEME',
       tagBg: '#f59e0b',
-      title: 'ZUNOON 2026',
+      title: 'AARAMBH 2.0',
       subtitle: 'The Freshers Odyssey',
       description: 'The premier annual cultural welcome festival for LNJPIT Chapra newcomers.',
       actionText: 'EXPLORE FEST',
@@ -251,10 +251,10 @@ export default function CubeSection() {
           INTERACTIVE 3D ALBUM
         </span>
         <h2 className="text-4xl sm:text-6xl md:text-7xl font-carter tracking-wide text-white uppercase drop-shadow-[5px_5px_0px_#000]">
-          StEP into the <span className="bg-gradient-to-r from-amber-300 via-rose-400 to-purple-400 bg-clip-text text-transparent">ZUNIVERSE</span>
+          StEP into the <span className="bg-gradient-to-r from-amber-300 via-rose-400 to-purple-400 bg-clip-text text-transparent">AARAMBH-VERSE</span>
         </h2>
         <p className="mt-2 text-sm sm:text-base font-chewy text-purple-200 max-w-lg mx-auto">
-          Drag and rotate the 3D cube to discover each facet of the Zunoon Freshers Fest celebration.
+          Drag and rotate the 3D cube to discover each facet of the Aarambh 2.0 Freshers Fest celebration.
         </p>
       </ScrollReveal>
 

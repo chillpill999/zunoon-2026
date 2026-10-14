@@ -23,7 +23,7 @@ export default function FaqSection() {
             FREQUENTLY ASKED
           </h2>
           <p className="font-chewy text-xl text-purple-200 mt-2">
-            Everything freshers and seniors need to know before stepping into Zunoon.
+            Everything freshers and seniors need to know before stepping into Aarambh 2.0.
           </p>
         </div>
       </ScrollReveal>

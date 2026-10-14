@@ -13,7 +13,7 @@ const VALID_BRANCHES = [
 
 function generatePassToken(roll: string, name: string): string {
   const timestamp = Date.now();
-  const raw = `${roll}:${name}:${timestamp}:LNJPIT_ZUNOON_ATTENDANCE`;
+  const raw = `${roll}:${name}:${timestamp}:LNJPIT_AARAMBH_ATTENDANCE`;
   return Buffer.from(raw).toString('base64');
 }
 
@@ -23,7 +23,7 @@ function generateAdmitId(): string {
   for (let i = 0; i < 5; i++) {
     code += chars.charAt(Math.floor(Math.random() * chars.length));
   }
-  return `ZN-2026-${code}`;
+  return `AR-2026-${code}`;
 }
 
 export async function POST(request: Request) {

@@ -31,11 +31,11 @@ export default function Navbar() {
         {/* Brand Logo & Institution Badge */}
         <Link href="/" className="flex items-center gap-2.5 group">
           <div className="w-10 h-10 rounded-xl bg-amber-400 border-2 border-black flex items-center justify-center font-carter text-2xl text-black shadow-[3px_3px_0px_#000] -rotate-6 group-hover:rotate-0 transition-transform">
-            Z
+            A
           </div>
           <div className="flex flex-col text-left">
-            <span className="font-carter text-2xl sm:text-3xl tracking-wide text-white leading-none drop-shadow-[2px_2px_0px_#000]">
-              ZUN<span className="text-amber-400">OO</span>N
+            <span className="font-carter text-xl sm:text-2xl tracking-wide text-white leading-none drop-shadow-[2px_2px_0px_#000]">
+              AARAMBH <span className="text-amber-400">2.0</span>
             </span>
             <span className="text-[10px] font-mono text-purple-300 tracking-wider">
               {FEST_CONFIG.shortInstitution}

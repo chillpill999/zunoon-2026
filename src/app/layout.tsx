@@ -30,19 +30,19 @@ const spaceGrotesk = Space_Grotesk({
 });
 
 export const metadata: Metadata = {
-  title: "ZUNOON 2026 | College Freshers Fest — LNJPIT Chapra",
-  description: "Official portal for ZUNOON 2026, the Annual Freshers Fest of Loknayak Jai Prakash Institute of Technology (LNJPIT), Chapra, Bihar. A New Chapter. One Campus. Endless Memories. Free Digital Attendance Passes.",
-  keywords: ["Zunoon", "Zunoon 2026", "LNJPIT Chapra", "Freshers Fest", "College Fest", "Free Pass", "Bihar Engineering", "Pronites", "Competitions"],
+  title: "AARAMBH 2.0 | College Freshers Fest — LNJPIT Chapra",
+  description: "Official portal for AARAMBH 2.0, the Annual Freshers Fest of Loknayak Jai Prakash Institute of Technology (LNJPIT), Chapra, Bihar. A New Chapter. One Campus. Endless Memories. Free Digital Attendance Passes.",
+  keywords: ["Aarambh 2.0", "Aarambh", "LNJPIT Chapra", "Freshers Fest", "College Fest", "Free Pass", "Bihar Engineering", "Pronites", "Competitions"],
   openGraph: {
-    title: "ZUNOON 2026 | LNJPIT Chapra Freshers Fest",
-    description: "A New Chapter. One Campus. Endless Memories. Claim your free digital attendance pass for ZUNOON 2026 at LNJPIT Chapra.",
+    title: "AARAMBH 2.0 | LNJPIT Chapra Freshers Fest",
+    description: "A New Chapter. One Campus. Endless Memories. Claim your free digital attendance pass for AARAMBH 2.0 at LNJPIT Chapra.",
     type: "website",
     locale: "en_IN",
-    siteName: "ZUNOON 2026",
+    siteName: "AARAMBH 2.0",
   },
   twitter: {
     card: "summary_large_image",
-    title: "ZUNOON 2026 | LNJPIT Chapra Freshers Fest",
+    title: "AARAMBH 2.0 | LNJPIT Chapra Freshers Fest",
     description: "A New Chapter. One Campus. Endless Memories. 100% Free Entry & Digital Passes.",
   },
 };

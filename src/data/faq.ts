@@ -7,7 +7,7 @@ export interface FaqItem {
 export const FAQS: FaqItem[] = [
   {
     question: "Is registration or entry really 100% free?",
-    answer: "Yes, absolutely! ZUNOON is entirely free for all students of LNJPIT Chapra. There are zero registration fees, zero gate entry charges, and no paid pass tiers. Just complete the free registration form on this website to generate your digital attendance pass.",
+    answer: "Yes, absolutely! AARAMBH 2.0 is entirely free for all students of LNJPIT Chapra. There are zero registration fees, zero gate entry charges, and no paid pass tiers. Just complete the free registration form on this website to generate your digital attendance pass.",
     tag: "Registration"
   },
   {
@@ -27,11 +27,11 @@ export const FAQS: FaqItem[] = [
   },
   {
     question: "Can senior students (2nd, 3rd, and 4th year) attend?",
-    answer: "Of course! ZUNOON is organized by senior batches to officially welcome our new juniors. Seniors participate in organizing committees, cheer in audience arenas, and join in the evening DJ and music celebration.",
+    answer: "Of course! AARAMBH 2.0 is organized by senior batches to officially welcome our new juniors. Seniors participate in organizing committees, cheer in audience arenas, and join in the evening DJ and music celebration.",
     tag: "Community"
   },
   {
-    question: "What is the recommended dress code for ZUNOON?",
+    question: "What is the recommended dress code for AARAMBH 2.0?",
     answer: "For the morning inauguration and Mr. & Ms. Freshers pageant: Traditional Indian Ethnic wear or sharp Formals. For the evening musical celebrations: Comfortable festive party wear.",
     tag: "Guidelines"
   }

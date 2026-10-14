@@ -48,8 +48,8 @@ export default function DigitalPassCard({ pass, onReset }: { pass: PassData; onR
           <div className="inline-flex items-center gap-1.5 px-3 py-0.5 rounded-full bg-amber-400 text-black font-carter text-[10px] tracking-widest uppercase border border-black shadow-[2px_2px_0px_#000] mb-1.5">
             <Ticket className="w-3 h-3" /> OFFICIAL ATTENDANCE PASS
           </div>
-          <h3 className="font-carter text-3xl sm:text-4xl text-white tracking-wide uppercase drop-shadow-[2px_2px_0px_#000]">
-            ZUN<span className="text-amber-400">OO</span>N
+          <h3 className="font-carter text-2xl sm:text-3xl text-white tracking-wide uppercase drop-shadow-[2px_2px_0px_#000]">
+            AARAMBH <span className="text-amber-400">2.0</span>
           </h3>
           <p className="text-xs font-mono text-purple-300 tracking-wider">
             {FEST_CONFIG.shortInstitution} • FRESHERS FEST

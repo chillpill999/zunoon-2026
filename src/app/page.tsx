@@ -18,13 +18,13 @@ export default function HomePage() {
       {/* 2. INFINITE SPONSORS & PARTNERS MARQUEE (Frame 11) */}
       <Marquee />
 
-      {/* 3. ABOUT ZUNOON & LNJPIT CHAPRA TAPESTRY (Frames 08 & 12) */}
+      {/* 3. ABOUT AARAMBH 2.0 & LNJPIT CHAPRA TAPESTRY (Frames 08 & 12) */}
       <AboutSection />
 
       {/* 4. FEST ACTIVITIES & COMPETITIONS */}
       <ActivitiesSection />
 
-      {/* 5. INTERACTIVE 3D ROTATING PHOTO CUBE - STeP INTO THE ZUNIVERSE (Frame 09) */}
+      {/* 5. INTERACTIVE 3D ROTATING PHOTO CUBE - StEP INTO THE AARAMBH-VERSE (Frame 09) */}
       <CubeSection />
 
       {/* 6. FESTIVAL SCHEDULE & TIMELINE */}

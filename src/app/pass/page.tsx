@@ -11,7 +11,7 @@ export default function PassPage() {
 
   useEffect(() => {
     try {
-      const stored = localStorage.getItem('zunoon_pass');
+      const stored = localStorage.getItem('aarambh_pass') || localStorage.getItem('zunoon_pass');
       if (stored) {
         setPass(JSON.parse(stored));
       }
@@ -52,6 +52,7 @@ export default function PassPage() {
             pass={pass}
             onReset={() => {
               if (confirm('Do you want to register another attendee or start over?')) {
+                localStorage.removeItem('aarambh_pass');
                 localStorage.removeItem('zunoon_pass');
                 setPass(null);
               }

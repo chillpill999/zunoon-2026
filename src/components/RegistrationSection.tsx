@@ -42,7 +42,7 @@ export default function RegistrationSection() {
   // Check if student already has a registered pass on this device
   useEffect(() => {
     try {
-      const stored = localStorage.getItem('zunoon_pass');
+      const stored = localStorage.getItem('aarambh_pass') || localStorage.getItem('zunoon_pass');
       if (stored) {
         setExistingPass(JSON.parse(stored));
       }
@@ -82,6 +82,7 @@ export default function RegistrationSection() {
       }
 
       // Save pass locally
+      localStorage.setItem('aarambh_pass', JSON.stringify(data.pass));
       localStorage.setItem('zunoon_pass', JSON.stringify(data.pass));
       setExistingPass(data.pass);
     } catch (err: unknown) {
@@ -115,7 +116,7 @@ export default function RegistrationSection() {
             CLAIM YOUR ATTENDANCE PASS
           </h2>
           <p className="font-chewy text-xl text-purple-200 mt-2 max-w-xl mx-auto">
-            Zero fees. Complete your details below to generate your official Zunoon digital attendance pass and QR entry code.
+            Zero fees. Complete your details below to generate your official Aarambh 2.0 digital attendance pass and QR entry code.
           </p>
         </div>
       </ScrollReveal>
@@ -131,6 +132,7 @@ export default function RegistrationSection() {
             pass={existingPass}
             onReset={() => {
               if (confirm('Do you want to register another attendee or start over?')) {
+                localStorage.removeItem('aarambh_pass');
                 localStorage.removeItem('zunoon_pass');
                 setExistingPass(null);
               }

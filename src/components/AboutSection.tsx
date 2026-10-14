@@ -34,7 +34,7 @@ export default function AboutSection() {
             <div className="relative w-full aspect-[9/16] sm:aspect-[4/5] md:aspect-[3/4] lg:aspect-[1/2] max-h-[1400px]">
               <Image
                 src="/about_collage.jpg"
-                alt="Zunoon About Us Tapestry"
+                alt="Aarambh 2.0 About Us Tapestry"
                 fill
                 className="object-cover object-top"
                 priority
@@ -53,8 +53,8 @@ export default function AboutSection() {
                   WHERE PASSION MEETS CAMPUS SPIRIT
                 </h3>
                 <p className="mt-3 text-xs sm:text-sm md:text-base font-sans text-purple-100 leading-relaxed">
-                  <strong className="text-amber-300">ZUNOON</strong> is the definitive freshers festival of{' '}
-                  <span className="text-white font-bold">{FEST_CONFIG.institution}</span>, Chapra. Inspired by the raw, vibrant energy of Indian street culture, retro cinema, and campus camaraderie, Zunoon invites every first-year student to step into the spotlight.
+                  <strong className="text-amber-300">AARAMBH 2.0</strong> is the definitive freshers festival of{' '}
+                  <span className="text-white font-bold">{FEST_CONFIG.institution}</span>, Chapra. Inspired by the raw, vibrant energy of Indian street culture, retro cinema, and campus camaraderie, Aarambh 2.0 invites every first-year student to step into the spotlight.
                 </p>
                 <div className="mt-4 flex flex-wrap items-center justify-center gap-3">
                   <a
@@ -177,7 +177,7 @@ export default function AboutSection() {
                 </div>
               </div>
               <p className="text-xs sm:text-sm font-sans text-purple-100/90 leading-relaxed">
-                This edition celebrates the transition into engineering life — the shared journeys on campus buses, the lively debates at chai stalls, late-night hostel jam sessions, and the courage to step outside one's comfort zone. Zunoon transforms the traditional college induction into a cinematic carnival where every newcomer finds their rhythm, their mentors, and their lifelong friends.
+                This edition celebrates the transition into engineering life — the shared journeys on campus buses, the lively debates at chai stalls, late-night hostel jam sessions, and the courage to step outside one's comfort zone. Aarambh 2.0 transforms the traditional college induction into a cinematic carnival where every newcomer finds their rhythm, their mentors, and their lifelong friends.
               </p>
               <div className="mt-5 pt-4 border-t border-white/10 flex items-center justify-between text-xs font-mono text-purple-300">
                 <span className="flex items-center gap-1.5">

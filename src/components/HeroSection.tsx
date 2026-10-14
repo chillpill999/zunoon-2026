@@ -169,8 +169,8 @@ export default function HeroSection() {
           </div>
 
           {/* Grand 3D Festival Title */}
-          <h1 className="text-5xl sm:text-8xl md:text-9xl font-carter tracking-wide text-white drop-shadow-[6px_6px_0px_#000000] sm:drop-shadow-[8px_8px_0px_#000000] uppercase leading-none select-none">
-            ZUN<span className="text-amber-400">OO</span>N
+          <h1 className="text-4xl sm:text-7xl md:text-8xl lg:text-9xl font-carter tracking-wide text-white drop-shadow-[6px_6px_0px_#000000] sm:drop-shadow-[8px_8px_0px_#000000] uppercase leading-none select-none">
+            AARAMBH <span className="text-amber-400">2.0</span>
           </h1>
 
           {/* Tagline */}
@@ -210,8 +210,9 @@ export default function HeroSection() {
 
             <button
               onClick={() => {
+                sessionStorage.removeItem('aarambh_intro_seen');
                 sessionStorage.removeItem('zunoon_intro_seen');
-                window.dispatchEvent(new CustomEvent('replay-zunoon-intro'));
+                window.dispatchEvent(new CustomEvent('replay-aarambh-intro'));
               }}
               className="comic-btn px-5 py-3 sm:py-3.5 rounded-2xl bg-indigo-600 hover:bg-indigo-500 text-white font-carter text-xs sm:text-base uppercase tracking-wide flex items-center justify-center gap-2 -rotate-1 cursor-pointer min-h-[44px]"
             >

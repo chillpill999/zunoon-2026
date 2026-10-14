@@ -57,7 +57,7 @@ const FESTIVAL_HIGHLIGHTS: MarqueeTickerItem[] = [
   {
     icon: Mail,
     label: 'PARTNERSHIP DESK',
-    sub: 'zunoon.lnjpit@gmail.com',
+    sub: 'aarambh.lnjpit@gmail.com',
     color: 'text-purple-300',
     borderColor: 'border-purple-400/40',
   },

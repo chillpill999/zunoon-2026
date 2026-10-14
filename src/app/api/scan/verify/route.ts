@@ -11,7 +11,7 @@ function verifyStaffAuth(pin: unknown): boolean {
 function extractRollFromBase64(token: string): string | null {
   try {
     const decoded = Buffer.from(token, 'base64').toString('utf-8');
-    if (decoded.includes('LNJPIT_ZUNOON_ATTENDANCE')) {
+    if (decoded.includes('LNJPIT_AARAMBH_ATTENDANCE') || decoded.includes('LNJPIT_ZUNOON_ATTENDANCE')) {
       const parts = decoded.split(':');
       return parts[0] ? parts[0].trim().toUpperCase() : null;
     }
@@ -79,7 +79,7 @@ export async function POST(request: Request) {
       .from('zunoon_registrations')
       .select('id, full_name, roll_number, branch, batch_year, attended, attended_at, registered_at');
 
-    if (rawToken.startsWith('ZN-2026-')) {
+    if (rawToken.startsWith('AR-2026-') || rawToken.startsWith('ZN-2026-')) {
       query = query.eq('id', rawToken);
     } else if (extractedRoll) {
       query = query.eq('roll_number', extractedRoll);

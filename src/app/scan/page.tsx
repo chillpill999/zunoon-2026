@@ -57,7 +57,7 @@ export default function GateScanPage() {
   // Check stored staff session
   useEffect(() => {
     try {
-      const storedPin = sessionStorage.getItem('zunoon_staff_pin');
+      const storedPin = sessionStorage.getItem('aarambh_staff_pin') || sessionStorage.getItem('zunoon_staff_pin');
       if (storedPin) {
         setPinInput(storedPin);
         setIsAuthenticated(true);
@@ -124,6 +124,7 @@ export default function GateScanPage() {
         throw new Error(data.message || 'Invalid staff passcode.');
       }
 
+      sessionStorage.setItem('aarambh_staff_pin', pinInput);
       sessionStorage.setItem('zunoon_staff_pin', pinInput);
       setIsAuthenticated(true);
     } catch (err: unknown) {
@@ -139,6 +140,7 @@ export default function GateScanPage() {
 
   const handleSignOut = () => {
     stopScanner();
+    sessionStorage.removeItem('aarambh_staff_pin');
     sessionStorage.removeItem('zunoon_staff_pin');
     setPinInput('');
     setIsAuthenticated(false);
@@ -154,7 +156,7 @@ export default function GateScanPage() {
     const now = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' });
 
     try {
-      const currentPin = sessionStorage.getItem('zunoon_staff_pin') || pinInput;
+      const currentPin = sessionStorage.getItem('aarambh_staff_pin') || sessionStorage.getItem('zunoon_staff_pin') || pinInput;
       const res = await fetch('/api/scan/verify', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -166,6 +168,7 @@ export default function GateScanPage() {
       if (res.status === 401) {
         // Session expired or invalidated
         setIsAuthenticated(false);
+        sessionStorage.removeItem('aarambh_staff_pin');
         sessionStorage.removeItem('zunoon_staff_pin');
         throw new Error('Staff authorization expired. Please log in again.');
       }
@@ -394,7 +397,7 @@ export default function GateScanPage() {
             <ShieldCheck className="w-3.5 h-3.5" /> Gate Staff Authenticated
           </div>
           <h1 className="font-carter text-3xl sm:text-4xl text-white tracking-wide uppercase drop-shadow-[2px_2px_0px_#000]">
-            ZUNOON <span className="text-amber-400">ENTRY SCANNER</span>
+            AARAMBH 2.0 <span className="text-amber-400">ENTRY SCANNER</span>
           </h1>
           <p className="text-xs sm:text-sm text-purple-200/80 mt-2 font-mono">
             {FEST_CONFIG.shortInstitution} • Gate Security & Attendee Verification

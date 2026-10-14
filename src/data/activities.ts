@@ -26,7 +26,7 @@ export const ACTIVITIES: ActivityItem[] = [
     venue: "Main Auditorium Stage",
     timeSlot: "Evening Grand Slot",
     isTeam: false,
-    description: "The most prestigious title of Zunoon! A three-stage showcase testing personality, style, confidence, quick wit, and stage charisma.",
+    description: "The most prestigious title of Aarambh 2.0! A three-stage showcase testing personality, style, confidence, quick wit, and stage charisma.",
     rules: [
       "Open exclusively to 1st Year (Freshers) students of LNJPIT Chapra.",
       "Round 1: Traditional / Western Ramp Walk & Personal Introduction (1 minute).",
@@ -36,7 +36,7 @@ export const ACTIVITIES: ActivityItem[] = [
     ],
     coordinators: [
       { name: "Cultural Committee Desk", phone: "+91 9122334455" },
-      { name: "Student Council Secretariat", phone: "zunoon.lnjpit@gmail.com" }
+      { name: "Student Council Secretariat", phone: "aarambh.lnjpit@gmail.com" }
     ]
   },
   {
@@ -59,7 +59,7 @@ export const ACTIVITIES: ActivityItem[] = [
       "Judging criteria: Choreography, rhythm sync, energy, expressions, and stage coverage."
     ],
     coordinators: [
-      { name: "Dance & Stage Wing Desk", phone: "zunoon.lnjpit@gmail.com" }
+      { name: "Dance & Stage Wing Desk", phone: "aarambh.lnjpit@gmail.com" }
     ]
   },
   {
@@ -79,7 +79,7 @@ export const ACTIVITIES: ActivityItem[] = [
       "Judging criteria: Sur, taal, vocal range, clarity, and overall stage presentation."
     ],
     coordinators: [
-      { name: "Music Society Desk", phone: "zunoon.lnjpit@gmail.com" }
+      { name: "Music Society Desk", phone: "aarambh.lnjpit@gmail.com" }
     ]
   },
   {
@@ -102,7 +102,7 @@ export const ACTIVITIES: ActivityItem[] = [
       "Script must be original or appropriately adapted. Decorum must be strictly maintained."
     ],
     coordinators: [
-      { name: "Dramatics Wing Desk", phone: "zunoon.lnjpit@gmail.com" }
+      { name: "Dramatics Wing Desk", phone: "aarambh.lnjpit@gmail.com" }
     ]
   },
   {
@@ -122,7 +122,7 @@ export const ACTIVITIES: ActivityItem[] = [
       "Original material earns bonus scoring from the student audience vote."
     ],
     coordinators: [
-      { name: "Literary Committee Desk", phone: "zunoon.lnjpit@gmail.com" }
+      { name: "Literary Committee Desk", phone: "aarambh.lnjpit@gmail.com" }
     ]
   },
   {
@@ -145,7 +145,7 @@ export const ACTIVITIES: ActivityItem[] = [
       "Emulators and iPad/tablet aspect ratio triggers are strictly prohibited."
     ],
     coordinators: [
-      { name: "Gaming & LAN Desk", phone: "zunoon.lnjpit@gmail.com" }
+      { name: "Gaming & LAN Desk", phone: "aarambh.lnjpit@gmail.com" }
     ]
   },
   {
@@ -167,7 +167,7 @@ export const ACTIVITIES: ActivityItem[] = [
       "Instant spot merchandise and celebration prizes awarded on completion."
     ],
     coordinators: [
-      { name: "Student Council Volunteers Desk", phone: "zunoon.lnjpit@gmail.com" }
+      { name: "Student Council Volunteers Desk", phone: "aarambh.lnjpit@gmail.com" }
     ]
   },
   {
@@ -182,12 +182,12 @@ export const ACTIVITIES: ActivityItem[] = [
     isTeam: false,
     description: "The ultimate freshers bash! Pulsating bass drops, concert lighting, fog effects, and a dance floor for the entire batch to celebrate together.",
     rules: [
-      "Valid Zunoon Free Digital Entry Pass required at the gate.",
+      "Valid Aarambh 2.0 Free Digital Entry Pass required at the gate.",
       "College ID Card mandatory for entry.",
       "Strict campus security and discipline enforced by student council and faculty marshals."
     ],
     coordinators: [
-      { name: "Zunoon Central Control Desk", phone: "+91 9122334455" }
+      { name: "Aarambh 2.0 Central Control Desk", phone: "+91 9122334455" }
     ]
   }
 ];

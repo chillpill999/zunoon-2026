@@ -10,10 +10,10 @@ export default function Footer() {
         <div className="space-y-4">
           <div className="flex items-center gap-2.5">
             <div className="w-9 h-9 rounded-xl bg-amber-400 border-2 border-black flex items-center justify-center font-carter text-xl text-black shadow-[3px_3px_0px_#000] -rotate-6">
-              Z
+              A
             </div>
-            <span className="font-carter text-2xl tracking-wide text-white">
-              ZUN<span className="text-amber-400">OO</span>N
+            <span className="font-carter text-xl tracking-wide text-white">
+              AARAMBH <span className="text-amber-400">2.0</span>
             </span>
           </div>
           <p className="text-xs sm:text-sm text-purple-200/80 leading-relaxed font-sans">
@@ -51,7 +51,7 @@ export default function Footer() {
 
         {/* Col 2: Navigation Links */}
         <div className="space-y-3">
-          <p className="font-carter text-base sm:text-lg text-amber-400 tracking-wide">Explore Zunoon</p>
+          <p className="font-carter text-base sm:text-lg text-amber-400 tracking-wide">Explore Aarambh 2.0</p>
           <ul className="space-y-2 text-xs sm:text-sm text-purple-200/90 font-medium">
             <li>
               <Link href="/#about" className="hover:text-amber-400 transition-colors">
@@ -129,7 +129,7 @@ export default function Footer() {
       </div>
 
       <div className="max-w-7xl mx-auto pt-6 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between text-xs text-purple-300/70 gap-3">
-        <p>© 2026 ZUNOON • {FEST_CONFIG.institution}, Chapra. All rights reserved.</p>
+        <p>© 2026 AARAMBH 2.0 • {FEST_CONFIG.institution}, Chapra. All rights reserved.</p>
         <p className="flex items-center gap-1.5">
           Made with <Heart className="w-3.5 h-3.5 text-rose-500 fill-rose-500" /> of{' '}
           <a

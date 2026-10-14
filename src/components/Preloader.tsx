@@ -24,8 +24,8 @@ interface FloatingWord {
 const FLOATING_WORDS: FloatingWord[] = [
   // Top-Left Zone
   {
-    id: 'w-zunoon',
-    text: 'जुनून',
+    id: 'w-aarambh',
+    text: 'आरंभ',
     x: '11%',
     y: '14%',
     size: 'text-4xl sm:text-6xl',
@@ -52,8 +52,8 @@ const FLOATING_WORDS: FloatingWord[] = [
     depth: 18,
   },
   {
-    id: 'w-za',
-    text: 'ज़',
+    id: 'w-aa',
+    text: 'आ',
     x: '6%',
     y: '30%',
     size: 'text-5xl sm:text-7xl',
@@ -96,8 +96,8 @@ const FLOATING_WORDS: FloatingWord[] = [
     depth: 20,
   },
   {
-    id: 'w-noo',
-    text: 'नू',
+    id: 'w-rambh',
+    text: 'रं',
     x: '89%',
     y: '27%',
     size: 'text-5xl sm:text-7xl',
@@ -274,7 +274,7 @@ export default function Preloader() {
   useEffect(() => {
     if (typeof window !== 'undefined') {
       setIsMobile(window.innerWidth < 800);
-      const hasSeen = sessionStorage.getItem('zunoon_intro_seen');
+      const hasSeen = sessionStorage.getItem('aarambh_intro_seen') || sessionStorage.getItem('zunoon_intro_seen');
       if (hasSeen) {
         setStage('complete');
       }
@@ -290,8 +290,12 @@ export default function Preloader() {
       setStage('wordmark');
     };
 
+    window.addEventListener('replay-aarambh-intro', handleReplay);
     window.addEventListener('replay-zunoon-intro', handleReplay);
-    return () => window.removeEventListener('replay-zunoon-intro', handleReplay);
+    return () => {
+      window.removeEventListener('replay-aarambh-intro', handleReplay);
+      window.removeEventListener('replay-zunoon-intro', handleReplay);
+    };
   }, []);
 
   // Stage 1: Cinematic Wordmark -> auto-progress to Stage 2 after 3.8s
@@ -354,11 +358,13 @@ export default function Preloader() {
         delay: 0.25,
         ease: 'power2.inOut',
         onComplete: () => {
+          sessionStorage.setItem('aarambh_intro_seen', 'true');
           sessionStorage.setItem('zunoon_intro_seen', 'true');
           setStage('complete');
         },
       });
     } else {
+      sessionStorage.setItem('aarambh_intro_seen', 'true');
       sessionStorage.setItem('zunoon_intro_seen', 'true');
       setStage('complete');
     }
@@ -375,14 +381,14 @@ export default function Preloader() {
       className="fixed inset-0 z-[99999] w-screen h-screen bg-black text-white flex items-center justify-center overflow-hidden select-none"
     >
       {/* ========================================================================= */}
-      {/* STAGE 1: CINEMATIC WORDMARK (ZUNOON filled with moving festival footage)   */}
+      {/* STAGE 1: CINEMATIC WORDMARK (AARAMBH 2.0 filled with moving festival footage)   */}
       {/* ========================================================================= */}
       {stage === 'wordmark' && (
         <div className="relative w-full h-full flex flex-col items-center justify-center px-4 bg-black animate-in fade-in duration-500">
           {/* Subtle Ambient Background Halo */}
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(212,175,55,0.08)_0%,transparent_65%)] pointer-events-none" />
 
-          {/* Large Video-Filled ZUNOON Wordmark */}
+          {/* Large Video-Filled AARAMBH 2.0 Wordmark */}
           <div className="relative w-full max-w-5xl h-64 sm:h-80 md:h-96 flex items-center justify-center">
             <svg
               className="w-full h-full drop-shadow-[0_0_25px_rgba(245,158,11,0.3)]"
@@ -390,7 +396,7 @@ export default function Preloader() {
               preserveAspectRatio="xMidYMid meet"
             >
               <defs>
-                <mask id="zunoonWordmarkMask">
+                <mask id="aarambhWordmarkMask">
                   <rect width="1000" height="320" fill="black" />
                   <text
                     x="500"
@@ -400,16 +406,16 @@ export default function Preloader() {
                     fill="white"
                     fontFamily="'Carter One', 'Impact', sans-serif"
                     fontWeight="900"
-                    fontSize="180"
-                    letterSpacing="8"
+                    fontSize="135"
+                    letterSpacing="4"
                   >
-                    ZUNOON
+                    AARAMBH 2.0
                   </text>
                 </mask>
               </defs>
 
-              {/* High-Energy Video Masked Inside ZUNOON Letters */}
-              <foreignObject width="1000" height="320" mask="url(#zunoonWordmarkMask)">
+              {/* High-Energy Video Masked Inside AARAMBH 2.0 Letters */}
+              <foreignObject width="1000" height="320" mask="url(#aarambhWordmarkMask)">
                 <div className="w-full h-full">
                   <video
                     src={isMobile ? '/intro_mob.mp4' : '/intro.mp4'}
@@ -433,10 +439,10 @@ export default function Preloader() {
                 strokeWidth="2.5"
                 fontFamily="'Carter One', 'Impact', sans-serif"
                 fontWeight="900"
-                fontSize="180"
-                letterSpacing="8"
+                fontSize="135"
+                letterSpacing="4"
               >
-                ZUNOON
+                AARAMBH 2.0
               </text>
             </svg>
           </div>
@@ -511,7 +517,7 @@ export default function Preloader() {
               onMouseEnter={() => setButtonHovered(true)}
               onMouseLeave={() => setButtonHovered(false)}
               className="group relative px-12 sm:px-16 py-4 sm:py-5 min-w-[260px] sm:min-w-[320px] rounded-[2px] bg-black/60 backdrop-blur-sm border border-neutral-600/80 hover:border-amber-400/90 active:scale-95 transition-all duration-500 ease-out overflow-hidden cursor-pointer shadow-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-400 focus-visible:ring-offset-2 focus-visible:ring-offset-black"
-              aria-label="Click to Enter Zunoon Freshers Fest Homepage"
+              aria-label="Click to Enter Aarambh 2.0 Freshers Fest Homepage"
             >
               {/* Soft Shimmer Light Beam that sweeps diagonally across on hover */}
               <div

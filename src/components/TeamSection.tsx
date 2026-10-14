@@ -75,7 +75,7 @@ export default function TeamSection() {
         <ScrollReveal direction="up" distance={24}>
           <div className="text-center mb-12">
             <span className="inline-block px-4 py-1.5 rounded-full bg-amber-400 text-black border-2 border-black text-xs font-carter tracking-widest uppercase shadow-[2px_2px_0px_#000] -rotate-1">
-              THE ARCHITECTS OF ZUNOON
+              THE ARCHITECTS OF AARAMBH 2.0
             </span>
             <h2 className="text-5xl sm:text-7xl font-carter tracking-wide text-white drop-shadow-[5px_5px_0px_#000] uppercase mt-3">
               MEET THE <span className="text-amber-400">TEAM</span>
@@ -102,7 +102,7 @@ export default function TeamSection() {
             </h3>
 
             <p className="font-chewy text-lg sm:text-2xl text-purple-200 mt-4 leading-relaxed max-w-xl mx-auto">
-              The official organizing committee, student coordinators, and faculty advisors for ZUNOON 2026 are currently being finalized and will be revealed shortly!
+              The official organizing committee, student coordinators, and faculty advisors for AARAMBH 2.0 are currently being finalized and will be revealed shortly!
             </p>
 
             <div className="mt-8 pt-6 border-t border-white/10 flex flex-wrap items-center justify-center gap-3 text-xs font-mono text-purple-300">
