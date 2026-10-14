@@ -2,146 +2,130 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
-import { Menu, X, Ticket } from 'lucide-react';
+import { Ticket } from 'lucide-react';
 import { FEST_CONFIG } from '@/data/config';
 
 interface NavItem {
   label: string;
   href: string;
-  rotation: number;
-  hoverBg: string;
-  textColor: string;
 }
 
 const NAV_ITEMS: NavItem[] = [
-  { label: 'About', href: '/#about', rotation: -6, hoverBg: '#f59e0b', textColor: '#000000' },
-  { label: 'Activities', href: '/#activities', rotation: 6, hoverBg: '#ec4899', textColor: '#ffffff' },
-  { label: 'Schedule', href: '/#schedule', rotation: -5, hoverBg: '#3b82f6', textColor: '#ffffff' },
-  { label: 'Gallery', href: '/#gallery', rotation: 5, hoverBg: '#10b981', textColor: '#000000' },
-  { label: 'FAQ', href: '/#faq', rotation: -4, hoverBg: '#06b6d4', textColor: '#000000' },
-  { label: 'Team', href: '/#team', rotation: 4, hoverBg: '#8b5cf6', textColor: '#ffffff' },
+  { label: 'About', href: '/#about' },
+  { label: 'Activities', href: '/#activities' },
+  { label: 'Schedule', href: '/#schedule' },
+  { label: 'Gallery', href: '/#gallery' },
+  { label: 'FAQ', href: '/#faq' },
+  { label: 'Team', href: '/#team' },
 ];
 
 export default function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 bg-[#0a0618]/70 backdrop-blur-xl backdrop-saturate-150 border-b border-cyan-400/30 shadow-[0_4px_30px_rgba(0,0,0,0.5),0_1px_15px_rgba(6,182,212,0.25)] px-4 sm:px-8 py-3 transition-all relative">
-      {/* Top subtle specular glass rim highlight */}
-      <div className="absolute inset-x-0 top-0 h-[1px] bg-gradient-to-r from-transparent via-white/30 to-transparent pointer-events-none" />
-      {/* Radiant glowing bottom edge */}
-      <div className="absolute inset-x-0 -bottom-[1px] h-[2px] bg-gradient-to-r from-transparent via-cyan-400 to-transparent shadow-[0_0_12px_#06b6d4,0_0_24px_#06b6d4] pointer-events-none" />
-
-      <div className="max-w-7xl mx-auto flex items-center justify-between">
-        {/* Brand Logo & Institution Badge */}
-        <Link href="/" className="flex items-center gap-2.5 group">
-          <div className="w-10 h-10 rounded-xl bg-amber-400 border-2 border-black flex items-center justify-center font-carter text-2xl text-black shadow-[3px_3px_0px_#000] -rotate-6 group-hover:rotate-0 transition-transform">
-            A
-          </div>
-          <div className="flex flex-col text-left">
-            <span className="font-carter text-xl sm:text-2xl tracking-wide text-white leading-none drop-shadow-[2px_2px_0px_#000]">
-              AARAMBH <span className="text-amber-400">2.0</span>
-            </span>
-            <span className="text-[10px] font-mono text-purple-300 tracking-wider">
-              {FEST_CONFIG.shortInstitution}
-            </span>
-          </div>
-        </Link>
-
-        {/* Desktop Tilted Sticker Navigation */}
-        <nav className="hidden lg:flex items-center gap-3">
-          {NAV_ITEMS.map((item) => (
-            <Link
-              key={item.label}
-              href={item.href}
-              style={{ transform: `rotate(${item.rotation}deg)` }}
-              className="px-3.5 py-1.5 rounded-lg font-carter text-sm uppercase tracking-wide border-2 border-black bg-white/10 text-white shadow-[3px_3px_0px_#000] transition-all hover:scale-110 active:scale-95"
-              onMouseEnter={(e) => {
-                e.currentTarget.style.backgroundColor = item.hoverBg;
-                e.currentTarget.style.color = item.textColor;
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.1)';
-                e.currentTarget.style.color = '#ffffff';
-              }}
-            >
-              {item.label}
-            </Link>
-          ))}
-        </nav>
-
-        {/* Action Controls: My Pass & Free Register */}
-        <div className="flex items-center gap-2 sm:gap-3">
-          <Link
-            href="/pass"
-            className="flex items-center justify-center gap-1.5 w-10 h-10 sm:w-auto sm:h-auto sm:px-3.5 sm:py-2 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-carter text-xs sm:text-sm uppercase border-2 border-black shadow-[2px_2px_0px_#000] sm:shadow-[3px_3px_0px_#000] hover:scale-105 active:scale-95 transition-all -rotate-2"
-            title="View my digital attendance pass"
-            aria-label="View digital attendance pass"
-          >
-            <Ticket className="w-4 h-4 shrink-0" />
-            <span className="hidden sm:inline">My Pass</span>
+    <div className="fixed top-2.5 sm:top-4 left-0 right-0 z-50 px-3 sm:px-6 pointer-events-none transition-all">
+      <header className="pointer-events-auto max-w-7xl mx-auto rounded-2xl sm:rounded-full bg-white/[0.14] hover:bg-white/[0.18] backdrop-blur-xl backdrop-saturate-180 border border-white/30 shadow-[0_8px_32px_0_rgba(0,0,0,0.37),0_0_25px_rgba(255,255,255,0.18),inset_0_1px_2px_0_rgba(255,255,255,0.5)] px-4 sm:px-7 py-2.5 sm:py-3 transition-all duration-300">
+        <div className="flex items-center justify-between">
+          {/* Brand Logo & Institution Badge */}
+          <Link href="/" className="flex items-center gap-2.5 group">
+            <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-amber-400 border-2 border-black flex items-center justify-center font-carter text-xl sm:text-2xl text-black shadow-[2px_2px_0px_#000] -rotate-6 group-hover:rotate-0 transition-transform">
+              A
+            </div>
+            <div className="flex flex-col text-left">
+              <span className="font-carter text-xl sm:text-2xl tracking-wide text-white leading-none drop-shadow-[0_2px_4px_rgba(0,0,0,0.6)]">
+                AARAMBH <span className="text-amber-400">2.0</span>
+              </span>
+              <span className="text-[10px] font-mono text-white/80 tracking-wider">
+                {FEST_CONFIG.shortInstitution}
+              </span>
+            </div>
           </Link>
 
-          <a
-            href="#register"
-            className="flex items-center gap-1 px-3 sm:px-4 py-2 rounded-xl bg-amber-400 hover:bg-amber-300 text-black font-carter text-xs sm:text-sm uppercase border-2 border-black shadow-[2px_2px_0px_#000] sm:shadow-[3px_3px_0px_#000] hover:scale-105 active:scale-95 transition-all rotate-2"
-          >
-            <span>Register</span>
-            <span className="hidden sm:inline">Free</span>
-          </a>
+          {/* Desktop Frosted Glass Navigation Links */}
+          <nav className="hidden lg:flex items-center gap-1 xl:gap-2">
+            {NAV_ITEMS.map((item) => (
+              <Link
+                key={item.label}
+                href={item.href}
+                className="px-3.5 py-1.5 rounded-full font-carter text-sm uppercase tracking-wider text-white/90 hover:text-white hover:bg-white/15 transition-all duration-200 drop-shadow-[0_1px_2px_rgba(0,0,0,0.5)]"
+              >
+                {item.label}
+              </Link>
+            ))}
+          </nav>
 
-          {/* Mobile Menu Toggle - 44x44px accessible touch target */}
-          <button
-            onClick={() => setMobileOpen(!mobileOpen)}
-            className="lg:hidden w-11 h-11 flex items-center justify-center rounded-xl bg-white/10 text-white border-2 border-black shadow-[2px_2px_0px_#000] active:scale-95 transition-transform"
-            aria-label="Toggle Navigation Menu"
-            aria-expanded={mobileOpen}
-          >
-            {mobileOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
-          </button>
+          {/* Action Controls: My Pass & Free Register */}
+          <div className="flex items-center gap-2 sm:gap-3">
+            <Link
+              href="/pass"
+              className="flex items-center justify-center gap-1.5 px-3 py-1.5 sm:px-4 sm:py-2 rounded-full bg-white/15 hover:bg-white/25 border border-white/40 text-white font-carter text-xs sm:text-sm uppercase shadow-[0_2px_10px_rgba(0,0,0,0.2)] hover:scale-105 active:scale-95 transition-all backdrop-blur-md"
+              title="View my digital attendance pass"
+              aria-label="View digital attendance pass"
+            >
+              <Ticket className="w-4 h-4 shrink-0 text-amber-300" />
+              <span className="hidden sm:inline">My Pass</span>
+            </Link>
+
+            <a
+              href="#register"
+              className="flex items-center gap-1 px-3.5 py-1.5 sm:px-4 sm:py-2 rounded-full bg-amber-400 hover:bg-amber-300 text-black font-carter text-xs sm:text-sm uppercase border-2 border-black shadow-[2px_2px_0px_#000] hover:scale-105 active:scale-95 transition-all"
+            >
+              <span>Register</span>
+              <span className="hidden sm:inline">Free</span>
+            </a>
+
+            {/* Mobile Menu Toggle - Two clean horizontal bars matching Blitzschlag */}
+            <button
+              onClick={() => setMobileOpen(!mobileOpen)}
+              className="lg:hidden w-10 h-10 flex flex-col items-center justify-center gap-1.5 rounded-xl bg-white/15 hover:bg-white/25 border border-white/30 text-white shadow-[0_2px_10px_rgba(0,0,0,0.2)] active:scale-95 transition-all"
+              aria-label="Toggle Navigation Menu"
+              aria-expanded={mobileOpen}
+            >
+              {mobileOpen ? (
+                <span className="font-carter text-lg text-white">✕</span>
+              ) : (
+                <>
+                  <span className="w-5 h-[2px] bg-white rounded-full shadow-sm" />
+                  <span className="w-5 h-[2px] bg-white rounded-full shadow-sm" />
+                </>
+              )}
+            </button>
+          </div>
         </div>
-      </div>
 
-      {/* Mobile Drawer & Backdrop */}
-      {mobileOpen && (
-        <>
-          <div
-            className="fixed inset-0 bg-black/60 backdrop-blur-sm z-40 lg:hidden"
-            onClick={() => setMobileOpen(false)}
-            aria-hidden="true"
-          />
-          <div className="relative z-50 lg:hidden mt-3 bg-[#130b2c]/80 backdrop-blur-xl border border-cyan-400/40 rounded-2xl p-4 shadow-[0_8px_32px_rgba(0,0,0,0.6),0_0_20px_rgba(6,182,212,0.25)] flex flex-col gap-2.5 animate-in fade-in slide-in-from-top-2 duration-200">
+        {/* Mobile Drawer & Backdrop */}
+        {mobileOpen && (
+          <div className="relative z-50 lg:hidden mt-3 bg-black/75 backdrop-blur-2xl border border-white/25 rounded-2xl p-4 shadow-[0_12px_40px_rgba(0,0,0,0.6),inset_0_1px_1px_rgba(255,255,255,0.3)] flex flex-col gap-2 animate-in fade-in slide-in-from-top-2 duration-200">
             {NAV_ITEMS.map((item) => (
               <Link
                 key={item.label}
                 href={item.href}
                 onClick={() => setMobileOpen(false)}
-                className="px-4 py-3 rounded-xl font-carter text-base border-2 border-black shadow-[2px_2px_0px_#000] flex items-center justify-between active:scale-98 transition-transform"
-                style={{ backgroundColor: item.hoverBg, color: item.textColor }}
+                className="px-4 py-2.5 rounded-xl font-carter text-sm uppercase tracking-wider text-white hover:bg-white/15 transition-all flex items-center justify-between"
               >
                 <span>{item.label}</span>
               </Link>
             ))}
-            <div className="pt-2 border-t border-white/20 flex gap-2.5">
+            <div className="pt-2 border-t border-white/20 flex gap-2">
               <Link
                 href="/pass"
                 onClick={() => setMobileOpen(false)}
-                className="flex-1 py-3 bg-indigo-600 hover:bg-indigo-500 text-white font-carter text-center text-sm rounded-xl border-2 border-black shadow-[2px_2px_0px_#000] flex items-center justify-center gap-1.5"
+                className="flex-1 py-2.5 bg-white/15 hover:bg-white/25 border border-white/30 text-white font-carter text-center text-xs uppercase rounded-xl flex items-center justify-center gap-1.5"
               >
-                <Ticket className="w-4 h-4" />
+                <Ticket className="w-4 h-4 text-amber-300" />
                 <span>View Pass</span>
               </Link>
               <a
                 href="#register"
                 onClick={() => setMobileOpen(false)}
-                className="flex-1 py-3 bg-amber-400 hover:bg-amber-300 text-black font-carter text-center text-sm rounded-xl border-2 border-black shadow-[2px_2px_0px_#000]"
+                className="flex-1 py-2.5 bg-amber-400 hover:bg-amber-300 text-black font-carter text-center text-xs uppercase rounded-xl border border-black shadow-[2px_2px_0px_#000]"
               >
                 Register Free
               </a>
             </div>
           </div>
-        </>
-      )}
-    </header>
+        )}
+      </header>
+    </div>
   );
 }
