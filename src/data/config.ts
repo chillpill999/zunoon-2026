@@ -57,6 +57,7 @@ export interface FestConfig {
   };
   socials: {
     instagram?: string;
+    hothlali?: string;
     youtube?: string;
     linkedin?: string;
   };
@@ -129,7 +130,8 @@ export const FEST_CONFIG: FestConfig = {
   },
 
   socials: {
-    instagram: "https://www.instagram.com/hothlali_department/",
+    instagram: "https://www.instagram.com/aarambh_lnjpit_26/",
+    hothlali: "https://www.instagram.com/hothlali_department/",
     youtube: "https://youtube.com/@aarambh_lnjpit",
   },
 };
