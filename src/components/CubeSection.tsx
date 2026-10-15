@@ -38,8 +38,10 @@ export default function CubeSection() {
 
   useEffect(() => {
     const cube = cubeRef.current;
-    if (!cube) return;
+    const container = containerRef.current;
+    if (!cube || !container) return;
 
+    let isVisible = false;
     let isPointerDown = false;
     let isDragging = false;
     let startX = 0;
@@ -95,18 +97,23 @@ export default function CubeSection() {
 
     let lastScrollY = typeof window !== 'undefined' ? window.scrollY : 0;
     const onScroll = () => {
-      if (isDragging) return;
+      if (!isVisible || isDragging) return;
       const currentScrollY = window.scrollY;
       const scrollDiff = currentScrollY - lastScrollY;
       lastScrollY = currentScrollY;
-      // Scroll velocity influence adds dynamic 3D reaction on mobile & PC scrolling
+      // Scroll velocity influence adds dynamic 3D reaction only when visible
       targetRotY += scrollDiff * 0.16;
       targetRotX += Math.max(-15, Math.min(15, scrollDiff * 0.06));
     };
     window.addEventListener('scroll', onScroll, { passive: true });
 
-    let animationId: number;
+    let animationId: number | null = null;
     const animate = () => {
+      if (!isVisible) {
+        animationId = null;
+        return;
+      }
+
       if (!isDragging) {
         targetRotY += idleSpeedY;
         targetRotX = Math.sin(Date.now() * 0.001) * 10;
@@ -120,23 +127,41 @@ export default function CubeSection() {
       const scale = isMobile ? '0.75' : '1';
 
       cube.style.transform = `
-        translateZ(${tz})
+        translate3d(0, 0, ${tz})
         scale(${scale})
-        rotateX(${curRotX}deg)
-        rotateY(${curRotY}deg)
+        rotateX(${curRotX.toFixed(2)}deg)
+        rotateY(${curRotY.toFixed(2)}deg)
       `;
 
       animationId = requestAnimationFrame(animate);
     };
 
-    animationId = requestAnimationFrame(animate);
+    // IntersectionObserver to ONLY run RAF when the cube is in view
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        isVisible = entry.isIntersecting;
+        if (isVisible) {
+          if (!animationId) {
+            animationId = requestAnimationFrame(animate);
+          }
+        } else {
+          if (animationId) {
+            cancelAnimationFrame(animationId);
+            animationId = null;
+          }
+        }
+      },
+      { threshold: 0.05 }
+    );
+    observer.observe(container);
 
     return () => {
+      observer.disconnect();
       cube.removeEventListener('pointerdown', onPointerDown);
       window.removeEventListener('pointermove', onPointerMove);
       window.removeEventListener('pointerup', onPointerUp);
       window.removeEventListener('scroll', onScroll);
-      cancelAnimationFrame(animationId);
+      if (animationId) cancelAnimationFrame(animationId);
     };
   }, []);
 
@@ -269,12 +294,11 @@ export default function CubeSection() {
           {/* The 3D CSS Cube (Photoless, 100% Vector & Typography) */}
           <div
             ref={cubeRef}
-            className="relative"
+            className="relative will-change-transform"
             style={{
               width: `${faceSize}px`,
               height: `${faceSize}px`,
               transformStyle: 'preserve-3d',
-              transition: 'transform 0.05s linear',
             }}
           >
           {FACES.map((face) => {

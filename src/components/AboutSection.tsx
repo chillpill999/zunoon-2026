@@ -8,8 +8,8 @@ import ScrollReveal from '@/components/ScrollReveal';
 export default function AboutSection() {
   return (
     <section id="about" className="relative w-full py-20 px-4 sm:px-6 lg:px-8 bg-[#0a0518] overflow-hidden">
-      {/* Background Decorative Ambient Aura */}
-      <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[1200px] h-[800px] bg-gradient-to-b from-purple-900/20 via-rose-900/15 to-transparent blur-3xl pointer-events-none" />
+      {/* Background Decorative Ambient Aura (Desktop only to conserve mobile GPU fill-rate) */}
+      <div className="hidden sm:block absolute top-1/4 left-1/2 -translate-x-1/2 w-[800px] lg:w-[1200px] h-[600px] lg:h-[800px] bg-gradient-to-b from-purple-900/20 via-rose-900/15 to-transparent blur-2xl pointer-events-none" />
 
       <div className="max-w-6xl mx-auto relative z-10">
         {/* Section Heading Tag */}

@@ -24,7 +24,7 @@ export default function Navbar() {
 
   return (
     <div className="fixed top-2.5 sm:top-4 left-0 right-0 z-50 px-3 sm:px-6 pointer-events-none transition-all">
-      <header className="pointer-events-auto max-w-7xl mx-auto rounded-2xl sm:rounded-full bg-white/[0.14] hover:bg-white/[0.18] backdrop-blur-xl backdrop-saturate-180 border border-white/30 shadow-[0_8px_32px_0_rgba(0,0,0,0.37),0_0_25px_rgba(255,255,255,0.18),inset_0_1px_2px_0_rgba(255,255,255,0.5)] px-4 sm:px-7 py-2.5 sm:py-3 transition-all duration-300">
+      <header className="pointer-events-auto max-w-7xl mx-auto rounded-2xl sm:rounded-full bg-white/[0.14] hover:bg-white/[0.18] backdrop-blur-md sm:backdrop-blur-xl backdrop-saturate-150 border border-white/30 shadow-[0_8px_32px_0_rgba(0,0,0,0.37),0_0_25px_rgba(255,255,255,0.18),inset_0_1px_2px_0_rgba(255,255,255,0.5)] px-4 sm:px-7 py-2.5 sm:py-3 transition-all duration-300 transform-gpu will-change-transform">
         <div className="flex items-center justify-between">
           {/* Brand Logo & Institution Badge */}
           <Link href="/" className="flex items-center gap-2.5 group">

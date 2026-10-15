@@ -9,11 +9,17 @@
   }
 
   html {
-    scroll-behavior: smooth;
+    scroll-behavior: auto;
     touch-action: manipulation;
     -webkit-text-size-adjust: 100%;
     -webkit-tap-highlight-color: transparent;
     -webkit-overflow-scrolling: touch;
+  }
+
+  @media (prefers-reduced-motion: no-preference) and (min-width: 768px) {
+    html {
+      scroll-behavior: smooth;
+    }
   }
 
   body {

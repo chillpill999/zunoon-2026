@@ -13,23 +13,26 @@ import {
 } from 'lucide-react';
 import { FEST_CONFIG } from '@/data/config';
 
-let cachedMobBlobUrl: string | null = null;
 let cachedDeskBlobUrl: string | null = null;
 
 export default function HeroSection() {
   const containerRef = useRef<HTMLDivElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
-  const [scrollProgress, setScrollProgress] = useState(0);
+  const phase1Ref = useRef<HTMLDivElement>(null);
+  const phase2Ref = useRef<HTMLDivElement>(null);
+  const phase3Ref = useRef<HTMLDivElement>(null);
+  const scrollPromptRef = useRef<HTMLDivElement>(null);
+
   const [isMobile, setIsMobile] = useState(() => {
     if (typeof window !== 'undefined') {
       return window.innerWidth < 800;
     }
     return false;
   });
+
   const [blobSrc, setBlobSrc] = useState<string | null>(() => {
-    if (typeof window !== 'undefined') {
-      const mob = window.innerWidth < 800;
-      return mob ? cachedMobBlobUrl : cachedDeskBlobUrl;
+    if (typeof window !== 'undefined' && window.innerWidth >= 800) {
+      return cachedDeskBlobUrl;
     }
     return null;
   });
@@ -44,31 +47,26 @@ export default function HeroSection() {
     return () => window.removeEventListener('resize', checkMobile);
   }, []);
 
-  // Preload video into Blob URL for instant zero-latency frame scrubbing on mobile & PC
+  // Desktop only: Preload video into Blob URL for instant zero-latency frame scrubbing
   useEffect(() => {
+    if (isMobile) return;
     let active = true;
-    const target = isMobile ? '/home_mob.mp4' : '/home.mp4';
-    const existingCache = isMobile ? cachedMobBlobUrl : cachedDeskBlobUrl;
 
-    if (existingCache) {
-      setBlobSrc(existingCache);
+    if (cachedDeskBlobUrl) {
+      setBlobSrc(cachedDeskBlobUrl);
       return;
     }
 
-    fetch(target)
+    fetch('/home.mp4')
       .then((res) => res.blob())
       .then((blob) => {
         if (!active) return;
         const url = URL.createObjectURL(blob);
-        if (isMobile) {
-          cachedMobBlobUrl = url;
-        } else {
-          cachedDeskBlobUrl = url;
-        }
+        cachedDeskBlobUrl = url;
         setBlobSrc(url);
       })
       .catch((err) => {
-        console.warn('Video blob preload error, falling back to direct stream:', err);
+        console.warn('Desktop video blob preload error, falling back to direct stream:', err);
       });
 
     return () => {
@@ -76,10 +74,10 @@ export default function HeroSection() {
     };
   }, [isMobile]);
 
-  // Seamlessly transition video src to blob URL without resetting currentTime
+  // Seamlessly transition video src on desktop when blob arrives
   useEffect(() => {
     const video = videoRef.current;
-    if (!video || !blobSrc) return;
+    if (!video || !blobSrc || isMobile) return;
     if (video.src !== blobSrc) {
       const currentTime = video.currentTime;
       video.src = blobSrc;
@@ -87,15 +85,56 @@ export default function HeroSection() {
         video.currentTime = currentTime;
       }
     }
-  }, [blobSrc]);
+  }, [blobSrc, isMobile]);
 
-  // Unified 60fps Scroll-Scrubbing Controller for Mobile & Desktop
+  // Unified 60fps Scroll Controller (Hardware Playback on Mobile, Scrubbing on Desktop)
   useEffect(() => {
     const video = videoRef.current;
     const container = containerRef.current;
     if (!video || !container) return;
 
     let rafId: number | null = null;
+    let mobileHasPlayed = false;
+
+    const updateOverlays = (progress: number) => {
+      // Phase 1 Overlay
+      if (phase1Ref.current) {
+        const op = Math.max(0, 1 - progress * 4.2);
+        const ty = -progress * 120;
+        const sc = 1 - progress * 0.12;
+        phase1Ref.current.style.opacity = op.toFixed(3);
+        phase1Ref.current.style.transform = `translate3d(0, ${ty.toFixed(1)}px, 0) scale(${sc.toFixed(3)})`;
+        phase1Ref.current.style.pointerEvents = progress > 0.22 ? 'none' : 'auto';
+      }
+
+      // Phase 2 Overlay (Cassette Tape)
+      if (phase2Ref.current) {
+        const op =
+          progress >= 0.26 && progress <= 0.62
+            ? Math.sin(((progress - 0.26) / 0.36) * Math.PI)
+            : 0;
+        const ty = progress < 0.44 ? 24 - (progress - 0.26) * 50 : -((progress - 0.44) * 50);
+        phase2Ref.current.style.opacity = op.toFixed(3);
+        phase2Ref.current.style.transform = `translate3d(-50%, ${ty.toFixed(1)}px, 0)`;
+      }
+
+      // Phase 3 Overlay (Tata Truck Back Milestone)
+      if (phase3Ref.current) {
+        const op =
+          progress >= 0.66 && progress <= 0.98
+            ? Math.sin(((progress - 0.66) / 0.32) * Math.PI)
+            : 0;
+        const ty = progress < 0.82 ? 24 - (progress - 0.66) * 50 : -((progress - 0.82) * 50);
+        phase3Ref.current.style.opacity = op.toFixed(3);
+        phase3Ref.current.style.transform = `translate3d(-50%, ${ty.toFixed(1)}px, 0)`;
+      }
+
+      // Bottom Scroll Prompt
+      if (scrollPromptRef.current) {
+        const op = progress < 0.08 ? 1 : Math.max(0, 1 - progress * 15);
+        scrollPromptRef.current.style.opacity = op.toFixed(3);
+      }
+    };
 
     const handleScroll = () => {
       if (rafId) return;
@@ -108,32 +147,61 @@ export default function HeroSection() {
 
         const rect = container.getBoundingClientRect();
         const viewportHeight = window.innerHeight || document.documentElement.clientHeight;
+
+        // Offscreen Guard: If hero is completely scrolled past, pause video and do zero work
+        if (rect.bottom <= 0) {
+          if (!video.paused) {
+            video.pause();
+          }
+          rafId = null;
+          return;
+        }
+
         const totalScroll = rect.height - viewportHeight;
         const scrolled = -rect.top;
 
         if (rect.top <= 0 && scrolled <= totalScroll) {
           const progress = Math.max(0, Math.min(scrolled / totalScroll, 1));
-          setScrollProgress(progress);
+          updateOverlays(progress);
 
-          // Scrub video frame in exact 1:1 synchronization with scroll progress
-          if (video.duration && Number.isFinite(video.duration)) {
-            const targetTime = video.duration * progress;
-            if (Math.abs(video.currentTime - targetTime) > 0.015) {
-              if ('fastSeek' in video && typeof (video as any).fastSeek === 'function') {
-                (video as any).fastSeek(targetTime);
-              } else {
-                video.currentTime = targetTime;
+          if (isMobile) {
+            // Mobile: Smooth hardware playback without decoder seek thrash (Blitzschlag architecture)
+            if (!mobileHasPlayed) {
+              mobileHasPlayed = true;
+              video.currentTime = 0;
+              video.play().catch(() => {});
+            }
+          } else {
+            // Desktop: Exact 1:1 scroll scrubbing
+            if (video.duration && Number.isFinite(video.duration)) {
+              const targetTime = video.duration * progress;
+              if (Math.abs(video.currentTime - targetTime) > 0.02) {
+                if ('fastSeek' in video && typeof (video as any).fastSeek === 'function') {
+                  (video as any).fastSeek(targetTime);
+                } else {
+                  video.currentTime = targetTime;
+                }
               }
             }
           }
         } else if (rect.top > 0) {
-          setScrollProgress(0);
-          if (video.duration && Number.isFinite(video.duration)) {
+          updateOverlays(0);
+          if (isMobile) {
+            if (mobileHasPlayed) {
+              mobileHasPlayed = false;
+              video.pause();
+              video.currentTime = 0;
+            }
+          } else if (video.duration && Number.isFinite(video.duration)) {
             video.currentTime = 0;
           }
         } else if (scrolled > totalScroll) {
-          setScrollProgress(1);
-          if (video.duration && Number.isFinite(video.duration)) {
+          updateOverlays(1);
+          if (isMobile) {
+            if (!video.paused) {
+              video.pause();
+            }
+          } else if (video.duration && Number.isFinite(video.duration)) {
             video.currentTime = video.duration;
           }
         }
@@ -159,7 +227,7 @@ export default function HeroSection() {
       ref={containerRef}
       className="relative w-full"
       style={{
-        height: isMobile ? '390vh' : '420vh',
+        height: isMobile ? '260vh' : '420vh',
         backgroundColor: '#000000',
       }}
     >
@@ -173,7 +241,7 @@ export default function HeroSection() {
           muted
           playsInline
           preload="auto"
-          className="absolute inset-0 w-full h-full object-cover select-none pointer-events-none will-change-contents"
+          className="absolute inset-0 w-full h-full object-cover select-none pointer-events-none will-change-contents transform-gpu"
         />
 
         {/* Ambient Darkened Gradient at Top for Navbar Contrast */}
@@ -181,11 +249,11 @@ export default function HeroSection() {
 
         {/* PHASE 1 OVERLAY (0% to 25% Scroll): Main Hero Branding & Call-to-Actions */}
         <div
-          className="relative z-20 flex flex-col items-center justify-center text-center px-4 max-w-6xl mx-auto transition-all duration-300 pointer-events-auto"
+          ref={phase1Ref}
+          className="relative z-20 flex flex-col items-center justify-center text-center px-4 max-w-6xl mx-auto will-change-transform pointer-events-auto"
           style={{
-            opacity: Math.max(0, 1 - scrollProgress * 4.2),
-            transform: `translateY(${-scrollProgress * 120}px) scale(${1 - scrollProgress * 0.12})`,
-            pointerEvents: scrollProgress > 0.22 ? 'none' : 'auto',
+            opacity: 1,
+            transform: 'translate3d(0, 0px, 0) scale(1)',
           }}
         >
           {/* Floating Retro Decorative Badges (Visible & scaled on both Mobile & Desktop) */}
@@ -212,13 +280,13 @@ export default function HeroSection() {
             <h1 className="sr-only">AARAMBH 2.0</h1>
             
             {/* Warm radiant backglow */}
-            <div className="absolute inset-0 bg-gradient-to-r from-amber-500/20 via-rose-500/25 to-amber-500/20 blur-2xl rounded-full scale-90 sm:scale-105 pointer-events-none -z-10" />
+            <div className="absolute inset-0 bg-gradient-to-r from-amber-500/20 via-rose-500/25 to-amber-500/20 blur-xl rounded-full scale-90 sm:scale-105 pointer-events-none -z-10" />
 
             {/* Official Transparent Emblems */}
             <img
               src="/aarambh_logo_official.png"
               alt="AARAMBH 2.0 - Official Festival Logo"
-              className="w-full h-auto object-contain drop-shadow-[0_8px_25px_rgba(0,0,0,0.85)] filter drop-shadow-[0_0_20px_rgba(245,158,11,0.35)] transition-transform duration-300 group-hover:scale-105"
+              className="w-full h-auto object-contain drop-shadow-[0_8px_20px_rgba(0,0,0,0.8)] transition-transform duration-300 group-hover:scale-105"
             />
           </div>
 
@@ -269,15 +337,11 @@ export default function HeroSection() {
 
         {/* PHASE 2 OVERLAY (28% to 62% Scroll): Cassette Tape & Horn OK Please Milestone */}
         <div
-          className="absolute z-20 bottom-16 sm:bottom-24 left-1/2 -translate-x-1/2 text-center pointer-events-none transition-all duration-300 px-4 w-full max-w-xl"
+          ref={phase2Ref}
+          className="absolute z-20 bottom-16 sm:bottom-24 left-1/2 -translate-x-1/2 text-center pointer-events-none px-4 w-full max-w-xl will-change-transform"
           style={{
-            opacity:
-              scrollProgress >= 0.26 && scrollProgress <= 0.62
-                ? Math.sin(((scrollProgress - 0.26) / 0.36) * Math.PI)
-                : 0,
-            transform: `translate(-50%, ${
-              scrollProgress < 0.44 ? 24 - (scrollProgress - 0.26) * 50 : -((scrollProgress - 0.44) * 50)
-            }px)`,
+            opacity: 0,
+            transform: 'translate3d(-50%, 24px, 0)',
           }}
         >
           <div className="inline-flex items-center gap-2 sm:gap-3 px-4 py-2 sm:px-6 sm:py-2.5 rounded-2xl bg-black/90 border-3 border-amber-400 text-white font-carter text-xs sm:text-lg shadow-[6px_6px_0px_#000] -rotate-1 max-w-[94vw]">
@@ -289,15 +353,11 @@ export default function HeroSection() {
 
         {/* PHASE 3 OVERLAY (66% to 98% Scroll): Tata Truck Back Milestone */}
         <div
-          className="absolute z-20 bottom-16 sm:bottom-24 left-1/2 -translate-x-1/2 text-center pointer-events-none transition-all duration-300 px-4 w-full max-w-xl"
+          ref={phase3Ref}
+          className="absolute z-20 bottom-16 sm:bottom-24 left-1/2 -translate-x-1/2 text-center pointer-events-none px-4 w-full max-w-xl will-change-transform"
           style={{
-            opacity:
-              scrollProgress >= 0.66 && scrollProgress <= 0.98
-                ? Math.sin(((scrollProgress - 0.66) / 0.32) * Math.PI)
-                : 0,
-            transform: `translate(-50%, ${
-              scrollProgress < 0.82 ? 24 - (scrollProgress - 0.66) * 50 : -((scrollProgress - 0.82) * 50)
-            }px)`,
+            opacity: 0,
+            transform: 'translate3d(-50%, 24px, 0)',
           }}
         >
           <div className="inline-flex flex-col sm:flex-row items-center gap-1.5 sm:gap-3 px-4 py-2 sm:px-6 sm:py-2.5 rounded-2xl bg-black/90 border-3 border-rose-500 text-white font-carter text-xs sm:text-lg shadow-[6px_6px_0px_#000] rotate-1 max-w-[94vw]">
@@ -309,8 +369,9 @@ export default function HeroSection() {
 
         {/* Bottom Scroll Prompt Indicator */}
         <div
-          className="absolute bottom-4 left-1/2 -translate-x-1/2 z-20 flex flex-col items-center gap-1 pointer-events-none transition-opacity duration-300"
-          style={{ opacity: scrollProgress < 0.08 ? 1 : Math.max(0, 1 - scrollProgress * 15) }}
+          ref={scrollPromptRef}
+          className="absolute bottom-4 left-1/2 -translate-x-1/2 z-20 flex flex-col items-center gap-1 pointer-events-none will-change-opacity"
+          style={{ opacity: 1 }}
         >
           <span className="font-mono text-[11px] font-bold text-amber-300/90 tracking-widest uppercase bg-black/70 px-3 py-1 rounded-full border border-black shadow-[2px_2px_0px_#000]">
             SCROLL TO EXPLORE
