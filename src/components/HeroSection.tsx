@@ -25,6 +25,8 @@ export default function HeroSection() {
   const cassetteSpoolLeftRef = useRef<HTMLDivElement>(null);
   const cassetteSpoolRightRef = useRef<HTMLDivElement>(null);
 
+  const [scrollProgress, setScrollProgress] = useState(0);
+
   const [isMobile, setIsMobile] = useState(() => {
     if (typeof window !== 'undefined') {
       return window.innerWidth < 800;
@@ -161,7 +163,7 @@ export default function HeroSection() {
       video.addEventListener('seeked', onSeeked);
     }
 
-    const updateOverlays = (progress: number) => {
+    const updateMobileOverlays = (progress: number) => {
       // Phase 1 Overlay (Hero Title, CTAs, Badges)
       if (phase1Ref.current) {
         const op = Math.max(0, 1 - progress * 4.2);
@@ -207,13 +209,6 @@ export default function HeroSection() {
         const op = progress < 0.08 ? 1 : Math.max(0, 1 - progress * 15);
         scrollPromptRef.current.style.opacity = op.toFixed(3);
       }
-
-      // Desktop ONLY: Original Real-Time Camera 3D Perspective Zoom
-      if (!isMobile && video) {
-        const zoom = 1 + progress * 0.14;
-        const panY = -progress * 24;
-        video.style.transform = `scale(${zoom.toFixed(3)}) translate3d(0, ${panY.toFixed(1)}px, 0)`;
-      }
     };
 
     const handleScroll = () => {
@@ -239,13 +234,13 @@ export default function HeroSection() {
 
         if (rect.top <= 0 && scrolled <= totalScroll) {
           const progress = Math.max(0, Math.min(scrolled / totalScroll, 1));
-          updateOverlays(progress);
 
           if (!isMobile) {
             // DESKTOP: Exact original 1:1 scroll scrubbing
+            setScrollProgress(progress);
             if (video.duration && Number.isFinite(video.duration)) {
               const targetTime = video.duration * progress;
-              if (Math.abs(video.currentTime - targetTime) > 0.02) {
+              if (Math.abs(video.currentTime - targetTime) > 0.015) {
                 if ('fastSeek' in video && typeof (video as any).fastSeek === 'function') {
                   (video as any).fastSeek(targetTime);
                 } else {
@@ -254,29 +249,32 @@ export default function HeroSection() {
               }
             }
           } else {
-            // PHONES: High-FPS video scrubbing (0ms RAM blob, no kinetic engine, hardware seek guard)
+            // PHONES: Direct overlay updates + throttled seek queue
+            updateMobileOverlays(progress);
             if (video.duration && Number.isFinite(video.duration)) {
               mobileTargetTime = video.duration * progress;
               performMobileSeek();
             }
           }
         } else if (rect.top > 0) {
-          updateOverlays(0);
           if (!isMobile) {
+            setScrollProgress(0);
             if (video.duration && Number.isFinite(video.duration)) {
               video.currentTime = 0;
             }
           } else {
+            updateMobileOverlays(0);
             mobileTargetTime = 0;
             performMobileSeek();
           }
         } else if (scrolled > totalScroll) {
-          updateOverlays(1);
           if (!isMobile) {
+            setScrollProgress(1);
             if (video.duration && Number.isFinite(video.duration)) {
               video.currentTime = video.duration;
             }
           } else {
+            updateMobileOverlays(1);
             if (video.duration && Number.isFinite(video.duration)) {
               mobileTargetTime = video.duration;
               performMobileSeek();
@@ -315,7 +313,7 @@ export default function HeroSection() {
     >
       {/* Sticky Pinned Viewport Container (100dvh for mobile address bar stability) */}
       <div className="sticky top-0 left-0 w-full h-screen min-h-[100dvh] overflow-hidden flex flex-col items-center justify-center">
-        {/* Cinematic Video Element */}
+        {/* Cinematic Scroll-Scrubbed Video Element */}
         <video
           ref={videoRef}
           src={blobSrc || fallbackSrc}
@@ -323,9 +321,7 @@ export default function HeroSection() {
           muted
           playsInline
           preload="auto"
-          className={`absolute inset-0 w-full h-full object-cover select-none pointer-events-none transform-gpu ${
-            !isMobile ? 'will-change-transform' : ''
-          }`}
+          className="absolute inset-0 w-full h-full object-cover select-none pointer-events-none will-change-contents"
         />
 
         {/* Ambient Darkened Gradient at Top for Navbar Contrast */}
@@ -334,11 +330,19 @@ export default function HeroSection() {
         {/* PHASE 1 OVERLAY (0% to 25% Scroll): Main Hero Branding & Call-to-Actions */}
         <div
           ref={phase1Ref}
-          className="relative z-20 flex flex-col items-center justify-center text-center px-4 max-w-6xl mx-auto will-change-transform pointer-events-auto"
-          style={{
-            opacity: 1,
-            transform: 'translate3d(0, 0px, 0) scale(1)',
-          }}
+          className="relative z-20 flex flex-col items-center justify-center text-center px-4 max-w-6xl mx-auto transition-all duration-300 pointer-events-auto"
+          style={
+            !isMobile
+              ? {
+                  opacity: Math.max(0, 1 - scrollProgress * 4.2),
+                  transform: `translateY(${-scrollProgress * 120}px) scale(${1 - scrollProgress * 0.12})`,
+                  pointerEvents: scrollProgress > 0.22 ? 'none' : 'auto',
+                }
+              : {
+                  opacity: 1,
+                  transform: 'translate3d(0, 0px, 0) scale(1)',
+                }
+          }
         >
           {/* Floating Retro Decorative Badges (Visible & scaled on both Mobile & Desktop) */}
           <div className="absolute -top-10 sm:-top-12 left-1 sm:left-6 flex items-center gap-1.5 sm:gap-2 px-2.5 py-1 sm:px-4 sm:py-2 bg-pink-500 text-white font-carter text-[10px] sm:text-sm rounded-xl sm:rounded-2xl border-2 sm:border-3 border-black shadow-[3px_3px_0px_#000] sm:shadow-[4px_4px_0px_#000] -rotate-12 animate-float pointer-events-none z-30">
@@ -410,11 +414,23 @@ export default function HeroSection() {
         {/* PHASE 2 OVERLAY (24% to 64% Scroll): Cassette Tape & Real-Time Spinning Spool Reels */}
         <div
           ref={phase2Ref}
-          className="absolute z-20 bottom-16 sm:bottom-24 left-1/2 -translate-x-1/2 text-center pointer-events-none px-4 w-full max-w-xl will-change-transform"
-          style={{
-            opacity: 0,
-            transform: 'translate3d(-50%, 24px, 0)',
-          }}
+          className="absolute z-20 bottom-16 sm:bottom-24 left-1/2 -translate-x-1/2 text-center pointer-events-none transition-all duration-300 px-4 w-full max-w-xl"
+          style={
+            !isMobile
+              ? {
+                  opacity:
+                    scrollProgress >= 0.26 && scrollProgress <= 0.62
+                      ? Math.sin(((scrollProgress - 0.26) / 0.36) * Math.PI)
+                      : 0,
+                  transform: `translate(-50%, ${
+                    scrollProgress < 0.44 ? 24 - (scrollProgress - 0.26) * 50 : -((scrollProgress - 0.44) * 50)
+                  }px)`,
+                }
+              : {
+                  opacity: 0,
+                  transform: 'translate3d(-50%, 24px, 0)',
+                }
+          }
         >
           <div className="inline-flex items-center gap-2.5 sm:gap-3.5 px-4 py-2 sm:px-6 sm:py-2.5 rounded-2xl bg-black/90 border-3 border-amber-400 text-white font-carter text-xs sm:text-lg shadow-[6px_6px_0px_#000] -rotate-1 max-w-[94vw]">
             {/* Real-time Spinning Left Cassette Reel */}
@@ -441,11 +457,23 @@ export default function HeroSection() {
         {/* PHASE 3 OVERLAY (66% to 98% Scroll): Tata Truck Back Milestone */}
         <div
           ref={phase3Ref}
-          className="absolute z-20 bottom-16 sm:bottom-24 left-1/2 -translate-x-1/2 text-center pointer-events-none px-4 w-full max-w-xl will-change-transform"
-          style={{
-            opacity: 0,
-            transform: 'translate3d(-50%, 24px, 0)',
-          }}
+          className="absolute z-20 bottom-16 sm:bottom-24 left-1/2 -translate-x-1/2 text-center pointer-events-none transition-all duration-300 px-4 w-full max-w-xl"
+          style={
+            !isMobile
+              ? {
+                  opacity:
+                    scrollProgress >= 0.66 && scrollProgress <= 0.98
+                      ? Math.sin(((scrollProgress - 0.66) / 0.32) * Math.PI)
+                      : 0,
+                  transform: `translate(-50%, ${
+                    scrollProgress < 0.82 ? 24 - (scrollProgress - 0.66) * 50 : -((scrollProgress - 0.82) * 50)
+                  }px)`,
+                }
+              : {
+                  opacity: 0,
+                  transform: 'translate3d(-50%, 24px, 0)',
+                }
+          }
         >
           <div className="inline-flex flex-col sm:flex-row items-center gap-1.5 sm:gap-3 px-4 py-2 sm:px-6 sm:py-2.5 rounded-2xl bg-black/90 border-3 border-rose-500 text-white font-carter text-xs sm:text-lg shadow-[6px_6px_0px_#000] rotate-1 max-w-[94vw]">
             <span className="text-amber-400">BURA NA MANO FRESHERS HAI</span>
@@ -457,8 +485,8 @@ export default function HeroSection() {
         {/* Bottom Scroll Prompt Indicator */}
         <div
           ref={scrollPromptRef}
-          className="absolute bottom-4 left-1/2 -translate-x-1/2 z-20 flex flex-col items-center gap-1 pointer-events-none will-change-opacity"
-          style={{ opacity: 1 }}
+          className="absolute bottom-4 left-1/2 -translate-x-1/2 z-20 flex flex-col items-center gap-1 pointer-events-none transition-opacity duration-300"
+          style={{ opacity: !isMobile ? (scrollProgress < 0.08 ? 1 : Math.max(0, 1 - scrollProgress * 15)) : 1 }}
         >
           <span className="font-mono text-[11px] font-bold text-amber-300/90 tracking-widest uppercase bg-black/70 px-3 py-1 rounded-full border border-black shadow-[2px_2px_0px_#000]">
             SCROLL TO EXPLORE
