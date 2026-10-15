@@ -207,10 +207,20 @@ export default function HeroSection() {
             </span>
           </div>
 
-          {/* Grand 3D Festival Title */}
-          <h1 className="text-4xl sm:text-7xl md:text-8xl lg:text-9xl font-carter tracking-wide text-white drop-shadow-[6px_6px_0px_#000000] sm:drop-shadow-[8px_8px_0px_#000000] uppercase leading-none select-none">
-            AARAMBH <span className="text-amber-400">2.0</span>
-          </h1>
+          {/* Official Grand 3D Festival Logo */}
+          <div className="relative flex flex-col items-center justify-center w-full max-w-sm sm:max-w-xl md:max-w-2xl lg:max-w-3xl xl:max-w-4xl mx-auto my-1 sm:my-2 select-none group">
+            <h1 className="sr-only">AARAMBH 2.0</h1>
+            
+            {/* Warm radiant backglow */}
+            <div className="absolute inset-0 bg-gradient-to-r from-amber-500/20 via-rose-500/25 to-amber-500/20 blur-2xl rounded-full scale-90 sm:scale-105 pointer-events-none -z-10" />
+
+            {/* Official Transparent Emblems */}
+            <img
+              src="/aarambh_logo_official.png"
+              alt="AARAMBH 2.0 - Official Festival Logo"
+              className="w-full h-auto object-contain drop-shadow-[0_8px_25px_rgba(0,0,0,0.85)] filter drop-shadow-[0_0_20px_rgba(245,158,11,0.35)] transition-transform duration-300 group-hover:scale-105"
+            />
+          </div>
 
           {/* Tagline */}
           <p className="mt-2.5 sm:mt-3 text-base sm:text-2xl md:text-3xl font-chewy text-amber-200 tracking-wide max-w-2xl drop-shadow-[2px_2px_0px_#000]">
