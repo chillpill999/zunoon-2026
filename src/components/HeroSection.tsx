@@ -12,7 +12,10 @@ import {
 } from 'lucide-react';
 import { FEST_CONFIG } from '@/data/config';
 
-let cachedDeskBlobUrl: string | null = null;
+const cachedBlobUrls: { desk: string | null; mob: string | null } = {
+  desk: null,
+  mob: null,
+};
 
 export default function HeroSection() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -32,8 +35,9 @@ export default function HeroSection() {
   });
 
   const [blobSrc, setBlobSrc] = useState<string | null>(() => {
-    if (typeof window !== 'undefined' && window.innerWidth >= 800) {
-      return cachedDeskBlobUrl;
+    if (typeof window !== 'undefined') {
+      const mob = window.innerWidth < 800;
+      return mob ? cachedBlobUrls.mob : cachedBlobUrls.desk;
     }
     return null;
   });
@@ -48,26 +52,27 @@ export default function HeroSection() {
     return () => window.removeEventListener('resize', checkMobile);
   }, []);
 
-  // Desktop only: Preload video into Blob URL for instant zero-latency frame scrubbing
+  // Preload video into in-memory Blob URL for zero-latency instant scrubbing (Mobile & Desktop)
   useEffect(() => {
-    if (isMobile) return;
     let active = true;
+    const targetKey = isMobile ? 'mob' : 'desk';
+    const targetFile = isMobile ? '/home_mob.mp4' : '/home.mp4';
 
-    if (cachedDeskBlobUrl) {
-      setBlobSrc(cachedDeskBlobUrl);
+    if (cachedBlobUrls[targetKey]) {
+      setBlobSrc(cachedBlobUrls[targetKey]);
       return;
     }
 
-    fetch('/home.mp4')
+    fetch(targetFile)
       .then((res) => res.blob())
       .then((blob) => {
         if (!active) return;
         const url = URL.createObjectURL(blob);
-        cachedDeskBlobUrl = url;
+        cachedBlobUrls[targetKey] = url;
         setBlobSrc(url);
       })
       .catch((err) => {
-        console.warn('Desktop video blob preload error, falling back to direct stream:', err);
+        console.warn('Video blob preload error, falling back to direct stream:', err);
       });
 
     return () => {
@@ -75,10 +80,10 @@ export default function HeroSection() {
     };
   }, [isMobile]);
 
-  // Seamlessly transition video src on desktop when blob arrives
+  // Seamlessly transition video src when blob arrives
   useEffect(() => {
     const video = videoRef.current;
-    if (!video || !blobSrc || isMobile) return;
+    if (!video || !blobSrc) return;
     if (video.src !== blobSrc) {
       const currentTime = video.currentTime;
       video.src = blobSrc;
@@ -86,17 +91,54 @@ export default function HeroSection() {
         video.currentTime = currentTime;
       }
     }
-  }, [blobSrc, isMobile]);
+  }, [blobSrc]);
 
-  // Real-Time Scroll Controller (Scroll-Velocity Kinematics on Mobile, 1:1 Scrubbing on Desktop)
+  // Ultra-Fast 60fps Scroll-Scrubbing Controller for Mobile & Desktop
   useEffect(() => {
     const video = videoRef.current;
     const container = containerRef.current;
     if (!video || !container) return;
 
     let rafId: number | null = null;
-    let lastScrolled = 0;
-    let scrollStopTimer: ReturnType<typeof setTimeout> | null = null;
+    let targetTime = 0;
+    let isSeeking = false;
+    let seekTimeoutId: ReturnType<typeof setTimeout> | null = null;
+
+    const performSeek = () => {
+      if (!video) return;
+      const duration = video.duration;
+      if (!duration || !Number.isFinite(duration)) return;
+
+      const clampedTime = Math.max(0, Math.min(targetTime, duration));
+      const diff = Math.abs(video.currentTime - clampedTime);
+
+      // Seek when difference is greater than ~1 frame (0.016s)
+      if (diff > 0.016) {
+        if (isSeeking || video.seeking) return;
+        isSeeking = true;
+
+        if ('fastSeek' in video && typeof (video as any).fastSeek === 'function') {
+          (video as any).fastSeek(clampedTime);
+        } else {
+          video.currentTime = clampedTime;
+        }
+
+        // Failsafe timeout in case seeked event doesn't fire
+        if (seekTimeoutId) clearTimeout(seekTimeoutId);
+        seekTimeoutId = setTimeout(() => {
+          isSeeking = false;
+        }, 50);
+      }
+    };
+
+    const onSeeked = () => {
+      isSeeking = false;
+      if (seekTimeoutId) clearTimeout(seekTimeoutId);
+      // Immediately catch up if scroll position shifted during previous seek
+      performSeek();
+    };
+
+    video.addEventListener('seeked', onSeeked);
 
     const updateOverlays = (progress: number) => {
       // Phase 1 Overlay (Hero Title, CTAs, Badges)
@@ -120,7 +162,7 @@ export default function HeroSection() {
         phase2Ref.current.style.transform = `translate3d(-50%, ${ty.toFixed(1)}px, 0)`;
       }
 
-      // Real-time Rotating Cassette Spools (Wind forward on scroll down, rewind on scroll up)
+      // Real-time Rotating Cassette Spools
       if (cassetteSpoolLeftRef.current) {
         cassetteSpoolLeftRef.current.style.transform = `rotate(${(progress * 1440).toFixed(1)}deg)`;
       }
@@ -144,13 +186,6 @@ export default function HeroSection() {
         const op = progress < 0.08 ? 1 : Math.max(0, 1 - progress * 15);
         scrollPromptRef.current.style.opacity = op.toFixed(3);
       }
-
-      // Real-Time Camera 3D Perspective Zoom (Tied 1:1 to scroll progress without seeking!)
-      if (video) {
-        const zoom = 1 + progress * 0.14;
-        const panY = -progress * 24;
-        video.style.transform = `scale(${zoom.toFixed(3)}) translate3d(0, ${panY.toFixed(1)}px, 0)`;
-      }
     };
 
     const handleScroll = () => {
@@ -165,11 +200,8 @@ export default function HeroSection() {
         const rect = container.getBoundingClientRect();
         const viewportHeight = window.innerHeight || document.documentElement.clientHeight;
 
-        // Offscreen Guard: If hero is completely scrolled past, pause video and do zero work
+        // Offscreen Guard: If hero is completely scrolled past, do zero work
         if (rect.bottom <= 0) {
-          if (!video.paused) {
-            video.pause();
-          }
           rafId = null;
           return;
         }
@@ -181,71 +213,19 @@ export default function HeroSection() {
           const progress = Math.max(0, Math.min(scrolled / totalScroll, 1));
           updateOverlays(progress);
 
-          if (isMobile) {
-            // Real-Time Kinetic Velocity Engine for Mobile:
-            // The video plays forward in real time as the user scrolls, scaling with scroll speed!
-            // When the user stops scrolling, it gracefully halts on that frame!
-            const scrollDelta = scrolled - lastScrolled;
-            lastScrolled = scrolled;
-
-            if (scrollDelta > 0) {
-              // Scrolling down: drive video forward with speed proportional to thumb velocity
-              const velocityRate = Math.min(2.4, Math.max(0.85, 0.85 + scrollDelta * 0.04));
-              if (video.paused) {
-                video.play().catch(() => {});
-              }
-              video.playbackRate = velocityRate;
-
-              if (scrollStopTimer) clearTimeout(scrollStopTimer);
-              scrollStopTimer = setTimeout(() => {
-                if (video && !video.paused) {
-                  video.pause();
-                }
-              }, 140);
-            } else if (scrollDelta < 0) {
-              // Scrolling up: pause forward playback
-              if (!video.paused) {
-                video.pause();
-              }
-            }
-
-            if (progress >= 0.98 && !video.paused) {
-              video.pause();
-            }
-          } else {
-            // Desktop: Exact 1:1 scroll scrubbing
-            if (video.duration && Number.isFinite(video.duration)) {
-              const targetTime = video.duration * progress;
-              if (Math.abs(video.currentTime - targetTime) > 0.02) {
-                if ('fastSeek' in video && typeof (video as any).fastSeek === 'function') {
-                  (video as any).fastSeek(targetTime);
-                } else {
-                  video.currentTime = targetTime;
-                }
-              }
-            }
+          if (video.duration && Number.isFinite(video.duration)) {
+            targetTime = video.duration * progress;
+            performSeek();
           }
         } else if (rect.top > 0) {
           updateOverlays(0);
-          lastScrolled = 0;
-          if (isMobile) {
-            if (!video.paused) {
-              video.pause();
-            }
-            if (video.currentTime > 0) {
-              video.currentTime = 0;
-            }
-          } else if (video.duration && Number.isFinite(video.duration)) {
-            video.currentTime = 0;
-          }
+          targetTime = 0;
+          performSeek();
         } else if (scrolled > totalScroll) {
           updateOverlays(1);
-          if (isMobile) {
-            if (!video.paused) {
-              video.pause();
-            }
-          } else if (video.duration && Number.isFinite(video.duration)) {
-            video.currentTime = video.duration;
+          if (video.duration && Number.isFinite(video.duration)) {
+            targetTime = video.duration;
+            performSeek();
           }
         }
 
@@ -259,8 +239,9 @@ export default function HeroSection() {
 
     return () => {
       window.removeEventListener('scroll', handleScroll);
+      video.removeEventListener('seeked', onSeeked);
       if (rafId) cancelAnimationFrame(rafId);
-      if (scrollStopTimer) clearTimeout(scrollStopTimer);
+      if (seekTimeoutId) clearTimeout(seekTimeoutId);
     };
   }, [blobSrc, isMobile]);
 
@@ -271,13 +252,13 @@ export default function HeroSection() {
       ref={containerRef}
       className="relative w-full"
       style={{
-        height: isMobile ? '270vh' : '420vh',
+        height: isMobile ? '320vh' : '420vh',
         backgroundColor: '#000000',
       }}
     >
       {/* Sticky Pinned Viewport Container (100dvh for mobile address bar stability) */}
       <div className="sticky top-0 left-0 w-full h-screen min-h-[100dvh] overflow-hidden flex flex-col items-center justify-center">
-        {/* Cinematic Video Element with 1:1 Real-time Camera Perspective Zoom */}
+        {/* Cinematic Video Element with 1:1 Pixel-Perfect Native Scrubbing */}
         <video
           ref={videoRef}
           src={blobSrc || fallbackSrc}
@@ -285,7 +266,7 @@ export default function HeroSection() {
           muted
           playsInline
           preload="auto"
-          className="absolute inset-0 w-full h-full object-cover select-none pointer-events-none will-change-transform transform-gpu"
+          className="absolute inset-0 w-full h-full object-cover select-none pointer-events-none transform-gpu"
         />
 
         {/* Ambient Darkened Gradient at Top for Navbar Contrast */}
