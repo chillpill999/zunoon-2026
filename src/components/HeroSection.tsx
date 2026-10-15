@@ -22,6 +22,8 @@ export default function HeroSection() {
   const phase2Ref = useRef<HTMLDivElement>(null);
   const phase3Ref = useRef<HTMLDivElement>(null);
   const scrollPromptRef = useRef<HTMLDivElement>(null);
+  const cassetteSpoolLeftRef = useRef<HTMLDivElement>(null);
+  const cassetteSpoolRightRef = useRef<HTMLDivElement>(null);
 
   const [isMobile, setIsMobile] = useState(() => {
     if (typeof window !== 'undefined') {
@@ -87,35 +89,44 @@ export default function HeroSection() {
     }
   }, [blobSrc, isMobile]);
 
-  // Unified 60fps Scroll Controller (Hardware Playback on Mobile, Scrubbing on Desktop)
+  // Real-Time Scroll Controller (Scroll-Velocity Kinematics on Mobile, 1:1 Scrubbing on Desktop)
   useEffect(() => {
     const video = videoRef.current;
     const container = containerRef.current;
     if (!video || !container) return;
 
     let rafId: number | null = null;
-    let mobileHasPlayed = false;
+    let lastScrolled = 0;
+    let scrollStopTimer: ReturnType<typeof setTimeout> | null = null;
 
     const updateOverlays = (progress: number) => {
-      // Phase 1 Overlay
+      // Phase 1 Overlay (Hero Title, CTAs, Badges)
       if (phase1Ref.current) {
         const op = Math.max(0, 1 - progress * 4.2);
-        const ty = -progress * 120;
+        const ty = -progress * 130;
         const sc = 1 - progress * 0.12;
         phase1Ref.current.style.opacity = op.toFixed(3);
         phase1Ref.current.style.transform = `translate3d(0, ${ty.toFixed(1)}px, 0) scale(${sc.toFixed(3)})`;
         phase1Ref.current.style.pointerEvents = progress > 0.22 ? 'none' : 'auto';
       }
 
-      // Phase 2 Overlay (Cassette Tape)
+      // Phase 2 Overlay (Cassette Tape & Horn OK Please Milestone)
       if (phase2Ref.current) {
         const op =
-          progress >= 0.26 && progress <= 0.62
-            ? Math.sin(((progress - 0.26) / 0.36) * Math.PI)
+          progress >= 0.24 && progress <= 0.64
+            ? Math.sin(((progress - 0.24) / 0.4) * Math.PI)
             : 0;
-        const ty = progress < 0.44 ? 24 - (progress - 0.26) * 50 : -((progress - 0.44) * 50);
+        const ty = progress < 0.44 ? 24 - (progress - 0.24) * 50 : -((progress - 0.44) * 50);
         phase2Ref.current.style.opacity = op.toFixed(3);
         phase2Ref.current.style.transform = `translate3d(-50%, ${ty.toFixed(1)}px, 0)`;
+      }
+
+      // Real-time Rotating Cassette Spools (Wind forward on scroll down, rewind on scroll up)
+      if (cassetteSpoolLeftRef.current) {
+        cassetteSpoolLeftRef.current.style.transform = `rotate(${(progress * 1440).toFixed(1)}deg)`;
+      }
+      if (cassetteSpoolRightRef.current) {
+        cassetteSpoolRightRef.current.style.transform = `rotate(${(progress * 1440).toFixed(1)}deg)`;
       }
 
       // Phase 3 Overlay (Tata Truck Back Milestone)
@@ -133,6 +144,13 @@ export default function HeroSection() {
       if (scrollPromptRef.current) {
         const op = progress < 0.08 ? 1 : Math.max(0, 1 - progress * 15);
         scrollPromptRef.current.style.opacity = op.toFixed(3);
+      }
+
+      // Real-Time Camera 3D Perspective Zoom (Tied 1:1 to scroll progress without seeking!)
+      if (video) {
+        const zoom = 1 + progress * 0.14;
+        const panY = -progress * 24;
+        video.style.transform = `scale(${zoom.toFixed(3)}) translate3d(0, ${panY.toFixed(1)}px, 0)`;
       }
     };
 
@@ -165,11 +183,35 @@ export default function HeroSection() {
           updateOverlays(progress);
 
           if (isMobile) {
-            // Mobile: Smooth hardware playback without decoder seek thrash (Blitzschlag architecture)
-            if (!mobileHasPlayed) {
-              mobileHasPlayed = true;
-              video.currentTime = 0;
-              video.play().catch(() => {});
+            // Real-Time Kinetic Velocity Engine for Mobile:
+            // The video plays forward in real time as the user scrolls, scaling with scroll speed!
+            // When the user stops scrolling, it gracefully halts on that frame!
+            const scrollDelta = scrolled - lastScrolled;
+            lastScrolled = scrolled;
+
+            if (scrollDelta > 0) {
+              // Scrolling down: drive video forward with speed proportional to thumb velocity
+              const velocityRate = Math.min(2.4, Math.max(0.85, 0.85 + scrollDelta * 0.04));
+              if (video.paused) {
+                video.play().catch(() => {});
+              }
+              video.playbackRate = velocityRate;
+
+              if (scrollStopTimer) clearTimeout(scrollStopTimer);
+              scrollStopTimer = setTimeout(() => {
+                if (video && !video.paused) {
+                  video.pause();
+                }
+              }, 140);
+            } else if (scrollDelta < 0) {
+              // Scrolling up: pause forward playback
+              if (!video.paused) {
+                video.pause();
+              }
+            }
+
+            if (progress >= 0.98 && !video.paused) {
+              video.pause();
             }
           } else {
             // Desktop: Exact 1:1 scroll scrubbing
@@ -186,10 +228,12 @@ export default function HeroSection() {
           }
         } else if (rect.top > 0) {
           updateOverlays(0);
+          lastScrolled = 0;
           if (isMobile) {
-            if (mobileHasPlayed) {
-              mobileHasPlayed = false;
+            if (!video.paused) {
               video.pause();
+            }
+            if (video.currentTime > 0) {
               video.currentTime = 0;
             }
           } else if (video.duration && Number.isFinite(video.duration)) {
@@ -217,6 +261,7 @@ export default function HeroSection() {
     return () => {
       window.removeEventListener('scroll', handleScroll);
       if (rafId) cancelAnimationFrame(rafId);
+      if (scrollStopTimer) clearTimeout(scrollStopTimer);
     };
   }, [blobSrc, isMobile]);
 
@@ -227,13 +272,13 @@ export default function HeroSection() {
       ref={containerRef}
       className="relative w-full"
       style={{
-        height: isMobile ? '260vh' : '420vh',
+        height: isMobile ? '270vh' : '420vh',
         backgroundColor: '#000000',
       }}
     >
       {/* Sticky Pinned Viewport Container (100dvh for mobile address bar stability) */}
       <div className="sticky top-0 left-0 w-full h-screen min-h-[100dvh] overflow-hidden flex flex-col items-center justify-center">
-        {/* Cinematic Scroll-Scrubbed Video Element */}
+        {/* Cinematic Video Element with 1:1 Real-time Camera Perspective Zoom */}
         <video
           ref={videoRef}
           src={blobSrc || fallbackSrc}
@@ -241,7 +286,7 @@ export default function HeroSection() {
           muted
           playsInline
           preload="auto"
-          className="absolute inset-0 w-full h-full object-cover select-none pointer-events-none will-change-contents transform-gpu"
+          className="absolute inset-0 w-full h-full object-cover select-none pointer-events-none will-change-transform transform-gpu"
         />
 
         {/* Ambient Darkened Gradient at Top for Navbar Contrast */}
@@ -335,7 +380,7 @@ export default function HeroSection() {
           </div>
         </div>
 
-        {/* PHASE 2 OVERLAY (28% to 62% Scroll): Cassette Tape & Horn OK Please Milestone */}
+        {/* PHASE 2 OVERLAY (24% to 64% Scroll): Cassette Tape & Real-Time Spinning Spool Reels */}
         <div
           ref={phase2Ref}
           className="absolute z-20 bottom-16 sm:bottom-24 left-1/2 -translate-x-1/2 text-center pointer-events-none px-4 w-full max-w-xl will-change-transform"
@@ -344,10 +389,25 @@ export default function HeroSection() {
             transform: 'translate3d(-50%, 24px, 0)',
           }}
         >
-          <div className="inline-flex items-center gap-2 sm:gap-3 px-4 py-2 sm:px-6 sm:py-2.5 rounded-2xl bg-black/90 border-3 border-amber-400 text-white font-carter text-xs sm:text-lg shadow-[6px_6px_0px_#000] -rotate-1 max-w-[94vw]">
-            <span className="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-rose-500 animate-ping shrink-0" />
+          <div className="inline-flex items-center gap-2.5 sm:gap-3.5 px-4 py-2 sm:px-6 sm:py-2.5 rounded-2xl bg-black/90 border-3 border-amber-400 text-white font-carter text-xs sm:text-lg shadow-[6px_6px_0px_#000] -rotate-1 max-w-[94vw]">
+            {/* Real-time Spinning Left Cassette Reel */}
+            <div
+              ref={cassetteSpoolLeftRef}
+              className="w-5 h-5 sm:w-6 sm:h-6 rounded-full border-2 border-dashed border-amber-400 bg-amber-500/20 flex items-center justify-center shrink-0 will-change-transform"
+            >
+              <span className="w-1.5 h-1.5 rounded-full bg-amber-400" />
+            </div>
+
             <span className="text-amber-300 shrink-0">SIDE A:</span>
             <span className="tracking-wide truncate">HORN OK PLEASE • CASSETTE MIXTAPE 2026</span>
+
+            {/* Real-time Spinning Right Cassette Reel */}
+            <div
+              ref={cassetteSpoolRightRef}
+              className="w-5 h-5 sm:w-6 sm:h-6 rounded-full border-2 border-dashed border-rose-400 bg-rose-500/20 flex items-center justify-center shrink-0 will-change-transform"
+            >
+              <span className="w-1.5 h-1.5 rounded-full bg-rose-400" />
+            </div>
           </div>
         </div>
 
