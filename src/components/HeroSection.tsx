@@ -7,7 +7,6 @@ import {
   Ticket,
   Trophy,
   ArrowRight,
-  Play,
   ChevronDown,
   GraduationCap,
 } from 'lucide-react';
@@ -365,18 +364,6 @@ export default function HeroSection() {
               <span>EXPLORE FEST</span>
               <ArrowRight className="w-5 h-5 shrink-0" />
             </a>
-
-            <button
-              onClick={() => {
-                sessionStorage.removeItem('aarambh_intro_seen');
-                sessionStorage.removeItem('zunoon_intro_seen');
-                window.dispatchEvent(new CustomEvent('replay-aarambh-intro'));
-              }}
-              className="comic-btn px-5 py-3 sm:py-3.5 rounded-2xl bg-indigo-600 hover:bg-indigo-500 text-white font-carter text-xs sm:text-base uppercase tracking-wide flex items-center justify-center gap-2 -rotate-1 cursor-pointer min-h-[44px]"
-            >
-              <Play className="w-4 h-4 fill-white shrink-0" />
-              <span>REPLAY INTRO</span>
-            </button>
           </div>
         </div>
 
