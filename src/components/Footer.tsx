@@ -60,8 +60,8 @@ export default function Footer() {
               </Link>
             </li>
             <li>
-              <Link href="/#activities" className="hover:text-amber-400 transition-colors">
-                Activities & Pageant
+              <Link href="/#events" className="hover:text-amber-400 transition-colors">
+                Events & Competitions (29 Events)
               </Link>
             </li>
             <li>
@@ -75,8 +75,8 @@ export default function Footer() {
               </Link>
             </li>
             <li>
-              <Link href="/#register" className="hover:text-amber-400 transition-colors">
-                Free Registration
+              <Link href="/#events" className="hover:text-amber-400 transition-colors font-bold text-amber-300">
+                Register for Events
               </Link>
             </li>
           </ul>
@@ -103,20 +103,26 @@ export default function Footer() {
 
         {/* Col 4: Entry Notice */}
         <div className="space-y-3">
-          <p className="font-carter text-base sm:text-lg text-amber-400 tracking-wide">Admission Policy</p>
+          <p className="font-carter text-base sm:text-lg text-amber-400 tracking-wide">Competition Desk</p>
           <div className="p-4 rounded-2xl bg-[#140b2e] border-2 border-black text-xs font-mono text-purple-200/90 space-y-2 shadow-[3px_3px_0px_#000]">
             <p className="text-emerald-400 font-bold flex items-center gap-1.5">
               <Ticket className="w-3.5 h-3.5" /> 100% Free Festival
             </p>
             <p className="text-[11px] leading-relaxed">
-              No payment or paid passes exist. Generate your free digital pass and present your LNJPIT ID card at the gate.
+              No registration charges exist. Free participation across 5 student clubs and 29 competitions. Present your LNJPIT ID card at the venues.
             </p>
             <div className="flex flex-col gap-1.5">
               <Link
-                href="/pass"
+                href="/#events"
                 className="inline-block mt-1 text-amber-400 underline underline-offset-4 hover:text-amber-300 font-bold text-[11px]"
               >
-                Access Your Digital Pass →
+                Register for Competitions →
+              </Link>
+              <Link
+                href="/pass"
+                className="inline-block text-purple-300 hover:text-amber-400 font-mono text-[10px] opacity-80 hover:opacity-100 transition-opacity"
+              >
+                Access Digital Gate Pass →
               </Link>
               <Link
                 href="/scan"

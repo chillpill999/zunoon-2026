@@ -1,11 +1,10 @@
 import HeroSection from '@/components/HeroSection';
 import Marquee from '@/components/Marquee';
 import AboutSection from '@/components/AboutSection';
-import ActivitiesSection from '@/components/ActivitiesSection';
+import EventRegistrationPortal from '@/components/EventRegistrationPortal';
 import ScheduleSection from '@/components/ScheduleSection';
 import CubeSection from '@/components/CubeSection';
 import GallerySection from '@/components/GallerySection';
-import RegistrationSection from '@/components/RegistrationSection';
 import FaqSection from '@/components/FaqSection';
 import TeamSection from '@/components/TeamSection';
 
@@ -21,10 +20,10 @@ export default function HomePage() {
       {/* 3. ABOUT AARAMBH 2.0 & LNJPIT CHAPRA TAPESTRY (Frames 08 & 12) */}
       <AboutSection />
 
-      {/* 4. FEST ACTIVITIES & COMPETITIONS */}
-      <ActivitiesSection />
+      {/* 4. BLITZSCHLAG-STYLE CATEGORY-WISE EVENT REGISTRATION (5 Clubs & 29 Competitions) */}
+      <EventRegistrationPortal />
 
-      {/* 5. INTERACTIVE 3D ROTATING PHOTO CUBE - StEP INTO THE AARAMBH-VERSE (Frame 09) */}
+      {/* 5. INTERACTIVE 3D ROTATING PHOTO CUBE - STEP INTO THE AARAMBH-VERSE (Frame 09) */}
       <CubeSection />
 
       {/* 6. FESTIVAL SCHEDULE & TIMELINE */}
@@ -33,13 +32,10 @@ export default function HomePage() {
       {/* 7. VISUAL STORYTELLING GALLERY */}
       <GallerySection />
 
-      {/* 8. 100% FREE REGISTRATION & INSTANT QR PASS GENERATOR */}
-      <RegistrationSection />
-
-      {/* 9. FAQ ACCORDION */}
+      {/* 8. FAQ ACCORDION */}
       <FaqSection />
 
-      {/* 10. LEADERSHIP & COMMITTEE CAROUSEL (Frame 10) */}
+      {/* 9. LEADERSHIP & COMMITTEE CAROUSEL (Frame 10) */}
       <TeamSection />
     </div>
   );

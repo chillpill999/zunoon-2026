@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
-import { Ticket } from 'lucide-react';
+import { Trophy } from 'lucide-react';
 import { FEST_CONFIG } from '@/data/config';
 
 interface NavItem {
@@ -12,7 +12,7 @@ interface NavItem {
 
 const NAV_ITEMS: NavItem[] = [
   { label: 'About', href: '/#about' },
-  { label: 'Activities', href: '/#activities' },
+  { label: 'Events', href: '/#events' },
   { label: 'Schedule', href: '/#schedule' },
   { label: 'Gallery', href: '/#gallery' },
   { label: 'FAQ', href: '/#faq' },
@@ -54,24 +54,14 @@ export default function Navbar() {
             ))}
           </nav>
 
-          {/* Action Controls: My Pass & Free Register */}
+          {/* Action Controls: Register for Events */}
           <div className="flex items-center gap-1.5 sm:gap-3 shrink-0">
-            <Link
-              href="/pass"
-              className="h-8 sm:h-9 px-2.5 sm:px-4 rounded-full bg-white/15 hover:bg-white/25 border border-white/40 text-white font-carter text-xs sm:text-sm uppercase shadow-[0_2px_10px_rgba(0,0,0,0.2)] hover:scale-105 active:scale-95 transition-all backdrop-blur-md flex items-center justify-center gap-1.5 shrink-0"
-              title="View my digital attendance pass"
-              aria-label="View digital attendance pass"
-            >
-              <Ticket className="w-3.5 h-3.5 sm:w-4 sm:h-4 shrink-0 text-amber-300" />
-              <span className="hidden sm:inline">My Pass</span>
-            </Link>
-
             <a
-              href="#register"
-              className="h-8 sm:h-9 px-3 sm:px-4 rounded-full bg-amber-400 hover:bg-amber-300 text-black font-carter text-xs sm:text-sm uppercase border-2 border-black shadow-[2px_2px_0px_#000] hover:scale-105 active:scale-95 transition-all flex items-center justify-center gap-1 shrink-0 whitespace-nowrap"
+              href="/#events"
+              className="h-8 sm:h-9 px-3 sm:px-4 rounded-full bg-amber-400 hover:bg-amber-300 text-black font-carter text-xs sm:text-sm uppercase border-2 border-black shadow-[2px_2px_0px_#000] hover:scale-105 active:scale-95 transition-all flex items-center justify-center gap-1.5 shrink-0 whitespace-nowrap"
             >
-              <span>Register</span>
-              <span className="hidden sm:inline">Free</span>
+              <Trophy className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-black shrink-0" />
+              <span>Register for Events</span>
             </a>
 
             {/* Mobile Menu Toggle - Two clean horizontal bars matching Blitzschlag */}
@@ -106,21 +96,14 @@ export default function Navbar() {
                 <span>{item.label}</span>
               </Link>
             ))}
-            <div className="pt-2 border-t border-white/20 flex gap-2">
-              <Link
-                href="/pass"
-                onClick={() => setMobileOpen(false)}
-                className="flex-1 py-2.5 bg-white/15 hover:bg-white/25 border border-white/30 text-white font-carter text-center text-xs uppercase rounded-xl flex items-center justify-center gap-1.5"
-              >
-                <Ticket className="w-4 h-4 text-amber-300" />
-                <span>View Pass</span>
-              </Link>
+            <div className="pt-2 border-t border-white/20">
               <a
-                href="#register"
+                href="/#events"
                 onClick={() => setMobileOpen(false)}
-                className="flex-1 py-2.5 bg-amber-400 hover:bg-amber-300 text-black font-carter text-center text-xs uppercase rounded-xl border border-black shadow-[2px_2px_0px_#000]"
+                className="w-full py-2.5 bg-amber-400 hover:bg-amber-300 text-black font-carter text-center text-xs uppercase rounded-xl border border-black shadow-[2px_2px_0px_#000] flex items-center justify-center gap-1.5"
               >
-                Register Free
+                <Trophy className="w-4 h-4 text-black" />
+                <span>Register for Events</span>
               </a>
             </div>
           </div>

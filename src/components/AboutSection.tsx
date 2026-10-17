@@ -58,11 +58,11 @@ export default function AboutSection() {
                 </p>
                 <div className="mt-4 flex flex-wrap items-center justify-center gap-3">
                   <a
-                    href="#register"
+                    href="#events"
                     className="comic-btn px-6 py-2.5 rounded-xl bg-amber-400 hover:bg-amber-300 text-black font-carter text-sm uppercase tracking-wide inline-flex items-center gap-2 -rotate-1"
                   >
-                    <Ticket className="w-4 h-4" />
-                    <span>CLAIM FREE PASS</span>
+                    <Trophy className="w-4 h-4" />
+                    <span>REGISTER FOR EVENTS</span>
                   </a>
                 </div>
               </div>

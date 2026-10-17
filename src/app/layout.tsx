@@ -31,11 +31,11 @@ const spaceGrotesk = Space_Grotesk({
 
 export const metadata: Metadata = {
   title: "AARAMBH 2.0 | College Freshers Fest — LNJPIT Chapra",
-  description: "Official portal for AARAMBH 2.0, the Annual Freshers Fest of Loknayak Jai Prakash Institute of Technology (LNJPIT), Chapra, Bihar. A New Chapter. One Campus. Endless Memories. Free Digital Attendance Passes.",
-  keywords: ["Aarambh 2.0", "Aarambh", "LNJPIT Chapra", "Freshers Fest", "College Fest", "Free Pass", "Bihar Engineering", "Pronites", "Competitions"],
+  description: "Official portal for AARAMBH 2.0, the Annual Freshers Fest of Loknayak Jai Prakash Institute of Technology (LNJPIT), Chapra, Bihar. 5 Student Clubs, 29 Major Competitions, and 100% Free Event Registration.",
+  keywords: ["Aarambh 2.0", "Aarambh", "LNJPIT Chapra", "Freshers Fest", "College Fest", "Event Registration", "Competitions", "Literary Club", "Technical Club", "Sports Club", "Art Club", "Cultural Club"],
   openGraph: {
     title: "AARAMBH 2.0 | LNJPIT Chapra Freshers Fest",
-    description: "A New Chapter. One Campus. Endless Memories. Claim your free digital attendance pass for AARAMBH 2.0 at LNJPIT Chapra.",
+    description: "A New Chapter. One Campus. Endless Memories. Register for 29 competitions across 5 student clubs at LNJPIT Chapra.",
     type: "website",
     locale: "en_IN",
     siteName: "AARAMBH 2.0",
@@ -43,7 +43,7 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "AARAMBH 2.0 | LNJPIT Chapra Freshers Fest",
-    description: "A New Chapter. One Campus. Endless Memories. 100% Free Entry & Digital Passes.",
+    description: "Official College Cultural Festival. 5 Student Clubs & 29 Competitions. Register Now.",
   },
 };
 

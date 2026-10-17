@@ -394,11 +394,11 @@ export default function HeroSection() {
           {/* Call to Actions */}
           <div className="mt-6 sm:mt-8 flex flex-col sm:flex-row items-stretch sm:items-center justify-center gap-2.5 sm:gap-4 w-full sm:w-auto max-w-xs sm:max-w-none">
             <a
-              href="#register"
+              href="#events"
               className="comic-btn px-6 py-3 sm:px-7 sm:py-3.5 rounded-2xl bg-amber-400 hover:bg-amber-300 text-black font-carter text-sm sm:text-lg uppercase tracking-wide flex items-center justify-center gap-2 -rotate-1 sm:-rotate-2 min-h-[48px]"
             >
-              <Ticket className="w-5 h-5 shrink-0" />
-              <span>GET FREE PASS</span>
+              <Trophy className="w-5 h-5 shrink-0" />
+              <span>REGISTER FOR EVENTS</span>
             </a>
 
             <a
