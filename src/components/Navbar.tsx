@@ -2,12 +2,13 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
-import { Trophy } from 'lucide-react';
+import { Trophy, Heart, ExternalLink } from 'lucide-react';
 import { FEST_CONFIG } from '@/data/config';
 
 interface NavItem {
   label: string;
   href: string;
+  external?: boolean;
 }
 
 const NAV_ITEMS: NavItem[] = [
@@ -15,6 +16,7 @@ const NAV_ITEMS: NavItem[] = [
   { label: 'Events', href: '/#events' },
   { label: 'Schedule', href: '/#schedule' },
   { label: 'Gallery', href: '/#gallery' },
+  { label: 'Confessions', href: 'https://www.confessionlnjpit.in/', external: true },
   { label: 'FAQ', href: '/#faq' },
   { label: 'Team', href: '/#team' },
 ];
@@ -43,25 +45,52 @@ export default function Navbar() {
 
           {/* Desktop Frosted Glass Navigation Links */}
           <nav className="hidden lg:flex items-center gap-1 xl:gap-2">
-            {NAV_ITEMS.map((item) => (
-              <Link
-                key={item.label}
-                href={item.href}
-                className="px-3.5 py-1.5 rounded-full font-carter text-sm uppercase tracking-wider text-white/90 hover:text-white hover:bg-white/15 transition-all duration-200 drop-shadow-[0_1px_2px_rgba(0,0,0,0.5)]"
-              >
-                {item.label}
-              </Link>
-            ))}
+            {NAV_ITEMS.map((item) =>
+              item.external ? (
+                <a
+                  key={item.label}
+                  href={item.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="px-3 py-1.5 rounded-full font-carter text-sm uppercase tracking-wider text-rose-300 hover:text-white hover:bg-rose-500/20 transition-all duration-200 drop-shadow-[0_1px_2px_rgba(0,0,0,0.5)] flex items-center gap-1"
+                >
+                  <Heart className="w-3.5 h-3.5 text-rose-400 fill-rose-400" />
+                  <span>{item.label}</span>
+                </a>
+              ) : (
+                <Link
+                  key={item.label}
+                  href={item.href}
+                  className="px-3.5 py-1.5 rounded-full font-carter text-sm uppercase tracking-wider text-white/90 hover:text-white hover:bg-white/15 transition-all duration-200 drop-shadow-[0_1px_2px_rgba(0,0,0,0.5)]"
+                >
+                  {item.label}
+                </Link>
+              )
+            )}
           </nav>
 
-          {/* Action Controls: Register for Events */}
-          <div className="flex items-center gap-1.5 sm:gap-3 shrink-0">
+          {/* Action Controls: Confessions & Register for Events */}
+          <div className="flex items-center gap-1.5 sm:gap-2.5 shrink-0">
+            {/* Confession Page Fast Redirect */}
+            <a
+              href="https://www.confessionlnjpit.in/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="h-8 sm:h-9 px-2.5 sm:px-3 rounded-full bg-rose-600/30 hover:bg-rose-600/50 border border-rose-400/50 text-rose-200 hover:text-white font-carter text-xs sm:text-sm uppercase shadow-[0_2px_10px_rgba(244,63,94,0.25)] hover:scale-105 active:scale-95 transition-all backdrop-blur-md flex items-center justify-center gap-1.5 shrink-0"
+              title="LNJPIT Confessions Page"
+            >
+              <Heart className="w-3.5 h-3.5 text-rose-400 fill-rose-400 shrink-0" />
+              <span className="hidden sm:inline">Confessions</span>
+              <span className="sm:hidden">Confess</span>
+            </a>
+
             <a
               href="/#events"
               className="h-8 sm:h-9 px-3 sm:px-4 rounded-full bg-amber-400 hover:bg-amber-300 text-black font-carter text-xs sm:text-sm uppercase border-2 border-black shadow-[2px_2px_0px_#000] hover:scale-105 active:scale-95 transition-all flex items-center justify-center gap-1.5 shrink-0 whitespace-nowrap"
             >
               <Trophy className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-black shrink-0" />
-              <span>Register for Events</span>
+              <span className="hidden sm:inline">Register for Events</span>
+              <span className="sm:hidden">Register</span>
             </a>
 
             {/* Mobile Menu Toggle - Two clean horizontal bars matching Blitzschlag */}
@@ -86,17 +115,45 @@ export default function Navbar() {
         {/* Mobile Drawer & Backdrop */}
         {mobileOpen && (
           <div className="relative z-50 lg:hidden mt-3 bg-black/75 backdrop-blur-2xl border border-white/25 rounded-2xl p-4 shadow-[0_12px_40px_rgba(0,0,0,0.6),inset_0_1px_1px_rgba(255,255,255,0.3)] flex flex-col gap-2 animate-in fade-in slide-in-from-top-2 duration-200">
-            {NAV_ITEMS.map((item) => (
-              <Link
-                key={item.label}
-                href={item.href}
+            {NAV_ITEMS.map((item) =>
+              item.external ? (
+                <a
+                  key={item.label}
+                  href={item.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={() => setMobileOpen(false)}
+                  className="px-4 py-2.5 rounded-xl font-carter text-sm uppercase tracking-wider text-rose-300 hover:text-white hover:bg-rose-500/20 transition-all flex items-center justify-between"
+                >
+                  <span className="flex items-center gap-2">
+                    <Heart className="w-4 h-4 text-rose-400 fill-rose-400" />
+                    <span>{item.label}</span>
+                  </span>
+                  <ExternalLink className="w-3.5 h-3.5 text-rose-400" />
+                </a>
+              ) : (
+                <Link
+                  key={item.label}
+                  href={item.href}
+                  onClick={() => setMobileOpen(false)}
+                  className="px-4 py-2.5 rounded-xl font-carter text-sm uppercase tracking-wider text-white hover:bg-white/15 transition-all flex items-center justify-between"
+                >
+                  <span>{item.label}</span>
+                </Link>
+              )
+            )}
+            <div className="pt-2 border-t border-white/20 flex flex-col gap-2">
+              <a
+                href="https://www.confessionlnjpit.in/"
+                target="_blank"
+                rel="noopener noreferrer"
                 onClick={() => setMobileOpen(false)}
-                className="px-4 py-2.5 rounded-xl font-carter text-sm uppercase tracking-wider text-white hover:bg-white/15 transition-all flex items-center justify-between"
+                className="w-full py-2.5 bg-rose-600/30 hover:bg-rose-600/50 border border-rose-400/60 text-white font-carter text-center text-xs uppercase rounded-xl flex items-center justify-center gap-1.5 shadow-[2px_2px_0px_#000]"
               >
-                <span>{item.label}</span>
-              </Link>
-            ))}
-            <div className="pt-2 border-t border-white/20">
+                <Heart className="w-4 h-4 text-rose-400 fill-rose-400" />
+                <span>LNJPIT Confession Page ↗</span>
+              </a>
+
               <a
                 href="/#events"
                 onClick={() => setMobileOpen(false)}

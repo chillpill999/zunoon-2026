@@ -79,6 +79,16 @@ export default function Footer() {
                 Register for Events
               </Link>
             </li>
+            <li>
+              <a
+                href="https://www.confessionlnjpit.in/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-pink-400 hover:text-pink-300 transition-colors font-bold flex items-center gap-1"
+              >
+                <span>LNJPIT Confession Page ↗</span>
+              </a>
+            </li>
           </ul>
         </div>
 

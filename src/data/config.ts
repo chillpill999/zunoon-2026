@@ -60,6 +60,7 @@ export interface FestConfig {
     hothlali?: string;
     youtube?: string;
     linkedin?: string;
+    confession?: string;
   };
 }
 
@@ -133,5 +134,6 @@ export const FEST_CONFIG: FestConfig = {
     instagram: "https://www.instagram.com/aarambh_lnjpit_26/",
     hothlali: "https://www.instagram.com/hothlali_department/",
     youtube: "https://youtube.com/@aarambh_lnjpit",
+    confession: "https://www.confessionlnjpit.in/",
   },
 };

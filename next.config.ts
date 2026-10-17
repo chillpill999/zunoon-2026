@@ -38,6 +38,20 @@ const nextConfig: NextConfig = {
       },
     ];
   },
+  async redirects() {
+    return [
+      {
+        source: '/confession',
+        destination: 'https://www.confessionlnjpit.in/',
+        permanent: false,
+      },
+      {
+        source: '/confessions',
+        destination: 'https://www.confessionlnjpit.in/',
+        permanent: false,
+      },
+    ];
+  },
 };
 
 export default nextConfig;
