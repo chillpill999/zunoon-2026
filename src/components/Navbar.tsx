@@ -25,26 +25,26 @@ export default function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
 
   return (
-    <div className="fixed top-2.5 sm:top-4 left-0 right-0 z-50 px-3 sm:px-6 pointer-events-none transition-all">
-      <header className="pointer-events-auto max-w-7xl mx-auto rounded-2xl sm:rounded-full bg-white/[0.14] hover:bg-white/[0.18] backdrop-blur-md sm:backdrop-blur-xl backdrop-saturate-150 border border-white/30 shadow-[0_8px_32px_0_rgba(0,0,0,0.37),0_0_25px_rgba(255,255,255,0.18),inset_0_1px_2px_0_rgba(255,255,255,0.5)] px-3 sm:px-7 py-2 sm:py-2.5 transition-all duration-300 transform-gpu will-change-transform">
-        <div className="flex items-center justify-between gap-2 sm:gap-4">
+    <div className="fixed top-2.5 sm:top-4 left-0 right-0 z-50 px-2 sm:px-6 pointer-events-none transition-all">
+      <header className="pointer-events-auto max-w-7xl mx-auto rounded-2xl sm:rounded-full bg-white/[0.14] hover:bg-white/[0.18] backdrop-blur-md sm:backdrop-blur-xl backdrop-saturate-150 border border-white/30 shadow-[0_8px_32px_0_rgba(0,0,0,0.37),0_0_25px_rgba(255,255,255,0.18),inset_0_1px_2px_0_rgba(255,255,255,0.5)] px-2.5 sm:px-6 py-2 sm:py-2.5 transition-all duration-300 transform-gpu will-change-transform">
+        <div className="flex items-center justify-between gap-1.5 sm:gap-4 w-full">
           {/* Brand Logo & Institution Badge */}
-          <Link href="/" className="flex items-center gap-2 sm:gap-2.5 group shrink-0 min-w-0">
-            <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-xl bg-amber-400 border-2 border-black flex items-center justify-center font-carter text-lg sm:text-2xl text-black shadow-[2px_2px_0px_#000] -rotate-6 group-hover:rotate-0 transition-transform shrink-0">
+          <Link href="/" className="flex items-center gap-1.5 sm:gap-2.5 group shrink-0 min-w-0">
+            <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-xl bg-amber-400 border-2 border-black flex items-center justify-center font-carter text-base sm:text-2xl text-black shadow-[2px_2px_0px_#000] -rotate-6 group-hover:rotate-0 transition-transform shrink-0">
               A
             </div>
             <div className="flex flex-col text-left justify-center min-w-0">
-              <span className="font-carter text-[15px] sm:text-2xl tracking-wide text-white leading-tight whitespace-nowrap drop-shadow-[0_2px_4px_rgba(0,0,0,0.6)]">
+              <span className="font-carter text-sm sm:text-2xl tracking-wide text-white leading-tight whitespace-nowrap drop-shadow-[0_2px_4px_rgba(0,0,0,0.6)]">
                 AARAMBH <span className="text-amber-400">2.0</span>
               </span>
-              <span className="text-[9px] sm:text-[10px] font-mono text-white/80 tracking-wider truncate block leading-none mt-0.5">
+              <span className="text-[9px] sm:text-[10px] font-mono text-white/80 tracking-wider truncate block leading-none mt-0.5 max-w-[130px] sm:max-w-none">
                 {FEST_CONFIG.shortInstitution}
               </span>
             </div>
           </Link>
 
           {/* Desktop Frosted Glass Navigation Links */}
-          <nav className="hidden lg:flex items-center gap-1 xl:gap-2">
+          <nav className="hidden lg:flex items-center gap-0.5 xl:gap-1.5">
             {NAV_ITEMS.map((item) =>
               item.external ? (
                 <a
@@ -52,16 +52,16 @@ export default function Navbar() {
                   href={item.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="px-3 py-1.5 rounded-full font-carter text-sm uppercase tracking-wider text-rose-300 hover:text-white hover:bg-rose-500/20 transition-all duration-200 drop-shadow-[0_1px_2px_rgba(0,0,0,0.5)] flex items-center gap-1"
+                  className="px-2 xl:px-3 py-1.5 rounded-full font-carter text-xs xl:text-sm uppercase tracking-wider text-rose-300 hover:text-white hover:bg-rose-500/20 transition-all duration-200 drop-shadow-[0_1px_2px_rgba(0,0,0,0.5)] flex items-center gap-1 whitespace-nowrap"
                 >
-                  <Heart className="w-3.5 h-3.5 text-rose-400 fill-rose-400" />
+                  <Heart className="w-3 h-3 text-rose-400 fill-rose-400" />
                   <span>{item.label}</span>
                 </a>
               ) : (
                 <Link
                   key={item.label}
                   href={item.href}
-                  className="px-3.5 py-1.5 rounded-full font-carter text-sm uppercase tracking-wider text-white/90 hover:text-white hover:bg-white/15 transition-all duration-200 drop-shadow-[0_1px_2px_rgba(0,0,0,0.5)]"
+                  className="px-2 xl:px-3 py-1.5 rounded-full font-carter text-xs xl:text-sm uppercase tracking-wider text-white/90 hover:text-white hover:bg-white/15 transition-all duration-200 drop-shadow-[0_1px_2px_rgba(0,0,0,0.5)] whitespace-nowrap"
                 >
                   {item.label}
                 </Link>
@@ -69,28 +69,28 @@ export default function Navbar() {
             )}
           </nav>
 
-          {/* Action Controls: Confessions & Register for Events */}
-          <div className="flex items-center gap-1.5 sm:gap-2.5 shrink-0">
-            {/* Confession Page Fast Redirect */}
+          {/* Action Controls: Register for Events & Mobile Menu */}
+          <div className="flex items-center gap-1.5 sm:gap-3 shrink-0">
+            {/* Desktop Confession Quick-Badge on large screens */}
             <a
               href="https://www.confessionlnjpit.in/"
               target="_blank"
               rel="noopener noreferrer"
-              className="h-8 sm:h-9 px-2.5 sm:px-3 rounded-full bg-rose-600/30 hover:bg-rose-600/50 border border-rose-400/50 text-rose-200 hover:text-white font-carter text-xs sm:text-sm uppercase shadow-[0_2px_10px_rgba(244,63,94,0.25)] hover:scale-105 active:scale-95 transition-all backdrop-blur-md flex items-center justify-center gap-1.5 shrink-0"
+              className="hidden 2xl:inline-flex h-8 sm:h-9 px-2.5 sm:px-3 rounded-full bg-rose-600/30 hover:bg-rose-600/50 border border-rose-400/50 text-rose-200 hover:text-white font-carter text-xs sm:text-sm uppercase shadow-[0_2px_10px_rgba(244,63,94,0.25)] hover:scale-105 active:scale-95 transition-all backdrop-blur-md items-center justify-center gap-1.5 shrink-0"
               title="LNJPIT Confessions Page"
             >
               <Heart className="w-3.5 h-3.5 text-rose-400 fill-rose-400 shrink-0" />
-              <span className="hidden sm:inline">Confessions</span>
-              <span className="sm:hidden">Confess</span>
+              <span>Confessions</span>
             </a>
 
+            {/* Primary Action Button: Register for Events */}
             <a
               href="/#events"
-              className="h-8 sm:h-9 px-3 sm:px-4 rounded-full bg-amber-400 hover:bg-amber-300 text-black font-carter text-xs sm:text-sm uppercase border-2 border-black shadow-[2px_2px_0px_#000] hover:scale-105 active:scale-95 transition-all flex items-center justify-center gap-1.5 shrink-0 whitespace-nowrap"
+              className="h-8 sm:h-9 px-2.5 sm:px-4 rounded-full bg-amber-400 hover:bg-amber-300 text-black font-carter text-xs sm:text-sm uppercase border-2 border-black shadow-[2px_2px_0px_#000] hover:scale-105 active:scale-95 transition-all flex items-center justify-center gap-1 sm:gap-1.5 shrink-0 whitespace-nowrap"
             >
               <Trophy className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-black shrink-0" />
-              <span className="hidden sm:inline">Register for Events</span>
-              <span className="sm:hidden">Register</span>
+              <span className="hidden xl:inline">Register for Events</span>
+              <span className="xl:hidden">Register</span>
             </a>
 
             {/* Mobile Menu Toggle - Two clean horizontal bars matching Blitzschlag */}
