@@ -250,7 +250,7 @@ export default function TeamSection() {
 
                   <div className="mt-3 pt-2.5 border-t border-white/10 flex items-center justify-between text-[10px] font-mono text-purple-300/80">
                     <span className="truncate">LNJPIT Chapra</span>
-                    <span className="text-amber-400 font-bold shrink-0">Batch 2026</span>
+                    <span className="text-amber-400 font-bold shrink-0">Batch 2K25</span>
                   </div>
                 </div>
               </div>
