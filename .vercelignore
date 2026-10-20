@@ -1,0 +1,17 @@
+# Video scratch & diagnostics (do not deploy to Vercel)
+public/video_frames
+public/video_frames/**
+public/video_backups
+public/video_backups/**
+public/*raw*.mp4
+public/*orig*.mp4
+public/home_zunoon_raw.mp4
+
+# Scripts and test harnesses
+scripts
+scripts/**
+.playwright-mcp
+.playwright-mcp/**
+
+# Local and test files
+*.log
