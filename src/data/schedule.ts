@@ -13,7 +13,7 @@ export const FEST_SCHEDULE: ScheduleSlot[] = [
     time: "09:30 AM - 10:30 AM",
     title: "Inaugural Ceremony & Lamp Lighting",
     category: "Formal",
-    venue: "Main Auditorium",
+    venue: "Main LNJPIT Ground",
     description: "Welcome address by Honorable Principal, HODs, Student Council speech, and auspicious Saraswati Vandana.",
     status: "Proposed",
     color: "#f59e0b"
@@ -22,7 +22,7 @@ export const FEST_SCHEDULE: ScheduleSlot[] = [
     time: "10:45 AM - 12:15 PM",
     title: "Awaaz: The Nukkad Natak Face-Off",
     category: "Dramatics",
-    venue: "Central Quad Lawn",
+    venue: "Main LNJPIT Ground",
     description: "High-intensity street plays presented by diverse departments tackling social realism and student life.",
     status: "Proposed",
     color: "#ef4444"
@@ -31,7 +31,7 @@ export const FEST_SCHEDULE: ScheduleSlot[] = [
     time: "12:30 PM - 01:45 PM",
     title: "Sur Sargam: Solo & Duet Singing",
     category: "Music",
-    venue: "Auditorium Acoustic Arena",
+    venue: "Main LNJPIT Ground",
     description: "Acoustic covers, classical melodies, and soulful renditions competing for the Voice of LNJPIT trophy.",
     status: "Proposed",
     color: "#3b82f6"
@@ -40,7 +40,7 @@ export const FEST_SCHEDULE: ScheduleSlot[] = [
     time: "01:45 PM - 02:30 PM",
     title: "Lunch Break & Campus Icebreakers",
     category: "Informal",
-    venue: "Campus Ground & Canteen Area",
+    venue: "Main LNJPIT Ground",
     description: "Branch interaction circles, photo booth, and informal acoustic guitar jamming on the lawn.",
     status: "Proposed",
     color: "#06b6d4"
@@ -49,7 +49,7 @@ export const FEST_SCHEDULE: ScheduleSlot[] = [
     time: "02:30 PM - 04:00 PM",
     title: "Beat Drop: Dance Showdown",
     category: "Dance",
-    venue: "Auditorium Main Stage",
+    venue: "Main LNJPIT Ground",
     description: "Electrifying solo, duo, and group dance battles spanning hip-hop, contemporary, and Bollywood.",
     status: "Proposed",
     color: "#ec4899"
@@ -58,7 +58,7 @@ export const FEST_SCHEDULE: ScheduleSlot[] = [
     time: "04:15 PM - 06:15 PM",
     title: "Mr. & Ms. Freshers: The Grand Pageant",
     category: "Pageant",
-    venue: "Auditorium Stage",
+    venue: "Main LNJPIT Ground",
     description: "Ramp walk, talent exhibition, and rapid-fire judge interactions to crown the freshers monarchs.",
     status: "Proposed",
     color: "#f59e0b"
@@ -67,7 +67,7 @@ export const FEST_SCHEDULE: ScheduleSlot[] = [
     time: "06:30 PM - 07:15 PM",
     title: "Award Ceremony & Memento Distribution",
     category: "Ceremony",
-    venue: "Auditorium Stage",
+    venue: "Main LNJPIT Ground",
     description: "Honoring winners across all categories, departmental trophies, and token of gratitude to faculty guides.",
     status: "Proposed",
     color: "#10b981"
@@ -76,7 +76,7 @@ export const FEST_SCHEDULE: ScheduleSlot[] = [
     time: "07:30 PM - 10:00 PM",
     title: "The Euphoria: Live DJ Night & Celebration",
     category: "Concert",
-    venue: "Open Air Amphitheatre Ground",
+    venue: "Main LNJPIT Ground",
     description: "High-energy festival closing party with live DJ mixing, bass drops, and batch celebration under the stars.",
     status: "Proposed",
     color: "#f43f5e"

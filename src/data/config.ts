@@ -80,7 +80,7 @@ export const FEST_CONFIG: FestConfig = {
 
   // Official Venue
   isVenueConfirmed: true,
-  venueStatus: "Main Auditorium & Campus Grounds, LNJPIT Chapra",
+  venueStatus: "Main LNJPIT Ground, LNJPIT Chapra",
   confirmedVenue: "LNJPIT Campus, Chapra, Bihar",
 
   // Schedule status (proposed vs confirmed)

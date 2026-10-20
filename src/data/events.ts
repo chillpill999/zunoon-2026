@@ -235,7 +235,7 @@ export const FEST_EVENTS: FestEvent[] = [
     eligibility: 'Open to all batches',
     color: '#8b5cf6',
     gradient: 'from-purple-600 to-blue-600',
-    venue: 'Auditorium Acoustic Arena',
+    venue: 'Main LNJPIT Ground Stage',
     timeSlot: 'Mid-Day Grand Slot',
     description: 'The ultimate battle of brains! Multi-round trivia arena spanning general awareness, science, pop culture, sports, history, cinema, and meme lore.',
     rules: [
@@ -747,7 +747,7 @@ export const FEST_EVENTS: FestEvent[] = [
     eligibility: 'All LNJPIT batches',
     color: '#f59e0b',
     gradient: 'from-amber-500 to-rose-600',
-    venue: 'Main Auditorium Acoustic Arena',
+    venue: 'Main LNJPIT Ground Stage',
     timeSlot: 'Afternoon Grand Slot',
     description: 'Unleash your melodic vocal talent on the grand acoustic stage. Classical, semi-classical, western, and Bollywood tracks welcome.',
     rules: [
@@ -773,7 +773,7 @@ export const FEST_EVENTS: FestEvent[] = [
     eligibility: 'All batches',
     color: '#ec4899',
     gradient: 'from-pink-500 to-amber-500',
-    venue: 'Auditorium Main Stage',
+    venue: 'Main LNJPIT Ground Stage',
     timeSlot: 'Evening Grand Slot',
     description: 'Electrifying footwork, gravity-defying moves, synchronized group energy, and theatrical expression across all dance forms.',
     rules: [
@@ -826,7 +826,7 @@ export const FEST_EVENTS: FestEvent[] = [
     eligibility: 'Open to all students',
     color: '#f97316',
     gradient: 'from-orange-500 to-amber-500',
-    venue: 'Auditorium Stage',
+    venue: 'Main LNJPIT Ground Stage',
     timeSlot: 'Evening Warmup Slot',
     description: 'Unfiltered laughter, relatable hostel anecdotes, college engineering roasts, and sharp observational punchlines.',
     rules: [
@@ -852,7 +852,7 @@ export const FEST_EVENTS: FestEvent[] = [
     eligibility: '1st Year Freshers (Mr. & Ms. Freshers) & Open Runway',
     color: '#fbbf24',
     gradient: 'from-amber-400 to-rose-500',
-    venue: 'Auditorium Main Stage',
+    venue: 'Main LNJPIT Ground Stage',
     timeSlot: 'Grand Finale Showcase',
     description: 'The pinnacle event of Aarambh 2.0! High-glam couture runway walk, stage presence, spontaneous wit, and crowning of Mr. & Ms. Freshers.',
     rules: [

@@ -25,7 +25,7 @@ export default function StructuredData() {
     endDate: '2026-11-17T22:00:00+05:30',
     location: {
       '@type': 'Place',
-      name: 'LNJPIT Main Campus Grounds & Auditorium',
+      name: 'LNJPIT Main Campus Ground',
       address: {
         '@type': 'PostalAddress',
         streetAddress: 'Silao - Chapra Road, Near ITI',

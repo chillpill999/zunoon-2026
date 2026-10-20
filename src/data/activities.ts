@@ -23,7 +23,7 @@ export const ACTIVITIES: ActivityItem[] = [
     badge: "SIGNATURE EVENT",
     color: "#f59e0b", // Amber
     status: "Proposed",
-    venue: "Main Auditorium Stage",
+    venue: "Main LNJPIT Ground Stage",
     timeSlot: "Evening Grand Slot",
     isTeam: false,
     description: "The most prestigious title of Aarambh 2.0! A three-stage showcase testing personality, style, confidence, quick wit, and stage charisma.",
@@ -46,7 +46,7 @@ export const ACTIVITIES: ActivityItem[] = [
     badge: "SOLO & DUO",
     color: "#ec4899", // Pink
     status: "Proposed",
-    venue: "Auditorium Main Stage",
+    venue: "Main LNJPIT Ground Stage",
     timeSlot: "Afternoon Slot",
     isTeam: true,
     minTeam: 1,
@@ -69,7 +69,7 @@ export const ACTIVITIES: ActivityItem[] = [
     badge: "SINGING",
     color: "#3b82f6", // Blue
     status: "Proposed",
-    venue: "Auditorium Acoustic Arena",
+    venue: "Main LNJPIT Ground Stage",
     timeSlot: "Mid-day Slot",
     isTeam: false,
     description: "Unleash your vocal prowess in acoustic, classical, or Bollywood melodies. Dedicated live accompaniments permitted.",
