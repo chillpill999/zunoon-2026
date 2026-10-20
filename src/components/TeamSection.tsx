@@ -11,6 +11,7 @@ import ScrollReveal from '@/components/ScrollReveal';
 
 export interface CoreMember {
   id: string;
+  name: string;
   title: string;
   role: string;
   department: string;
@@ -24,12 +25,19 @@ export interface CoreMember {
   rotation: number;
 }
 
-// 8 Core Committee Members
-// Priority #1: 4th Member (CSE) as explicitly requested
-// Followed by: ME, EEE, Civil 1, CSE 2, Civil 2, CSE 3, ME 2
+// 8 Core Committee Members mapped according to site order:
+// 1) Chandra Pratap Singh (CSE Lead - priority #1 card)
+// 2) Ankit Raj (ME)
+// 3) Ayush Kumar (EEE)
+// 4) Vimal Yadav (Civil)
+// 5) DR Raju (CSE)
+// 6) Manish Kumar (Civil)
+// 7) Priyanshu Singh (CSE)
+// 8) Aman Raj (ME)
 export const CORE_COMMITTEE: CoreMember[] = [
   {
     id: 'core-cse-lead',
+    name: 'Chandra Pratap Singh',
     title: 'Core Committee Lead',
     role: 'Core Organizing Lead',
     department: 'Computer Science & Engg.',
@@ -44,6 +52,7 @@ export const CORE_COMMITTEE: CoreMember[] = [
   },
   {
     id: 'core-me',
+    name: 'Ankit Raj',
     title: 'Core Committee Member',
     role: 'Core Organizing Lead',
     department: 'Mechanical Engineering',
@@ -57,6 +66,7 @@ export const CORE_COMMITTEE: CoreMember[] = [
   },
   {
     id: 'core-eee',
+    name: 'Ayush Kumar',
     title: 'Core Committee Member',
     role: 'Core Organizing Lead',
     department: 'Electrical & Electronics',
@@ -70,6 +80,7 @@ export const CORE_COMMITTEE: CoreMember[] = [
   },
   {
     id: 'core-civil',
+    name: 'Vimal Yadav',
     title: 'Core Committee Member',
     role: 'Core Organizing Lead',
     department: 'Civil Engineering',
@@ -83,6 +94,7 @@ export const CORE_COMMITTEE: CoreMember[] = [
   },
   {
     id: 'core-cse',
+    name: 'DR Raju',
     title: 'Core Committee Member',
     role: 'Core Organizing Lead',
     department: 'Computer Science & Engg.',
@@ -96,6 +108,7 @@ export const CORE_COMMITTEE: CoreMember[] = [
   },
   {
     id: 'core-civil-2',
+    name: 'Manish Kumar',
     title: 'Core Committee Member',
     role: 'Core Organizing Lead',
     department: 'Civil Engineering',
@@ -109,6 +122,7 @@ export const CORE_COMMITTEE: CoreMember[] = [
   },
   {
     id: 'core-cse-2',
+    name: 'Priyanshu Singh',
     title: 'Core Committee Member',
     role: 'Core Organizing Lead',
     department: 'Computer Science & Engg.',
@@ -122,6 +136,7 @@ export const CORE_COMMITTEE: CoreMember[] = [
   },
   {
     id: 'core-me-2',
+    name: 'Aman Raj',
     title: 'Core Committee Member',
     role: 'Core Organizing Lead',
     department: 'Mechanical Engineering',
@@ -213,7 +228,7 @@ export default function TeamSection() {
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img
                     src={member.image}
-                    alt={`${member.department} Core Committee Member`}
+                    alt={`${member.name} - ${member.department} Core Committee`}
                     className="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-105"
                     loading="lazy"
                   />
@@ -253,13 +268,13 @@ export default function TeamSection() {
 
                 {/* Card Info Below Image */}
                 <div className="text-left px-1 mt-1">
-                  <div className="flex items-center justify-between gap-1 mb-1">
+                  <div className="flex items-center justify-between gap-1 mb-0.5">
                     <h3
-                      className={`font-carter text-base tracking-wide ${
+                      className={`font-carter text-base sm:text-lg tracking-wide ${
                         member.isLead ? 'text-amber-300' : 'text-white'
                       }`}
                     >
-                      {member.title}
+                      {member.name}
                     </h3>
                     {member.isLead && (
                       <span className="text-[9px] font-mono font-bold px-1.5 py-0.5 rounded bg-amber-400/20 text-amber-300 border border-amber-400/40">
@@ -267,6 +282,10 @@ export default function TeamSection() {
                       </span>
                     )}
                   </div>
+
+                  <span className="text-xs font-carter text-amber-400/90 block mb-1">
+                    {member.title}
+                  </span>
 
                   <p className="text-[11px] font-mono text-purple-200/90 leading-tight">
                     {member.branchLong}
