@@ -96,6 +96,19 @@ export const CORE_COMMITTEE: CoreMember[] = [
     tagBg: 'bg-purple-400 text-black',
     rotation: -0.5,
   },
+  {
+    id: 'core-civil-2',
+    title: 'Core Committee Member',
+    role: 'Core Organizing Lead',
+    department: 'Civil Engineering',
+    branchShort: 'CIVIL',
+    branchLong: 'Dept. of Civil Engineering',
+    image: '/team/member_6_civil.jpg',
+    priorityOrder: 6,
+    badgeColor: '#06b6d4',
+    tagBg: 'bg-cyan-400 text-black',
+    rotation: 1,
+  },
 ];
 
 export default function TeamSection() {
@@ -142,13 +155,13 @@ export default function TeamSection() {
             </div>
             <div className="flex items-center gap-2 font-mono text-[11px] text-amber-300">
               <span className="px-2.5 py-1 rounded-xl bg-black/50 border border-white/10">🎓 LNJPIT Chapra</span>
-              <span className="px-2.5 py-1 rounded-xl bg-amber-400/20 border border-amber-400/40 font-bold">5 Core Leads</span>
+              <span className="px-2.5 py-1 rounded-xl bg-amber-400/20 border border-amber-400/40 font-bold">6 Core Leads</span>
             </div>
           </div>
         </ScrollReveal>
 
-        {/* 5 Core Committee Cards Grid (Priority to 4th Member at Index 0) */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6">
+        {/* 6 Core Committee Cards Grid (2x3 symmetrical on large screens) */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {CORE_COMMITTEE.map((member, idx) => (
             <ScrollReveal
               key={member.id}
