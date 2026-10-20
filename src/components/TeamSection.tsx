@@ -201,8 +201,60 @@ export default function TeamSection() {
               MEET THE <span className="text-amber-400">CORE COMMITTEE</span>
             </h2>
             <p className="font-chewy text-xl text-purple-200 mt-2 max-w-2xl mx-auto">
-              The core student leadership from Mechanical, EEE, Civil, and Computer Science Engineering spearheading Aarambh 2.0 at {FEST_CONFIG.shortInstitution}.
+              Under the guidance of the Student Welfare Council, spearheading Aarambh 2.0 at {FEST_CONFIG.shortInstitution}.
             </p>
+          </div>
+        </ScrollReveal>
+
+        {/* Faculty Mentor & Approving Authority Spotlight (Prior Side) */}
+        <ScrollReveal direction="up" distance={20} delay={40}>
+          <div className="mb-12 max-w-3xl mx-auto comic-box p-6 sm:p-7 rounded-3xl bg-[#1f103f] border-3 border-amber-400 shadow-[8px_8px_0px_#000] relative overflow-hidden">
+            {/* Top Tape Sticker */}
+            <div className="w-28 h-5 bg-amber-300 border border-black/50 -rotate-2 mx-auto -mt-8 mb-4 shadow-[1px_1px_0px_#000]" />
+
+            <div className="flex flex-col sm:flex-row items-center gap-6 sm:gap-8">
+              {/* Professor Portrait */}
+              <div className="relative shrink-0">
+                <div className="w-32 h-40 sm:w-36 sm:h-44 rounded-2xl overflow-hidden border-3 border-black shadow-[5px_5px_0px_#000] bg-[#0e0722] -rotate-1 relative">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src="/team/prof_aditya_raj.jpg"
+                    alt="Prof. Aditya Raj - Student Welfare Council LNJPIT"
+                    className="w-full h-full object-cover object-top"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent pointer-events-none" />
+                </div>
+                {/* Council Tag */}
+                <span className="absolute -bottom-2.5 left-1/2 -translate-x-1/2 px-3 py-0.5 rounded-full bg-amber-400 text-black border border-black font-carter text-[10px] tracking-wider uppercase shadow-[2px_2px_0px_#000] whitespace-nowrap">
+                  COUNCIL MENTOR
+                </span>
+              </div>
+
+              {/* Info & Accreditation */}
+              <div className="text-center sm:text-left flex-1">
+                <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-400/20 border border-amber-400/40 text-amber-300 text-xs font-mono font-bold uppercase mb-2">
+                  <ShieldCheck className="w-3.5 h-3.5 text-amber-400" />
+                  <span>Student Welfare Council</span>
+                </div>
+
+                <h3 className="text-2xl sm:text-3xl font-carter text-white tracking-wide uppercase drop-shadow-[2px_2px_0px_#000]">
+                  Prof. Aditya Raj
+                </h3>
+
+                <p className="font-chewy text-lg text-amber-300 mt-1">
+                  Faculty Advisor & Approving Authority
+                </p>
+
+                <p className="text-xs sm:text-sm font-mono text-purple-200/90 mt-2 leading-relaxed">
+                  Overseeing and approving the student leadership body for Aarambh 2.0 under the Student Welfare Council at LNJPIT Chapra.
+                </p>
+
+                <div className="mt-4 pt-3 border-t border-white/10 flex flex-wrap items-center justify-center sm:justify-start gap-2 text-[11px] font-mono text-amber-300">
+                  <span className="px-2.5 py-1 rounded-xl bg-black/40 border border-white/10">🎓 LNJPIT Chapra</span>
+                  <span className="px-2.5 py-1 rounded-xl bg-amber-400 text-black font-bold border border-black">Core Approving Authority</span>
+                </div>
+              </div>
+            </div>
           </div>
         </ScrollReveal>
 
