@@ -25,15 +25,16 @@ export interface CoreMember {
   rotation: number;
 }
 
-// 8 Core Committee Members mapped according to site order:
+// 9 Core Committee Members mapped according to site order:
 // 1) Chandra Pratap Singh (CSE Lead - priority #1 card)
-// 2) Ankit Raj (ME)
-// 3) Ayush Kumar (EEE)
-// 4) Vimal Yadav (Civil)
-// 5) DR Raju (CSE)
-// 6) Manish Kumar (Civil)
-// 7) Priyanshu Singh (CSE)
-// 8) Aman Raj (ME)
+// 2) Prince Singh (CSE - second position)
+// 3) Ankit Raj (ME)
+// 4) Ayush Kumar (EEE)
+// 5) Vimal Yadav (Civil)
+// 6) DR Raju (CSE)
+// 7) Manish Kumar (Civil)
+// 8) Priyanshu Singh (CSE)
+// 9) Aman Raj (ME)
 export const CORE_COMMITTEE: CoreMember[] = [
   {
     id: 'core-cse-lead',
@@ -51,6 +52,20 @@ export const CORE_COMMITTEE: CoreMember[] = [
     rotation: -1.5,
   },
   {
+    id: 'core-prince-cse',
+    name: 'Prince Singh',
+    title: 'Core Committee Member',
+    role: 'Core Organizing Lead',
+    department: 'Computer Science & Engg.',
+    branchShort: 'CSE',
+    branchLong: 'Dept. of Computer Science & Engineering',
+    image: '/team/member_prince_cse.jpg',
+    priorityOrder: 2,
+    badgeColor: '#a855f7',
+    tagBg: 'bg-violet-400 text-black',
+    rotation: 0.8,
+  },
+  {
     id: 'core-me',
     name: 'Ankit Raj',
     title: 'Core Committee Member',
@@ -59,7 +74,7 @@ export const CORE_COMMITTEE: CoreMember[] = [
     branchShort: 'ME',
     branchLong: 'Dept. of Mechanical Engineering',
     image: '/team/member_1_me.jpg',
-    priorityOrder: 2,
+    priorityOrder: 3,
     badgeColor: '#3b82f6',
     tagBg: 'bg-blue-400 text-black',
     rotation: 1,
@@ -73,7 +88,7 @@ export const CORE_COMMITTEE: CoreMember[] = [
     branchShort: 'EEE',
     branchLong: 'Dept. of Electrical & Electronics Engg.',
     image: '/team/member_2_eee.jpg',
-    priorityOrder: 3,
+    priorityOrder: 4,
     badgeColor: '#10b981',
     tagBg: 'bg-emerald-400 text-black',
     rotation: -1,
@@ -87,7 +102,7 @@ export const CORE_COMMITTEE: CoreMember[] = [
     branchShort: 'CIVIL',
     branchLong: 'Dept. of Civil Engineering',
     image: '/team/member_3_civil.jpg',
-    priorityOrder: 4,
+    priorityOrder: 5,
     badgeColor: '#ec4899',
     tagBg: 'bg-pink-400 text-black',
     rotation: 1.5,
@@ -101,7 +116,7 @@ export const CORE_COMMITTEE: CoreMember[] = [
     branchShort: 'CSE',
     branchLong: 'Dept. of Computer Science & Engineering',
     image: '/team/member_5_cse.jpg',
-    priorityOrder: 5,
+    priorityOrder: 6,
     badgeColor: '#8b5cf6',
     tagBg: 'bg-purple-400 text-black',
     rotation: -0.5,
@@ -115,7 +130,7 @@ export const CORE_COMMITTEE: CoreMember[] = [
     branchShort: 'CIVIL',
     branchLong: 'Dept. of Civil Engineering',
     image: '/team/member_6_civil.jpg',
-    priorityOrder: 6,
+    priorityOrder: 7,
     badgeColor: '#06b6d4',
     tagBg: 'bg-cyan-400 text-black',
     rotation: 1,
@@ -129,7 +144,7 @@ export const CORE_COMMITTEE: CoreMember[] = [
     branchShort: 'CSE',
     branchLong: 'Dept. of Computer Science & Engineering',
     image: '/team/member_7_cse.jpg',
-    priorityOrder: 7,
+    priorityOrder: 8,
     badgeColor: '#0ea5e9',
     tagBg: 'bg-sky-400 text-black',
     rotation: -1,
@@ -143,7 +158,7 @@ export const CORE_COMMITTEE: CoreMember[] = [
     branchShort: 'ME',
     branchLong: 'Dept. of Mechanical Engineering',
     image: '/team/member_8_me.jpg',
-    priorityOrder: 8,
+    priorityOrder: 9,
     badgeColor: '#f97316',
     tagBg: 'bg-orange-400 text-black',
     rotation: 0.5,
@@ -194,13 +209,13 @@ export default function TeamSection() {
             </div>
             <div className="flex items-center gap-2 font-mono text-[11px] text-amber-300">
               <span className="px-2.5 py-1 rounded-xl bg-black/50 border border-white/10">🎓 LNJPIT Chapra</span>
-              <span className="px-2.5 py-1 rounded-xl bg-amber-400/20 border border-amber-400/40 font-bold">8 Core Leads</span>
+              <span className="px-2.5 py-1 rounded-xl bg-amber-400/20 border border-amber-400/40 font-bold">9 Core Leads</span>
             </div>
           </div>
         </ScrollReveal>
 
-        {/* 8 Core Committee Cards Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+        {/* 9 Core Committee Cards Grid (Symmetrical 3x3 layout) */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {CORE_COMMITTEE.map((member, idx) => (
             <ScrollReveal
               key={member.id}
