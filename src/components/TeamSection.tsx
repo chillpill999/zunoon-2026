@@ -24,9 +24,9 @@ export interface CoreMember {
   rotation: number;
 }
 
-// 7 Core Committee Members
+// 8 Core Committee Members
 // Priority #1: 4th Member (CSE) as explicitly requested
-// Followed by: ME, EEE, Civil 1, CSE 2, Civil 2, CSE 3
+// Followed by: ME, EEE, Civil 1, CSE 2, Civil 2, CSE 3, ME 2
 export const CORE_COMMITTEE: CoreMember[] = [
   {
     id: 'core-cse-lead',
@@ -120,6 +120,19 @@ export const CORE_COMMITTEE: CoreMember[] = [
     tagBg: 'bg-sky-400 text-black',
     rotation: -1,
   },
+  {
+    id: 'core-me-2',
+    title: 'Core Committee Member',
+    role: 'Core Organizing Lead',
+    department: 'Mechanical Engineering',
+    branchShort: 'ME',
+    branchLong: 'Dept. of Mechanical Engineering',
+    image: '/team/member_8_me.jpg',
+    priorityOrder: 8,
+    badgeColor: '#f97316',
+    tagBg: 'bg-orange-400 text-black',
+    rotation: 0.5,
+  },
 ];
 
 export default function TeamSection() {
@@ -166,12 +179,12 @@ export default function TeamSection() {
             </div>
             <div className="flex items-center gap-2 font-mono text-[11px] text-amber-300">
               <span className="px-2.5 py-1 rounded-xl bg-black/50 border border-white/10">🎓 LNJPIT Chapra</span>
-              <span className="px-2.5 py-1 rounded-xl bg-amber-400/20 border border-amber-400/40 font-bold">7 Core Leads</span>
+              <span className="px-2.5 py-1 rounded-xl bg-amber-400/20 border border-amber-400/40 font-bold">8 Core Leads</span>
             </div>
           </div>
         </ScrollReveal>
 
-        {/* 7 Core Committee Cards Grid */}
+        {/* 8 Core Committee Cards Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
           {CORE_COMMITTEE.map((member, idx) => (
             <ScrollReveal
