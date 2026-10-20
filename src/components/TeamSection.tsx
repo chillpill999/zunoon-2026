@@ -3,70 +3,107 @@
 import { 
   Users,
   Award,
-  Heart,
-  Code2,
-  Compass,
-  Megaphone,
-  Clock
+  Star,
+  Sparkles,
+  ShieldCheck,
+  GraduationCap
 } from 'lucide-react';
 import { FEST_CONFIG } from '@/data/config';
 import ScrollReveal from '@/components/ScrollReveal';
 
-interface CommitteeWing {
+export interface CoreMember {
+  id: string;
   title: string;
+  role: string;
   department: string;
-  tag: string;
-  tagColor: string;
-  gradient: string;
-  icon: typeof Users;
+  branchShort: string;
+  branchLong: string;
+  image: string;
+  isLead?: boolean;
+  priorityOrder: number;
+  badgeColor: string;
+  tagBg: string;
   rotation: number;
 }
 
-const COMMITTEE_WINGS: CommitteeWing[] = [
+// 5 Core Committee Members
+// Priority #1: 4th Member (CSE) as explicitly requested
+// Followed by: 1st (Mechanical), 2nd (EEE), 3rd (Civil), 5th (CSE)
+export const CORE_COMMITTEE: CoreMember[] = [
   {
-    title: 'Core Committee & Student General Secretary',
-    department: 'LNJPIT Student Council',
-    tag: 'EXECUTIVE LEAD',
-    tagColor: '#ec4899',
-    gradient: 'from-pink-500 via-rose-600 to-purple-700',
-    icon: Award,
-    rotation: -2,
-  },
-  {
-    title: 'Cultural Affairs & Stage Production',
-    department: 'Cultural Council',
-    tag: 'CULTURAL WING',
-    tagColor: '#10b981',
-    gradient: 'from-emerald-500 via-teal-600 to-cyan-700',
-    icon: Heart,
-    rotation: 2,
-  },
-  {
-    title: 'Technical Infrastructure & Web Architecture',
-    department: 'Digital Media & Tech',
-    tag: 'TECH CREW',
-    tagColor: '#06b6d4',
-    gradient: 'from-cyan-500 via-blue-600 to-indigo-800',
-    icon: Code2,
+    id: 'core-cse-lead',
+    title: 'Core Committee Lead',
+    role: 'Core Organizing Lead',
+    department: 'Computer Science & Engg.',
+    branchShort: 'CSE',
+    branchLong: 'Dept. of Computer Science & Engineering',
+    image: '/team/member_4_cse_lead.jpg',
+    isLead: true,
+    priorityOrder: 1,
+    badgeColor: '#fbbf24',
+    tagBg: 'bg-amber-400 text-black',
     rotation: -1.5,
   },
   {
-    title: 'Logistics, Hospitality & Public Relations',
-    department: 'Campus Operations',
-    tag: 'OPERATIONS',
-    tagColor: '#f97316',
-    gradient: 'from-orange-500 via-amber-600 to-red-700',
-    icon: Compass,
-    rotation: 2.5,
+    id: 'core-me',
+    title: 'Core Committee Member',
+    role: 'Core Organizing Lead',
+    department: 'Mechanical Engineering',
+    branchShort: 'ME',
+    branchLong: 'Dept. of Mechanical Engineering',
+    image: '/team/member_1_me.jpg',
+    priorityOrder: 2,
+    badgeColor: '#3b82f6',
+    tagBg: 'bg-blue-400 text-black',
+    rotation: 1,
+  },
+  {
+    id: 'core-eee',
+    title: 'Core Committee Member',
+    role: 'Core Organizing Lead',
+    department: 'Electrical & Electronics',
+    branchShort: 'EEE',
+    branchLong: 'Dept. of Electrical & Electronics Engg.',
+    image: '/team/member_2_eee.jpg',
+    priorityOrder: 3,
+    badgeColor: '#10b981',
+    tagBg: 'bg-emerald-400 text-black',
+    rotation: -1,
+  },
+  {
+    id: 'core-civil',
+    title: 'Core Committee Member',
+    role: 'Core Organizing Lead',
+    department: 'Civil Engineering',
+    branchShort: 'CIVIL',
+    branchLong: 'Dept. of Civil Engineering',
+    image: '/team/member_3_civil.jpg',
+    priorityOrder: 4,
+    badgeColor: '#ec4899',
+    tagBg: 'bg-pink-400 text-black',
+    rotation: 1.5,
+  },
+  {
+    id: 'core-cse',
+    title: 'Core Committee Member',
+    role: 'Core Organizing Lead',
+    department: 'Computer Science & Engg.',
+    branchShort: 'CSE',
+    branchLong: 'Dept. of Computer Science & Engineering',
+    image: '/team/member_5_cse.jpg',
+    priorityOrder: 5,
+    badgeColor: '#8b5cf6',
+    tagBg: 'bg-purple-400 text-black',
+    rotation: -0.5,
   },
 ];
 
 export default function TeamSection() {
   return (
     <section id="team" className="relative py-24 px-4 sm:px-6 lg:px-8 bg-[#110626] overflow-hidden">
-      {/* Background Banner with Ornate Mandala Texture */}
+      {/* Background Banner with Texture */}
       <div
-        className="absolute inset-0 bg-cover bg-center opacity-30 pointer-events-none"
+        className="absolute inset-0 bg-cover bg-center opacity-25 pointer-events-none"
         style={{ backgroundImage: `url('/assets/bg_main.jpg')` }}
       />
 
@@ -74,113 +111,149 @@ export default function TeamSection() {
         {/* Section Header */}
         <ScrollReveal direction="up" distance={24}>
           <div className="text-center mb-12">
-            <span className="inline-block px-4 py-1.5 rounded-full bg-amber-400 text-black border-2 border-black text-xs font-carter tracking-widest uppercase shadow-[2px_2px_0px_#000] -rotate-1">
-              THE ARCHITECTS OF AARAMBH 2.0
+            <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-amber-400 text-black border-2 border-black text-xs font-carter tracking-widest uppercase shadow-[2px_2px_0px_#000] -rotate-1">
+              <Sparkles className="w-3.5 h-3.5" />
+              <span>THE ARCHITECTS OF AARAMBH 2.0</span>
             </span>
             <h2 className="text-5xl sm:text-7xl font-carter tracking-wide text-white drop-shadow-[5px_5px_0px_#000] uppercase mt-3">
-              MEET THE <span className="text-amber-400">TEAM</span>
+              MEET THE <span className="text-amber-400">CORE COMMITTEE</span>
             </h2>
-            <p className="font-chewy text-xl text-purple-200 mt-2 max-w-xl mx-auto">
-              Faculty mentors, student leads, and dedicated committee creating a memorable Freshers Fest at {FEST_CONFIG.shortInstitution}.
+            <p className="font-chewy text-xl text-purple-200 mt-2 max-w-2xl mx-auto">
+              The core student leadership from Mechanical, EEE, Civil, and Computer Science Engineering spearheading Aarambh 2.0 at {FEST_CONFIG.shortInstitution}.
             </p>
           </div>
         </ScrollReveal>
 
-        {/* Central Spotlight Announcement Card */}
-        <ScrollReveal direction="up" distance={32} scale={0.96} delay={100}>
-          <div className="comic-box p-8 sm:p-12 rounded-3xl bg-[#1e1140] text-center max-w-3xl mx-auto mb-16 shadow-[8px_8px_0px_#000]">
-            <div className="w-20 h-20 rounded-2xl bg-amber-400 border-3 border-black text-black flex items-center justify-center mx-auto mb-6 shadow-[4px_4px_0px_#000] -rotate-6">
-              <Clock className="w-10 h-10" />
+        {/* Central Spotlight Badge */}
+        <ScrollReveal direction="up" distance={20} delay={60}>
+          <div className="mb-12 p-4 sm:p-5 rounded-3xl bg-[#1b0f38] border-2 border-amber-400/70 shadow-[5px_5px_0px_#000] max-w-3xl mx-auto flex flex-wrap items-center justify-between gap-4">
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 rounded-2xl bg-amber-400 text-black border-2 border-black flex items-center justify-center font-carter shadow-[2px_2px_0px_#000] -rotate-3 shrink-0">
+                <Star className="w-5 h-5 fill-black" />
+              </div>
+              <div className="text-left">
+                <span className="font-carter text-sm sm:text-base text-white tracking-wide uppercase block">
+                  LNJPIT CORE STEERING BODY
+                </span>
+                <span className="text-xs font-mono text-purple-300">
+                  Inter-departmental student leaders powering fest planning, registrations & events.
+                </span>
+              </div>
             </div>
-
-            <span className="inline-block px-4 py-1 rounded-full bg-purple-900/60 border border-purple-500/40 text-xs font-mono text-amber-300 tracking-widest uppercase mb-3">
-              OFFICIAL ANNOUNCEMENT • {FEST_CONFIG.shortInstitution}
-            </span>
-
-            <h3 className="text-3xl sm:text-5xl md:text-6xl font-carter text-white tracking-wide uppercase drop-shadow-[4px_4px_0px_#000]">
-              TO BE DECIDED <span className="text-amber-400">SHORTLY</span>
-            </h3>
-
-            <p className="font-chewy text-lg sm:text-2xl text-purple-200 mt-4 leading-relaxed max-w-xl mx-auto">
-              The official organizing committee, student coordinators, and faculty advisors for AARAMBH 2.0 are currently being finalized and will be revealed shortly!
-            </p>
-
-            <div className="mt-8 pt-6 border-t border-white/10 flex flex-wrap items-center justify-center gap-3 text-xs font-mono text-purple-300">
-              <span className="px-3.5 py-1.5 rounded-xl bg-black/40 border border-white/10">🎓 LNJPIT Chapra</span>
-              <span className="px-3.5 py-1.5 rounded-xl bg-black/40 border border-white/10">🎪 Batch 2026</span>
-              <span className="px-3.5 py-1.5 rounded-xl bg-amber-400/20 text-amber-300 border border-amber-400/40 font-bold">📢 Nominations In Progress</span>
+            <div className="flex items-center gap-2 font-mono text-[11px] text-amber-300">
+              <span className="px-2.5 py-1 rounded-xl bg-black/50 border border-white/10">🎓 LNJPIT Chapra</span>
+              <span className="px-2.5 py-1 rounded-xl bg-amber-400/20 border border-amber-400/40 font-bold">5 Core Leads</span>
             </div>
           </div>
         </ScrollReveal>
 
-        {/* Committee Wings Roadmap Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-          {COMMITTEE_WINGS.map((wing, idx) => {
-            const IconComponent = wing.icon;
-            return (
-              <ScrollReveal
-                key={wing.title}
-                direction="up"
-                distance={28}
-                delay={(idx % 4) * 80}
-                rotate={wing.rotation}
+        {/* 5 Core Committee Cards Grid (Priority to 4th Member at Index 0) */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6">
+          {CORE_COMMITTEE.map((member, idx) => (
+            <ScrollReveal
+              key={member.id}
+              direction="up"
+              distance={28}
+              delay={idx * 70}
+              rotate={member.rotation}
+            >
+              <div
+                className={`comic-box p-4 rounded-3xl transition-all group flex flex-col justify-between h-full relative ${
+                  member.isLead
+                    ? 'bg-[#22104a] border-amber-400 shadow-[6px_6px_0px_#f59e0b] hover:scale-105 ring-2 ring-amber-400/60'
+                    : 'bg-[#180e33] border-black shadow-[6px_6px_0px_#000] hover:scale-105'
+                }`}
               >
+                {/* Tape Sticker at Top */}
                 <div
-                  className="comic-box p-5 rounded-3xl bg-[#1e1140] hover:rotate-0 hover:scale-105 active:scale-95 transition-all group flex flex-col justify-between h-full"
-                >
-                  {/* Tape Sticker at Top */}
-                  <div className="w-16 h-4 bg-amber-200/40 border border-black/50 -rotate-3 mx-auto -mt-7 mb-3 shadow-[1px_1px_0px_#000]" />
+                  className={`w-16 h-4 border border-black/50 -rotate-2 mx-auto -mt-6 mb-3 shadow-[1px_1px_0px_#000] ${
+                    member.isLead ? 'bg-amber-300' : 'bg-amber-200/50'
+                  }`}
+                />
 
-                  {/* Stylized Avatar Badge Area */}
-                  <div
-                    className={`relative w-full aspect-square rounded-2xl overflow-hidden border-3 border-black mb-4 bg-gradient-to-br ${wing.gradient} shadow-[inset_0_0_30px_rgba(0,0,0,0.6)] flex flex-col items-center justify-center p-4`}
-                  >
-                    {/* Comic Halftone Pattern */}
-                    <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.18)_1.5px,transparent_1.5px)] bg-[size:10px_10px] pointer-events-none" />
+                {/* Portrait Photo Container */}
+                <div className="relative w-full aspect-[3/4] rounded-2xl overflow-hidden border-3 border-black mb-3.5 bg-[#0e0722] shadow-[inset_0_0_20px_rgba(0,0,0,0.6)]">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src={member.image}
+                    alt={`${member.department} Core Committee Member`}
+                    className="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-105"
+                    loading="lazy"
+                  />
 
-                    {/* Top Tag */}
-                    <div className="absolute top-2.5 left-2.5 z-10">
-                      <span
-                        className="px-2.5 py-0.5 rounded-full text-black font-carter text-[10px] tracking-wider uppercase border border-black shadow-[2px_2px_0px_#000]"
-                        style={{ backgroundColor: wing.tagColor }}
-                      >
-                        {wing.tag}
+                  {/* Gradient shadow for text readability */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/15 to-transparent pointer-events-none" />
+
+                  {/* Top-Left Branch Badge */}
+                  <div className="absolute top-2.5 left-2.5 z-10">
+                    <span
+                      className={`px-2.5 py-0.5 rounded-full font-carter text-[10px] tracking-wider uppercase border border-black shadow-[2px_2px_0px_#000] ${member.tagBg}`}
+                    >
+                      {member.branchShort}
+                    </span>
+                  </div>
+
+                  {/* Top-Right Priority Lead Badge if applicable */}
+                  {member.isLead && (
+                    <div className="absolute top-2.5 right-2.5 z-10">
+                      <span className="px-2 py-0.5 rounded-full bg-amber-400 text-black font-carter text-[9px] tracking-wider uppercase border border-black shadow-[2px_2px_0px_#000] flex items-center gap-1">
+                        <Star className="w-3 h-3 fill-black shrink-0" />
+                        <span>CORE LEAD</span>
                       </span>
                     </div>
+                  )}
 
-                    {/* Center TBD Emblem */}
-                    <div className="relative z-10 flex flex-col items-center justify-center">
-                      <div className="w-20 h-20 rounded-full bg-black/40 border-3 border-amber-300 flex items-center justify-center shadow-[4px_4px_0px_#000] group-hover:scale-110 transition-transform">
-                        <span className="font-carter text-2xl sm:text-3xl text-white tracking-widest drop-shadow-[2px_2px_0px_#000]">
-                          TBD
-                        </span>
-                      </div>
-                    </div>
-
-                    {/* Bottom Icon Badge */}
-                    <div className="absolute bottom-2.5 right-2.5 z-10 p-1.5 rounded-xl bg-black/60 border border-white/20 text-white shadow-[2px_2px_0px_#000]">
-                      <IconComponent className="w-4 h-4 text-amber-300" />
-                    </div>
-                  </div>
-
-                  {/* Info Details */}
-                  <div className="text-left px-1">
-                    <h3 className="font-carter text-xl text-amber-400 tracking-wide">
-                      To be decided shortly
-                    </h3>
-                    <p className="text-xs font-sans text-purple-200 mt-1 font-medium leading-relaxed">
-                      {wing.title}
-                    </p>
-                    <div className="mt-4 pt-3 border-t border-white/10 flex items-center justify-between text-[11px] font-mono text-purple-300">
-                      <span className="text-purple-300 font-bold">{wing.department}</span>
-                      <span className="text-white/60">LNJPIT</span>
-                    </div>
+                  {/* Bottom Department Tag Overlay on Image */}
+                  <div className="absolute bottom-2.5 left-2.5 right-2.5 z-10 text-left">
+                    <span className="font-carter text-sm text-white block drop-shadow-[2px_2px_0px_#000] leading-tight">
+                      {member.department}
+                    </span>
+                    <span className="text-[10px] font-mono text-amber-300 block font-semibold mt-0.5">
+                      {member.role}
+                    </span>
                   </div>
                 </div>
-              </ScrollReveal>
-            );
-          })}
+
+                {/* Card Info Below Image */}
+                <div className="text-left px-1 mt-1">
+                  <div className="flex items-center justify-between gap-1 mb-1">
+                    <h3
+                      className={`font-carter text-base tracking-wide ${
+                        member.isLead ? 'text-amber-300' : 'text-white'
+                      }`}
+                    >
+                      {member.title}
+                    </h3>
+                    {member.isLead && (
+                      <span className="text-[9px] font-mono font-bold px-1.5 py-0.5 rounded bg-amber-400/20 text-amber-300 border border-amber-400/40">
+                        PRIORITY
+                      </span>
+                    )}
+                  </div>
+
+                  <p className="text-[11px] font-mono text-purple-200/90 leading-tight">
+                    {member.branchLong}
+                  </p>
+
+                  <div className="mt-3 pt-2.5 border-t border-white/10 flex items-center justify-between text-[10px] font-mono text-purple-300/80">
+                    <span className="truncate">LNJPIT Chapra</span>
+                    <span className="text-amber-400 font-bold shrink-0">Batch 2026</span>
+                  </div>
+                </div>
+              </div>
+            </ScrollReveal>
+          ))}
         </div>
+
+        {/* Footer Note */}
+        <ScrollReveal direction="up" distance={16} delay={200}>
+          <div className="mt-14 text-center">
+            <div className="inline-flex items-center gap-2 px-5 py-2 rounded-2xl bg-black/40 border border-white/15 text-xs font-mono text-purple-300">
+              <GraduationCap className="w-4 h-4 text-amber-400" />
+              <span>LNJPIT Cultural Council • Guided by Honorable Principal & Faculty Advisory Board</span>
+            </div>
+          </div>
+        </ScrollReveal>
       </div>
     </section>
   );
