@@ -3,8 +3,6 @@
 import { 
   Users,
   Award,
-  Star,
-  Sparkles,
   ShieldCheck,
   GraduationCap
 } from 'lucide-react';
@@ -26,9 +24,9 @@ export interface CoreMember {
   rotation: number;
 }
 
-// 5 Core Committee Members
+// 7 Core Committee Members
 // Priority #1: 4th Member (CSE) as explicitly requested
-// Followed by: 1st (Mechanical), 2nd (EEE), 3rd (Civil), 5th (CSE)
+// Followed by: ME, EEE, Civil 1, CSE 2, Civil 2, CSE 3
 export const CORE_COMMITTEE: CoreMember[] = [
   {
     id: 'core-cse-lead',
@@ -109,6 +107,19 @@ export const CORE_COMMITTEE: CoreMember[] = [
     tagBg: 'bg-cyan-400 text-black',
     rotation: 1,
   },
+  {
+    id: 'core-cse-2',
+    title: 'Core Committee Member',
+    role: 'Core Organizing Lead',
+    department: 'Computer Science & Engg.',
+    branchShort: 'CSE',
+    branchLong: 'Dept. of Computer Science & Engineering',
+    image: '/team/member_7_cse.jpg',
+    priorityOrder: 7,
+    badgeColor: '#0ea5e9',
+    tagBg: 'bg-sky-400 text-black',
+    rotation: -1,
+  },
 ];
 
 export default function TeamSection() {
@@ -125,7 +136,7 @@ export default function TeamSection() {
         <ScrollReveal direction="up" distance={24}>
           <div className="text-center mb-12">
             <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-amber-400 text-black border-2 border-black text-xs font-carter tracking-widest uppercase shadow-[2px_2px_0px_#000] -rotate-1">
-              <Sparkles className="w-3.5 h-3.5" />
+              <Award className="w-3.5 h-3.5" />
               <span>THE ARCHITECTS OF AARAMBH 2.0</span>
             </span>
             <h2 className="text-5xl sm:text-7xl font-carter tracking-wide text-white drop-shadow-[5px_5px_0px_#000] uppercase mt-3">
@@ -142,7 +153,7 @@ export default function TeamSection() {
           <div className="mb-12 p-4 sm:p-5 rounded-3xl bg-[#1b0f38] border-2 border-amber-400/70 shadow-[5px_5px_0px_#000] max-w-3xl mx-auto flex flex-wrap items-center justify-between gap-4">
             <div className="flex items-center gap-3">
               <div className="w-10 h-10 rounded-2xl bg-amber-400 text-black border-2 border-black flex items-center justify-center font-carter shadow-[2px_2px_0px_#000] -rotate-3 shrink-0">
-                <Star className="w-5 h-5 fill-black" />
+                <ShieldCheck className="w-5 h-5 text-black" />
               </div>
               <div className="text-left">
                 <span className="font-carter text-sm sm:text-base text-white tracking-wide uppercase block">
@@ -155,19 +166,19 @@ export default function TeamSection() {
             </div>
             <div className="flex items-center gap-2 font-mono text-[11px] text-amber-300">
               <span className="px-2.5 py-1 rounded-xl bg-black/50 border border-white/10">🎓 LNJPIT Chapra</span>
-              <span className="px-2.5 py-1 rounded-xl bg-amber-400/20 border border-amber-400/40 font-bold">6 Core Leads</span>
+              <span className="px-2.5 py-1 rounded-xl bg-amber-400/20 border border-amber-400/40 font-bold">7 Core Leads</span>
             </div>
           </div>
         </ScrollReveal>
 
-        {/* 6 Core Committee Cards Grid (2x3 symmetrical on large screens) */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        {/* 7 Core Committee Cards Grid */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
           {CORE_COMMITTEE.map((member, idx) => (
             <ScrollReveal
               key={member.id}
               direction="up"
               distance={28}
-              delay={idx * 70}
+              delay={idx * 60}
               rotate={member.rotation}
             >
               <div
@@ -209,8 +220,8 @@ export default function TeamSection() {
                   {/* Top-Right Priority Lead Badge if applicable */}
                   {member.isLead && (
                     <div className="absolute top-2.5 right-2.5 z-10">
-                      <span className="px-2 py-0.5 rounded-full bg-amber-400 text-black font-carter text-[9px] tracking-wider uppercase border border-black shadow-[2px_2px_0px_#000] flex items-center gap-1">
-                        <Star className="w-3 h-3 fill-black shrink-0" />
+                      <span className="px-2.5 py-0.5 rounded-full bg-amber-400 text-black font-carter text-[9px] tracking-wider uppercase border border-black shadow-[2px_2px_0px_#000] flex items-center gap-1 font-bold">
+                        <Award className="w-3 h-3 text-black shrink-0" />
                         <span>CORE LEAD</span>
                       </span>
                     </div>
