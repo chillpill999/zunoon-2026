@@ -308,10 +308,34 @@ export default function CubeSection() {
         </div>
       </div>
 
-      {/* Interactive Drag Hint */}
-      <div className="relative z-10 mt-8 flex items-center gap-2 text-xs font-mono text-purple-300/80 bg-black/60 px-4 py-1.5 rounded-full border border-purple-500/30 shadow-[2px_2px_0px_#000]">
-        <Compass className="w-4 h-4 text-amber-400 animate-spin" />
-        <span>DRAG TO ROTATE 360° IN ANY DIRECTION • CLICK ANY PHOTO TO EXPAND</span>
+      {/* Interactive Drag Hint & Quick Face Selectors */}
+      <div className="relative z-10 mt-8 flex flex-col items-center gap-3">
+        <div className="flex items-center gap-2 text-xs font-mono text-purple-300/80 bg-black/60 px-4 py-1.5 rounded-full border border-purple-500/30 shadow-[2px_2px_0px_#000]">
+          <Compass className="w-4 h-4 text-amber-400 animate-spin" />
+          <span>DRAG TO ROTATE 360° IN ANY DIRECTION • CLICK ANY PHOTO TO EXPAND</span>
+        </div>
+
+        {/* 6 Direct Face Switchers */}
+        <div className="flex items-center justify-center gap-2.5 sm:gap-3 flex-wrap">
+          {FACES.map((face, idx) => (
+            <button
+              key={face.id}
+              type="button"
+              onClick={() => {
+                rotateToRef.current?.(face.targetRot.x, face.targetRot.y);
+              }}
+              className="w-11 h-11 sm:w-12 sm:h-12 rounded-xl overflow-hidden border-2 border-black/80 hover:border-amber-400 shadow-[3px_3px_0px_#000] hover:scale-110 active:scale-95 transition-all cursor-pointer relative group bg-black"
+              title={`Rotate 3D Cube to photo ${idx + 1}`}
+            >
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={face.image}
+                alt={`Face ${idx + 1}`}
+                className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
+              />
+            </button>
+          ))}
+        </div>
       </div>
 
       {/* 6 Interactive Album Photos Grid */}
