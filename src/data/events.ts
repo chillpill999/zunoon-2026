@@ -439,9 +439,10 @@ export const FEST_EVENTS: FestEvent[] = [
       'Judged on circuit accuracy, neat wiring layout, debugging speed, and verified output.',
     ],
     coordinators: [
-      { name: 'Circuits & Hardware Wing', phone: 'aarambh.lnjpit@gmail.com', role: 'Hardware Coordinator' },
+      { name: 'Ayush', role: 'Coordinator' },
+      { name: 'Sumit Kumar', role: 'Coordinator' },
     ],
-    formUrl: null,
+    formUrl: 'https://forms.gle/8XHbKzS26hTeFSSN7',
     status: 'Open',
   },
   {
