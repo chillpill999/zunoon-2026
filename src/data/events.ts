@@ -11,6 +11,11 @@ export interface ClubInfo {
   eventCount: number;
 }
 
+export interface EventFormLink {
+  label: string;
+  url: string;
+}
+
 export interface FestEvent {
   id: string;
   title: string;
@@ -28,6 +33,7 @@ export interface FestEvent {
   rules: string[];
   coordinators: { name: string; phone?: string; role?: string }[];
   formUrl: string | null;
+  formUrls?: EventFormLink[];
   status: 'Open' | 'Coming Soon';
 }
 
@@ -110,8 +116,10 @@ export const FEST_EVENTS: FestEvent[] = [
       'Decisions of the jury will be final and binding.',
     ],
     coordinators: [
-      { name: 'Literary Club Secretariat', phone: '+91 9122334455', role: 'Event Coordinator' },
-      { name: 'Debating Wing Desk', phone: 'aarambh.lnjpit@gmail.com', role: 'Student Secretary' },
+      { name: 'Shalini Khushi', phone: '+91 9534190498', role: 'Coordinator' },
+      { name: 'Aditya Anand', phone: '7256801888', role: 'Coordinator' },
+      { name: 'Shekhar', phone: '9199538672', role: 'Coordinator' },
+      { name: 'Karuna Kumari', phone: '8986358955', role: 'Coordinator' },
     ],
     formUrl: null,
     status: 'Open',
@@ -138,7 +146,11 @@ export const FEST_EVENTS: FestEvent[] = [
       'Judged on clarity of thought, body language, domain knowledge, and consensus-building.',
     ],
     coordinators: [
-      { name: 'Literary Club Desk', phone: '+91 9122334455', role: 'Faculty Coordinator' },
+      
+      { name: 'Shalini Khushi', phone: '+91 9534190498', role: 'Coordinator' },
+      { name: 'Aditya Anand', phone: '7256801888', role: 'Coordinator' },
+      { name: 'Shekhar', phone: '9199538672', role: 'Coordinator' },
+      { name: 'Karuna Kumari', phone: '8986358955', role: 'Coordinator' },
     ],
     formUrl: null,
     status: 'Open',
@@ -165,7 +177,11 @@ export const FEST_EVENTS: FestEvent[] = [
       'Judged on spontaneity, vocabulary, content relevance, humor, and poise.',
     ],
     coordinators: [
-      { name: 'Oratory Society Lead', phone: 'aarambh.lnjpit@gmail.com', role: 'Coordinator' },
+      
+      { name: 'Shalini Khushi', phone: '+91 9534190498', role: 'Coordinator' },
+      { name: 'Aditya Anand', phone: '7256801888', role: 'Coordinator' },
+      { name: 'Shekhar', phone: '9199538672', role: 'Coordinator' },
+      { name: 'Karuna Kumari', phone: '8986358955', role: 'Coordinator' },
     ],
     formUrl: null,
     status: 'Open',
@@ -192,7 +208,11 @@ export const FEST_EVENTS: FestEvent[] = [
       'Judged on thematic depth, vocabulary, paragraph transitions, and insight.',
     ],
     coordinators: [
-      { name: 'Literary Committee Secretary', phone: 'aarambh.lnjpit@gmail.com', role: 'Convener' },
+      
+      { name: 'Shalini Khushi', phone: '+91 9534190498', role: 'Coordinator' },
+      { name: 'Aditya Anand', phone: '7256801888', role: 'Coordinator' },
+      { name: 'Shekhar', phone: '9199538672', role: 'Coordinator' },
+      { name: 'Karuna Kumari', phone: '8986358955', role: 'Coordinator' },
     ],
     formUrl: null,
     status: 'Open',
@@ -219,7 +239,12 @@ export const FEST_EVENTS: FestEvent[] = [
       'Judged on originality of plot, character development, emotional resonance, and climax.',
     ],
     coordinators: [
-      { name: 'Fiction Wing Desk', phone: '+91 9122334455', role: 'Student Incharge' },
+      
+      { name: 'Ambika Kumari',  role: 'Coordinator' },
+      { name: 'Amitesh kumar ', role: 'Coordinator' },
+      { name: 'Aditya Anand', phone: '7256801888', role: 'Coordinator' },
+      { name: 'Shekhar', phone: '9199538672', role: 'Coordinator' },
+      { name: 'Karuna Kumari', phone: '8986358955', role: 'Coordinator' },
     ],
     formUrl: null,
     status: 'Open',
@@ -245,7 +270,11 @@ export const FEST_EVENTS: FestEvent[] = [
       'Finals include Audio-Visual round, Pounce & Bounce, and Rapid-Fire Buzzer rounds.',
     ],
     coordinators: [
-      { name: 'LNJPIT Quiz Club Lead', phone: 'aarambh.lnjpit@gmail.com', role: 'Quizmaster' },
+      
+      { name: 'Shalini Khushi', phone: '+91 9534190498', role: 'Coordinator' },
+      { name: 'Aditya Anand', phone: '7256801888', role: 'Coordinator' },
+      { name: 'Shekhar', phone: '9199538672', role: 'Coordinator' },
+      { name: 'Karuna Kumari', phone: '8986358955', role: 'Coordinator' },
     ],
     formUrl: null,
     status: 'Open',
@@ -271,7 +300,11 @@ export const FEST_EVENTS: FestEvent[] = [
       'Judged on positive outlook, character initiative, problem-solving mindset, and coherence.',
     ],
     coordinators: [
-      { name: 'Literary Committee Desk', phone: 'aarambh.lnjpit@gmail.com', role: 'Coordinator' },
+      
+      { name: 'Shalini Khushi', phone: '+91 9534190498', role: 'Coordinator' },
+      { name: 'Aditya Anand', phone: '7256801888', role: 'Coordinator' },
+      { name: 'Shekhar', phone: '9199538672', role: 'Coordinator' },
+      { name: 'Karuna Kumari', phone: '8986358955', role: 'Coordinator' },
     ],
     formUrl: null,
     status: 'Open',
@@ -291,7 +324,7 @@ export const FEST_EVENTS: FestEvent[] = [
     eligibility: 'Open to all engineering branches',
     color: '#06b6d4',
     gradient: 'from-cyan-500 to-teal-600',
-    venue: 'Computer Center Lab 1',
+    venue: 'Lab Building',
     timeSlot: 'Morning Slot',
     description: 'Race against the clock to hunt down segmentation faults, race conditions, memory leaks, and tricky logic bugs hidden in codebase snippets.',
     rules: [
@@ -329,7 +362,13 @@ export const FEST_EVENTS: FestEvent[] = [
       'Judged on innovation, UI/UX polish, technical execution, and live functionality.',
     ],
     coordinators: [
-      { name: 'Web Development Society', phone: 'aarambh.lnjpit@gmail.com', role: 'Hack Lead' },
+      { name: 'Abhinav Aman', phone: '9264117607', role: 'Coordinator' },
+      { name: 'Nitish Kumar', phone: '8102001172', role: 'Coordinator' },
+      { name: 'Sumit Kumar', role: 'Coordinator' },
+      { name: 'Ankit Kumar', role: 'Coordinator' },
+      { name: 'Ankush Maurya', role: 'Coordinator' },
+      { name: 'Soni yadav', role: 'Coordinator' },
+      { name: 'Amitesh Kumar', role: 'Coordinator' },
     ],
     formUrl: null,
     status: 'Open',
@@ -355,14 +394,20 @@ export const FEST_EVENTS: FestEvent[] = [
       'Negative marking applies on false buzzer presses.',
     ],
     coordinators: [
-      { name: 'Technical Committee Convener', phone: '+91 9122334455', role: 'Coordinator' },
+      
+      { name: 'Achal Kumar', role: 'Coordinator' },
+      { name: 'Rashid Ahmad', role: 'Coordinator' },
+      { name: 'Ambika kumari', role: 'Coordinator' },
+      { name: 'Amitesh Kumar', role: 'Coordinator' },
+      { name: 'Abhijeet Kumar', role: 'Coordinator' },
+
     ],
     formUrl: null,
     status: 'Open',
   },
 
   // ==========================================
-  // SPORTS CLUB (10 Events)
+  // SPORTS CLUB (9 Events)
   // ==========================================
   {
     id: 'sports-badminton',
@@ -385,9 +430,17 @@ export const FEST_EVENTS: FestEvent[] = [
       'Non-marking badminton shoes recommended; shuttles provided by committee.',
     ],
     coordinators: [
-      { name: 'Badminton Arena Desk', phone: '+91 9122334455', role: 'Sports Secretary' },
+      { name: 'Alok Kumar', phone: '+91 7292946673', role: 'Lead Coordinator' },
+      { name: 'Anand', phone: '+91 7292880723', role: 'Lead Coordinator' },
+      { name: 'Tanya Kumari', role: 'Student Coordinator' },
+      { name: 'Palak Kumari', role: 'Student Coordinator' },
+      { name: 'Saumya Mishra', role: 'Student Coordinator' },
+      { name: 'Khushi Kumari', role: 'Student Coordinator' },
+      { name: 'Abhinav Aman', role: 'Student Coordinator' },
+      { name: 'Aman Kumar', role: 'Student Coordinator' },
+      { name: 'Satyam Kumar', role: 'Student Coordinator' },
     ],
-    formUrl: null,
+    formUrl: 'https://forms.gle/971xToqih7MgvanB6',
     status: 'Open',
   },
   {
@@ -411,9 +464,15 @@ export const FEST_EVENTS: FestEvent[] = [
       'Rotations and net touch rules strictly officiated by sports committee referee.',
     ],
     coordinators: [
-      { name: 'Volleyball Committee', phone: 'aarambh.lnjpit@gmail.com', role: 'Court Referee' },
+      { name: 'Harsh Raj', phone: '+91 7542041771', role: 'Lead Coordinator' },
+      { name: 'Raushan Kumar', phone: '+91 9934358123', role: 'Lead Coordinator' },
+      { name: 'Rohit', phone: '+91 8092787503', role: 'Lead Coordinator' },
+      { name: 'Krish Jain', role: 'Student Coordinator' },
+      { name: 'Arnav Tiwary', role: 'Student Coordinator' },
+      { name: 'Prince', role: 'Student Coordinator' },
+      { name: 'Rajnikant Kumar', role: 'Student Coordinator' },
     ],
-    formUrl: null,
+    formUrl: 'https://forms.gle/ZKQxsedvhTSnZToW6',
     status: 'Open',
   },
   {
@@ -437,9 +496,28 @@ export const FEST_EVENTS: FestEvent[] = [
       'Umpire decision is final in all cases.',
     ],
     coordinators: [
-      { name: 'Cricket Council Desk', phone: '+91 9122334455', role: 'Tournament Lead' },
+      { name: 'Nishant Kumar', phone: '+91 6200240705', role: 'Boys Lead' },
+      { name: 'Arun', phone: '+91 8750824751', role: 'Boys Lead' },
+      { name: 'Krish Jain', phone: '+91 6201531607', role: 'Boys Lead' },
+      { name: 'OM Singh', phone: '+91 7480930538', role: 'Boys Lead' },
+      { name: 'Sunny', role: 'Boys Coordinator' },
+      { name: 'Tiroj', role: 'Boys Coordinator' },
+      { name: 'Ranjan Kumar', role: 'Boys Coordinator' },
+      { name: 'Aarma Yadav', role: 'Boys Coordinator' },
+      { name: 'Rishav', role: 'Boys Coordinator' },
+      { name: 'Saurabh Thakur', role: 'Boys Coordinator' },
+      { name: 'Abhishek Kumar', role: 'Boys Coordinator' },
+      { name: 'Abhishek Giri', role: 'Boys Coordinator' },
+      { name: 'Palak Kumari', role: 'Girls Coordinator' },
+      { name: 'Khushi Kumari', role: 'Girls Coordinator' },
+      { name: 'Dimple Yadav', role: 'Girls Coordinator' },
+      { name: 'Guriya Kumari', role: 'Girls Coordinator' },
     ],
-    formUrl: null,
+    formUrl: 'https://forms.gle/irCe79eQSR6z8VGb7',
+    formUrls: [
+      { label: 'Register for Fun Cricket (Boys)', url: 'https://forms.gle/irCe79eQSR6z8VGb7' },
+      { label: 'Register for Fun Cricket (Girls)', url: 'https://forms.gle/PnHP5vZoDiUVhyvr5' },
+    ],
     status: 'Open',
   },
   {
@@ -463,14 +541,13 @@ export const FEST_EVENTS: FestEvent[] = [
       'Illegal moves penalized according to official FIDE rules.',
     ],
     coordinators: [
-      { name: 'Abhinav singh ', phone: '6201404103', role: 'coordinator' },
-      { name: 'Amitesh kumar ', phone: '9430457719', role: 'coordinator' },
-      { name: 'Saurav Kumar  ', phone: '7766937052', role: 'coordinator' },
+      { name: 'Abhinav Singh', phone: '+91 6201404103', role: 'Lead Coordinator' },
+      { name: 'Amitesh Kumar', phone: '+91 9430457719', role: 'Lead Coordinator' },
+      { name: 'Saurav Kumar', phone: '+91 7766937052', role: 'Lead Coordinator' },
     ],
-    formUrl: null,
+    formUrl: 'https://forms.gle/HsV5a7avFAdEFThz9',
     status: 'Open',
   },
-
   {
     id: 'sports-table-tennis',
     title: 'Table Tennis Championship',
@@ -491,9 +568,12 @@ export const FEST_EVENTS: FestEvent[] = [
       'ITTF service and ball regulations enforced.',
     ],
     coordinators: [
-      { name: 'Table Tennis Incharge', phone: 'aarambh.lnjpit@gmail.com', role: 'Coordinator' },
+      { name: 'Nitesh Kumar', phone: '+91 8405868729', role: 'Lead Coordinator' },
+      { name: 'Sanjeev Kumar', phone: '+91 8051597167', role: 'Lead Coordinator' },
+      { name: 'Anand Mohan', role: 'Student Coordinator' },
+      { name: 'Dimple Yadav', role: 'Student Coordinator' },
     ],
-    formUrl: null,
+    formUrl: 'https://forms.gle/QVRovVTpmEVssdq26',
     status: 'Open',
   },
   {
@@ -516,9 +596,14 @@ export const FEST_EVENTS: FestEvent[] = [
       'Queen carries 3 points and must be confirmed with cover.',
     ],
     coordinators: [
-      { name: 'Indoor Games Desk', phone: '+91 9122334455', role: 'Coordinator' },
+      { name: 'Priyaranjan', phone: '+91 9065999214', role: 'Lead Coordinator' },
+      { name: 'Nitesh Kumar', phone: '+91 6200079543', role: 'Lead Coordinator' },
+      { name: 'Ratan', phone: '+91 9263852134', role: 'Lead Coordinator' },
+      { name: 'Krish Jain', role: 'Student Coordinator' },
+      { name: 'Rohit Raj', role: 'Student Coordinator' },
+      { name: 'Shivam', role: 'Student Coordinator' },
     ],
-    formUrl: null,
+    formUrl: 'https://forms.gle/m3e4zPuxgE89RXCj7',
     status: 'Open',
   },
   {
@@ -527,24 +612,30 @@ export const FEST_EVENTS: FestEvent[] = [
     club: 'sports',
     clubName: 'Sports Club',
     badge: 'RAW STRENGTH',
-    tags: ['Boys', 'Branch vs Branch', 'Endurance & Grip'],
-    format: 'Team of 8 Boys per branch',
-    eligibility: 'Boys branch teams (CSE, ME, CE, EEE, FPP, M&C)',
+    tags: ['Boys & Girls', 'Branch vs Branch', 'Endurance & Grip'],
+    format: 'Team of 8 per branch',
+    eligibility: 'Branch teams (CSE, ME, CE, EEE, FPP, M&C)',
     color: '#dc2626',
     gradient: 'from-red-600 to-orange-600',
     venue: 'Main Campus ground',
     timeSlot: 'Sunset Grand Event',
     description: 'The ultimate exhibition of raw strength, collective muscle, sync, and branch pride pulling on the heavy hemp rope!',
     rules: [
-      'Boys category only: 8 members per branch team.',
+      '8 members per branch team.',
       'Best of 3 pulls per clash.',
       'Cleats, spikes, or sticky gloves are strictly prohibited.',
       'Pulling begins only on referee whistle.',
     ],
     coordinators: [
-      { name: 'Sports Council Marshal', phone: '+91 9122334455', role: 'Referee' },
+      { name: 'Tiroj Alam', phone: '+91 9525929650', role: 'Lead Coordinator' },
+      { name: 'Raj Sharma', phone: '+91 7292937932', role: 'Lead Coordinator' },
+      { name: 'Kumari Ritika', role: 'Student Coordinator' },
+      { name: 'Amrita Kumari', role: 'Student Coordinator' },
+      { name: 'Guria Kumari', role: 'Student Coordinator' },
+      { name: 'Sumit Adarshi', role: 'Student Coordinator' },
+      { name: 'Amish Kumar', role: 'Student Coordinator' },
     ],
-    formUrl: null,
+    formUrl: 'https://forms.gle/mSifkFAqQV6E2Hao9',
     status: 'Open',
   },
   {
@@ -569,9 +660,21 @@ export const FEST_EVENTS: FestEvent[] = [
       'Scoring based on official esports placement + kill multiplier points.',
     ],
     coordinators: [
-      { name: 'E-Sports Coordinator', phone: 'aarambh.lnjpit@gmail.com', role: 'Room Admin' },
+      { name: 'Harshit Raj', phone: '+91 9263828113', role: 'BGMI Lead' },
+      { name: 'Rishav Kumar', phone: '+91 9264216575', role: 'Free Fire Lead' },
+      { name: 'Abhishek Kumar', phone: '+91 9153086846', role: 'Free Fire Lead' },
+      { name: 'Rohit Raj', role: 'BGMI Coordinator' },
+      { name: 'Gaurav Kumar', role: 'BGMI Coordinator' },
+      { name: 'Anshu', role: 'BGMI Coordinator' },
+      { name: 'Harshit', role: 'Free Fire Coordinator' },
+      { name: 'Alok Kumar', role: 'Free Fire Coordinator' },
+      { name: 'Amitesh Kumar', role: 'Free Fire Coordinator' },
     ],
-    formUrl: null,
+    formUrl: 'https://forms.gle/5gQpM8G9TqsuWZZv7',
+    formUrls: [
+      { label: 'Register for BGMI E-Sports (Squad)', url: 'https://forms.gle/5gQpM8G9TqsuWZZv7' },
+      { label: 'Register for Free Fire MAX (Squad)', url: 'https://forms.gle/9TVWktGTrPZotZhB8' },
+    ],
     status: 'Open',
   },
   {
@@ -595,9 +698,13 @@ export const FEST_EVENTS: FestEvent[] = [
       'First team to assemble all clue tokens and reach the finish line wins.',
     ],
     coordinators: [
-      { name: 'Adventure & Treasure Guild', phone: '+91 9122334455', role: 'Game Master' },
+      { name: 'Abhinav Aman', phone: '+91 9264117607', role: 'Lead Coordinator' },
+      { name: 'Saumya Mishra', role: 'Student Coordinator' },
+      { name: 'Amrita Kumari', role: 'Student Coordinator' },
+      { name: 'Kumari Ritika', role: 'Student Coordinator' },
+      { name: 'Rohit Raj', role: 'Student Coordinator' },
     ],
-    formUrl: null,
+    formUrl: 'https://forms.gle/JSWnU8AFJ5k5Lz3eA',
     status: 'Open',
   },
 

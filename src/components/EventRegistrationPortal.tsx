@@ -24,6 +24,7 @@ import {
   Check,
   Flame,
   ArrowRight,
+  Phone,
 } from 'lucide-react';
 import { CLUBS, FEST_EVENTS, FestEvent, ClubCategory } from '@/data/events';
 import ScrollReveal from '@/components/ScrollReveal';
@@ -474,6 +475,19 @@ export default function EventRegistrationPortal() {
                       </div>
                     </div>
 
+                    {/* Live Form Status */}
+                    {event.formUrl && (
+                      <div className="flex items-center justify-between text-[11px] font-mono pt-1">
+                        <span className="inline-flex items-center gap-1.5 text-amber-300 font-bold bg-amber-400/10 px-2 py-0.5 rounded-md border border-amber-400/30">
+                          <span className="w-1.5 h-1.5 rounded-full bg-amber-400 animate-ping" />
+                          <span>Google Form Live</span>
+                        </span>
+                        <span className="text-purple-300 text-[10px]">
+                          {event.coordinators.length} {event.coordinators.length === 1 ? 'Lead' : 'Leads'}
+                        </span>
+                      </div>
+                    )}
+
                     {/* Dual Action CTA Buttons */}
                     <div className="grid grid-cols-2 gap-2 pt-1">
                       <button
@@ -492,7 +506,7 @@ export default function EventRegistrationPortal() {
                         ) : (
                           <>
                             <Trophy className="w-3.5 h-3.5" />
-                            <span>Register</span>
+                            <span>{event.formUrl ? 'Register / Form' : 'Register'}</span>
                           </>
                         )}
                       </button>
@@ -595,23 +609,46 @@ export default function EventRegistrationPortal() {
             {/* TAB 1: REGISTRATION */}
             {modalTab === 'register' && (
               <div>
-                {/* Check if official Google Form URL is available */}
-                {activeModalEvent.formUrl ? (
-                  <div className="mb-6 p-5 rounded-2xl bg-amber-500/20 border-2 border-amber-400 text-center">
-                    <span className="px-3 py-1 rounded-full bg-amber-400 text-black font-carter text-xs uppercase mb-2 inline-block">
-                      Official Form Ready
+                {/* Check if official Google Form URL(s) are available */}
+                {activeModalEvent.formUrls && activeModalEvent.formUrls.length > 0 ? (
+                  <div className="mb-6 p-5 sm:p-6 rounded-2xl bg-gradient-to-br from-amber-500/20 via-purple-500/20 to-pink-500/20 border-3 border-amber-400 text-center shadow-[4px_4px_0px_#000]">
+                    <span className="px-3 py-1 rounded-full bg-amber-400 text-black font-carter text-xs uppercase mb-2 inline-block shadow-[2px_2px_0px_#000]">
+                      Official Google Forms Ready
                     </span>
-                    <p className="text-xs sm:text-sm text-purple-100 mb-4 font-sans">
-                      The official registration Google Form is live for {activeModalEvent.title}. Click below to complete your registration directly.
+                    <p className="text-xs sm:text-sm text-purple-100 mb-4 font-sans font-medium">
+                      Select your tournament division to fill out the official registration form for <strong className="text-white">{activeModalEvent.title}</strong>:
+                    </p>
+                    <div className="flex flex-col sm:flex-row gap-3 justify-center items-stretch">
+                      {activeModalEvent.formUrls.map((link, idx) => (
+                        <a
+                          key={idx}
+                          href={link.url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="comic-btn flex-1 px-4 py-3 bg-amber-400 hover:bg-amber-300 text-black font-carter text-xs sm:text-sm uppercase rounded-xl inline-flex items-center justify-center gap-2 shadow-[3px_3px_0px_#000] border-2 border-black transition-transform active:translate-x-0.5 active:translate-y-0.5"
+                        >
+                          <span>{link.label}</span>
+                          <ExternalLink className="w-4 h-4 shrink-0" />
+                        </a>
+                      ))}
+                    </div>
+                  </div>
+                ) : activeModalEvent.formUrl ? (
+                  <div className="mb-6 p-5 sm:p-6 rounded-2xl bg-amber-500/20 border-3 border-amber-400 text-center shadow-[4px_4px_0px_#000]">
+                    <span className="px-3 py-1 rounded-full bg-amber-400 text-black font-carter text-xs uppercase mb-2 inline-block shadow-[2px_2px_0px_#000]">
+                      Official Google Form Ready
+                    </span>
+                    <p className="text-xs sm:text-sm text-purple-100 mb-4 font-sans font-medium">
+                      The official registration Google Form is live for <strong className="text-white">{activeModalEvent.title}</strong>. Click below to register directly:
                     </p>
                     <a
                       href={activeModalEvent.formUrl}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="comic-btn px-6 py-3 bg-amber-400 hover:bg-amber-300 text-black font-carter text-sm uppercase rounded-xl inline-flex items-center gap-2 shadow-[3px_3px_0px_#000]"
+                      className="comic-btn px-6 py-3.5 bg-amber-400 hover:bg-amber-300 text-black font-carter text-sm uppercase rounded-xl inline-flex items-center justify-center gap-2 shadow-[3px_3px_0px_#000] border-2 border-black"
                     >
                       <span>Open Official Google Form</span>
-                      <ExternalLink className="w-4 h-4" />
+                      <ExternalLink className="w-4 h-4 shrink-0" />
                     </a>
                   </div>
                 ) : (
@@ -811,14 +848,41 @@ export default function EventRegistrationPortal() {
 
                 {/* Coordinators Contact Box */}
                 {activeModalEvent.coordinators.length > 0 && (
-                  <div className="p-4 rounded-2xl bg-black/50 border-2 border-black">
-                    <h5 className="font-carter text-sm text-amber-400 mb-2">Student Coordinators:</h5>
-                    <div className="space-y-2 text-xs font-mono text-purple-200">
+                  <div className="p-4 sm:p-5 rounded-2xl bg-black/60 border-3 border-black shadow-[4px_4px_0px_#000]">
+                    <div className="flex items-center justify-between mb-3 border-b border-white/10 pb-2">
+                      <h5 className="font-carter text-sm sm:text-base text-amber-400 flex items-center gap-2">
+                        <Users className="w-4 h-4 text-amber-400" />
+                        <span>Student Coordinators ({activeModalEvent.coordinators.length})</span>
+                      </h5>
+                      <span className="text-[10px] font-mono text-purple-300">Direct Contact</span>
+                    </div>
+
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 max-h-64 overflow-y-auto pr-1">
                       {activeModalEvent.coordinators.map((c, i) => (
-                        <div key={i} className="flex items-center justify-between border-b border-white/5 pb-1">
-                          <span className="font-bold text-white">{c.name}</span>
-                          <span className="text-purple-300">{c.role}</span>
-                          {c.phone && <span className="text-amber-400">{c.phone}</span>}
+                        <div
+                          key={i}
+                          className="p-2.5 rounded-xl bg-[#120826] border border-purple-500/30 flex items-center justify-between gap-2 shadow-[2px_2px_0px_#000]"
+                        >
+                          <div className="min-w-0">
+                            <p className="font-bold text-white text-xs truncate">{c.name}</p>
+                            {c.role && (
+                              <p className="text-[10px] font-mono text-purple-300/80 truncate">
+                                {c.role}
+                              </p>
+                            )}
+                          </div>
+                          {c.phone ? (
+                            <a
+                              href={`tel:${c.phone.replace(/[^0-9+]/g, '')}`}
+                              className="px-2 py-1 rounded-lg bg-amber-400/10 hover:bg-amber-400 hover:text-black border border-amber-400/40 text-amber-300 font-mono text-[11px] font-bold flex items-center gap-1 shrink-0 transition-colors"
+                              title={`Call ${c.name}`}
+                            >
+                              <Phone className="w-3 h-3" />
+                              <span>{c.phone.replace('+91 ', '')}</span>
+                            </a>
+                          ) : (
+                            <span className="text-[10px] font-mono text-purple-400/60 italic">Coordinator</span>
+                          )}
                         </div>
                       ))}
                     </div>
