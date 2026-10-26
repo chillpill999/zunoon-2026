@@ -61,7 +61,7 @@ export default function Footer() {
             </li>
             <li>
               <Link href="/#events" className="hover:text-amber-400 transition-colors">
-                Events & Competitions (28 Events)
+                Events & Competitions (27 Events)
               </Link>
             </li>
             <li>
@@ -119,7 +119,7 @@ export default function Footer() {
               <Ticket className="w-3.5 h-3.5" /> 100% Free Festival
             </p>
             <p className="text-[11px] leading-relaxed">
-              No registration charges exist. Free participation across 5 student clubs and 28 competitions. Present your LNJPIT ID card at the venues.
+              No registration charges exist. Free participation across 5 student clubs and 27 competitions. Present your LNJPIT ID card at the venues.
             </p>
             <div className="flex flex-col gap-1.5">
               <Link

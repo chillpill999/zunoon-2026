@@ -66,11 +66,11 @@ export const CLUBS: ClubInfo[] = [
     id: 'art',
     name: 'Art Club',
     shortName: 'Art & Design',
-    tagline: 'Canvas, Sketching, Posters & Traditional Henna',
+    tagline: 'Canvas, Sketching & Thematic Posters',
     color: '#ec4899',
     gradient: 'from-pink-500 to-rose-600',
     iconName: 'Palette',
-    eventCount: 4,
+    eventCount: 3,
   },
   {
     id: 'cultural',
@@ -558,7 +558,7 @@ export const FEST_EVENTS: FestEvent[] = [
     eligibility: 'All LNJPIT students (Mobile devices only)',
     color: '#10b981',
     gradient: 'from-emerald-500 to-teal-700',
-    venue: 'Seminar Hall 3 / Computer Lab Lounge',
+    venue: 'Hostel',
     timeSlot: 'Parallel Online & LAN Custom Rooms',
     description: 'Drop onto Erangel and Bermuda! Squad tactical combat, clutch sniper duels, fast zone rotations, and battle royale dominance.',
     rules: [
@@ -682,32 +682,6 @@ export const FEST_EVENTS: FestEvent[] = [
     formUrl: null,
     status: 'Open',
   },
-  {
-    id: 'art-mehendi',
-    title: 'Mehendi Design Competition',
-    club: 'art',
-    clubName: 'Art Club',
-    badge: 'TRADITIONAL HENNA',
-    tags: ['Henna Art', 'Arabic & Traditional', 'Solo / Pair'],
-    format: 'Solo artist (with 1 subject/model)',
-    eligibility: 'Open to all students',
-    color: '#be185d',
-    gradient: 'from-pink-700 to-rose-800',
-    venue: 'MPH',
-    timeSlot: 'Morning to Afternoon Slot',
-    description: 'Exquisite Henna motifs, intricate Indian bridal patterns, and modern Arabic floral geometry crafted live on hands.',
-    rules: [
-      'Time duration: 60 minutes.',
-      'Design must cover one hand up to the forearm.',
-      'Henna cones brought by participants or provided on request (natural Henna only).',
-      'Judged on intricate detailing, symmetry, design flow, and neatness.',
-    ],
-    coordinators: [
-      { name: 'Traditional Arts Wing', phone: 'aarambh.lnjpit@gmail.com', role: 'Coordinator' },
-    ],
-    formUrl: null,
-    status: 'Open',
-  },
 
   // ==========================================
   // CULTURAL CLUB (5 Events)
@@ -775,8 +749,8 @@ export const FEST_EVENTS: FestEvent[] = [
     eligibility: 'Open to all students',
     color: '#8b5cf6',
     gradient: 'from-purple-600 to-rose-600',
-    venue: 'Seminar Hall 1',
-    timeSlot: 'MPH/Academic building',
+    venue: 'Main LNJPIT Ground Stage',
+    timeSlot: 'Evening',
     description: 'Soul-stirring verses, thought-provoking nazms, Ghazals, and modern spoken word performed live under the acoustic spotlight.',
     rules: [
       'Must be original work written by the participant.',
