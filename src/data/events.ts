@@ -52,11 +52,11 @@ export const CLUBS: ClubInfo[] = [
     id: 'technical',
     name: 'Technical Club',
     shortName: 'Technical',
-    tagline: 'Coding, Web Sprints & Tech Intelligence',
+    tagline: 'Coding, Web Sprints, Hardware & Tech Intelligence',
     color: '#06b6d4',
     gradient: 'from-cyan-500 to-blue-600',
     iconName: 'Terminal',
-    eventCount: 3,
+    eventCount: 4,
   },
   {
     id: 'sports',
@@ -311,7 +311,7 @@ export const FEST_EVENTS: FestEvent[] = [
   },
 
   // ==========================================
-  // TECHNICAL CLUB (3 Events)
+  // TECHNICAL CLUB (4 Events)
   // ==========================================
   {
     id: 'tech-debugging',
@@ -394,13 +394,38 @@ export const FEST_EVENTS: FestEvent[] = [
       'Negative marking applies on false buzzer presses.',
     ],
     coordinators: [
-      
       { name: 'Achal Kumar', role: 'Coordinator' },
       { name: 'Rashid Ahmad', role: 'Coordinator' },
       { name: 'Ambika kumari', role: 'Coordinator' },
       { name: 'Amitesh Kumar', role: 'Coordinator' },
       { name: 'Abhijeet Kumar', role: 'Coordinator' },
-
+    ],
+    formUrl: null,
+    status: 'Open',
+  },
+  {
+    id: 'tech-circuitron',
+    title: 'Circitron',
+    club: 'technical',
+    clubName: 'Technical Club',
+    badge: 'CIRCUIT ARENA',
+    tags: ['Circuit Design', 'Breadboard & PCB', 'Hardware Debugging', 'Solo / Duo'],
+    format: 'Solo or Duo',
+    eligibility: 'Open to all engineering branches (EEE, CSE, ME, CE)',
+    color: '#14b8a6',
+    gradient: 'from-teal-500 to-emerald-600',
+    venue: 'Basic Electrical / Electronics Lab',
+    timeSlot: 'Morning to Mid-Day Session',
+    description: 'Step into the hardware arena! Breadboard circuit assembly, component identification, waveform troubleshooting, and rapid hardware debugging under timed pressure.',
+    rules: [
+      'Participants may compete solo or in teams of 2.',
+      'Round 1: Rapid component identification, schematic reading, and circuit theory screening.',
+      'Round 2: Hands-on breadboard wiring, logic gate implementation, and hardware fault debugging.',
+      'Components, breadboards, multimeters, and DC power supplies provided by organizers.',
+      'Judged on circuit accuracy, neat wiring layout, debugging speed, and verified output.',
+    ],
+    coordinators: [
+      { name: 'Circuits & Hardware Wing', phone: 'aarambh.lnjpit@gmail.com', role: 'Hardware Coordinator' },
     ],
     formUrl: null,
     status: 'Open',
