@@ -90,6 +90,29 @@ export const CLUBS: ClubInfo[] = [
   },
 ];
 
+const LITERARY_COORDINATORS = [
+  { name: 'Shalini Khushi', phone: '+91 9534190418', role: 'Lead Coordinator' },
+  { name: 'Aditya Anand', phone: '+91 7256801888', role: 'Lead Coordinator' },
+  { name: 'Shekhar', phone: '+91 9199538672', role: 'Lead Coordinator' },
+  { name: 'Karuna Kumari', phone: '+91 8986358955', role: 'Lead Coordinator' },
+  { name: 'Ambika Kumari', role: 'Coordinator' },
+  { name: 'Tanya Singh', role: 'Coordinator' },
+  { name: 'Harshita Kumari', role: 'Coordinator' },
+  { name: 'Priya Rani', role: 'Coordinator' },
+  { name: 'Manish Kumar', role: 'Coordinator' },
+  { name: 'Kumari Ritika', role: 'Coordinator' },
+  { name: 'Rohit Kumar', role: 'Coordinator' },
+  { name: 'Suraj', role: 'Coordinator' },
+  { name: 'Ayush Kr', role: 'Coordinator' },
+  { name: 'Soni Kumari', role: 'Coordinator' },
+  { name: 'Khushi Kumari', role: 'Coordinator' },
+  { name: 'Amrita Kumari', role: 'Coordinator' },
+  { name: 'Simran Kr', role: 'Coordinator' },
+  { name: 'Karan Kr Singh', role: 'Coordinator' },
+  { name: 'Anuj Kr', role: 'Coordinator' },
+  { name: 'Nikhil Kr Yadav', role: 'Coordinator' },
+];
+
 export const FEST_EVENTS: FestEvent[] = [
   // ==========================================
   // LITERARY CLUB (7 Events)
@@ -115,13 +138,8 @@ export const FEST_EVENTS: FestEvent[] = [
       'Judging criteria: Logic and factual weight, delivery fluency, rebuttal agility, and parliamentary decorum.',
       'Decisions of the jury will be final and binding.',
     ],
-    coordinators: [
-      { name: 'Shalini Khushi', phone: '+91 9534190498', role: 'Coordinator' },
-      { name: 'Aditya Anand', phone: '7256801888', role: 'Coordinator' },
-      { name: 'Shekhar', phone: '9199538672', role: 'Coordinator' },
-      { name: 'Karuna Kumari', phone: '8986358955', role: 'Coordinator' },
-    ],
-    formUrl: null,
+    coordinators: LITERARY_COORDINATORS,
+    formUrl: 'https://forms.gle/FyWvYwhgqNkDiirX8',
     status: 'Open',
   },
   {
@@ -145,14 +163,8 @@ export const FEST_EVENTS: FestEvent[] = [
       'Aggressive shouting or interrupting without allowing others to speak results in negative marking.',
       'Judged on clarity of thought, body language, domain knowledge, and consensus-building.',
     ],
-    coordinators: [
-      
-      { name: 'Shalini Khushi', phone: '+91 9534190498', role: 'Coordinator' },
-      { name: 'Aditya Anand', phone: '7256801888', role: 'Coordinator' },
-      { name: 'Shekhar', phone: '9199538672', role: 'Coordinator' },
-      { name: 'Karuna Kumari', phone: '8986358955', role: 'Coordinator' },
-    ],
-    formUrl: null,
+    coordinators: LITERARY_COORDINATORS,
+    formUrl: 'https://forms.gle/FyWvYwhgqNkDiirX8',
     status: 'Open',
   },
   {
@@ -176,14 +188,8 @@ export const FEST_EVENTS: FestEvent[] = [
       'A bell will ring at 2 minutes (warning) and 3 minutes (conclusion).',
       'Judged on spontaneity, vocabulary, content relevance, humor, and poise.',
     ],
-    coordinators: [
-      
-      { name: 'Shalini Khushi', phone: '+91 9534190498', role: 'Coordinator' },
-      { name: 'Aditya Anand', phone: '7256801888', role: 'Coordinator' },
-      { name: 'Shekhar', phone: '9199538672', role: 'Coordinator' },
-      { name: 'Karuna Kumari', phone: '8986358955', role: 'Coordinator' },
-    ],
-    formUrl: null,
+    coordinators: LITERARY_COORDINATORS,
+    formUrl: 'https://forms.gle/GWf9fF4tbZg6EPvh8',
     status: 'Open',
   },
   {
@@ -207,14 +213,8 @@ export const FEST_EVENTS: FestEvent[] = [
       'Plagiarism or use of mobile devices during writing will lead to immediate disqualification.',
       'Judged on thematic depth, vocabulary, paragraph transitions, and insight.',
     ],
-    coordinators: [
-      
-      { name: 'Shalini Khushi', phone: '+91 9534190498', role: 'Coordinator' },
-      { name: 'Aditya Anand', phone: '7256801888', role: 'Coordinator' },
-      { name: 'Shekhar', phone: '9199538672', role: 'Coordinator' },
-      { name: 'Karuna Kumari', phone: '8986358955', role: 'Coordinator' },
-    ],
-    formUrl: null,
+    coordinators: LITERARY_COORDINATORS,
+    formUrl: 'https://forms.gle/GWf9fF4tbZg6EPvh8',
     status: 'Open',
   },
   {
@@ -238,15 +238,8 @@ export const FEST_EVENTS: FestEvent[] = [
       'Time limit: 75 minutes.',
       'Judged on originality of plot, character development, emotional resonance, and climax.',
     ],
-    coordinators: [
-      
-      { name: 'Ambika Kumari',  role: 'Coordinator' },
-      { name: 'Amitesh kumar ', role: 'Coordinator' },
-      { name: 'Aditya Anand', phone: '7256801888', role: 'Coordinator' },
-      { name: 'Shekhar', phone: '9199538672', role: 'Coordinator' },
-      { name: 'Karuna Kumari', phone: '8986358955', role: 'Coordinator' },
-    ],
-    formUrl: null,
+    coordinators: LITERARY_COORDINATORS,
+    formUrl: 'https://forms.gle/GWf9fF4tbZg6EPvh8',
     status: 'Open',
   },
   {
@@ -269,13 +262,7 @@ export const FEST_EVENTS: FestEvent[] = [
       'Top 6 teams advance to the Stage Finals.',
       'Finals include Audio-Visual round, Pounce & Bounce, and Rapid-Fire Buzzer rounds.',
     ],
-    coordinators: [
-      
-      { name: 'Shalini Khushi', phone: '+91 9534190498', role: 'Coordinator' },
-      { name: 'Aditya Anand', phone: '7256801888', role: 'Coordinator' },
-      { name: 'Shekhar', phone: '9199538672', role: 'Coordinator' },
-      { name: 'Karuna Kumari', phone: '8986358955', role: 'Coordinator' },
-    ],
+    coordinators: LITERARY_COORDINATORS,
     formUrl: null,
     status: 'Open',
   },
@@ -299,14 +286,8 @@ export const FEST_EVENTS: FestEvent[] = [
       'Language: English or Hindi.',
       'Judged on positive outlook, character initiative, problem-solving mindset, and coherence.',
     ],
-    coordinators: [
-      
-      { name: 'Shalini Khushi', phone: '+91 9534190498', role: 'Coordinator' },
-      { name: 'Aditya Anand', phone: '7256801888', role: 'Coordinator' },
-      { name: 'Shekhar', phone: '9199538672', role: 'Coordinator' },
-      { name: 'Karuna Kumari', phone: '8986358955', role: 'Coordinator' },
-    ],
-    formUrl: null,
+    coordinators: LITERARY_COORDINATORS,
+    formUrl: 'https://forms.gle/GWf9fF4tbZg6EPvh8',
     status: 'Open',
   },
 
@@ -419,7 +400,7 @@ export const FEST_EVENTS: FestEvent[] = [
   },
   {
     id: 'tech-circuitron',
-    title: 'Circitron',
+    title: 'Circuitron',
     club: 'technical',
     clubName: 'Technical Club',
     badge: 'CIRCUIT ARENA',
