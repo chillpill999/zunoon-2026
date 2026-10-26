@@ -1,7 +1,6 @@
 'use client';
 
-import { useState, useMemo, useEffect } from 'react';
-import confetti from 'canvas-confetti';
+import { useState, useMemo } from 'react';
 import {
   Trophy,
   BookOpen,
@@ -9,41 +8,19 @@ import {
   Palette,
   Sparkles,
   Search,
-  Filter,
   CheckCircle2,
   ExternalLink,
   X,
   MapPin,
   Clock,
   Users,
-  Award,
-  ChevronRight,
-  Share2,
   AlertCircle,
   FileText,
-  Check,
-  Flame,
   ArrowRight,
   Phone,
 } from 'lucide-react';
 import { CLUBS, FEST_EVENTS, FestEvent, ClubCategory } from '@/data/events';
 import ScrollReveal from '@/components/ScrollReveal';
-
-const BRANCH_OPTIONS = [
-  'Computer Science & Engineering (CSE)',
-  'Civil Engineering (CE)',
-  'Mechanical Engineering (ME)',
-  'Electrical & Electronics Engineering (EEE)',
-  'Food Processing & Preservation (FPP)',
-  'Mathematics & Computing (M&C)',
-];
-
-const BATCH_OPTIONS = [
-  '1st Year / Fresher (Batch 2026)',
-  '2nd Year / Senior (Batch 2025)',
-  '3rd Year / Senior (Batch 2024)',
-  '4th Year / Senior (Batch 2023)',
-];
 
 const QUICK_TAG_FILTERS = [
   'All',
@@ -55,58 +32,12 @@ const QUICK_TAG_FILTERS = [
   'Singles / Doubles',
 ];
 
-interface RegisteredRecord {
-  eventId: string;
-  eventTitle: string;
-  clubName: string;
-  fullName: string;
-  rollNumber: string;
-  branch: string;
-  phone: string;
-  subCategory?: string;
-  teamName?: string;
-  registeredAt: string;
-}
-
 export default function EventRegistrationPortal() {
   const [selectedClub, setSelectedClub] = useState<ClubCategory>('all');
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedTag, setSelectedTag] = useState('All');
   const [activeModalEvent, setActiveModalEvent] = useState<FestEvent | null>(null);
   const [modalTab, setModalTab] = useState<'register' | 'rules'>('register');
-  const [showMyRegistrations, setShowMyRegistrations] = useState(false);
-
-  // Local storage state for registered competitions
-  const [registrations, setRegistrations] = useState<RegisteredRecord[]>([]);
-
-  // Registration Form State
-  const [formData, setFormData] = useState({
-    fullName: '',
-    rollNumber: '',
-    email: '',
-    phone: '',
-    branch: BRANCH_OPTIONS[0],
-    batchYear: BATCH_OPTIONS[0],
-    subCategory: '',
-    teamName: '',
-    teamMembers: '',
-  });
-
-  const [formSubmitting, setFormSubmitting] = useState(false);
-  const [formSuccess, setFormSuccess] = useState<string | null>(null);
-  const [formError, setFormError] = useState<string | null>(null);
-
-  // Load saved registrations on mount
-  useEffect(() => {
-    try {
-      const stored = localStorage.getItem('aarambh_registered_events');
-      if (stored) {
-        setRegistrations(JSON.parse(stored));
-      }
-    } catch {
-      // LocalStorage error non-fatal
-    }
-  }, []);
 
   // Filtered Events
   const filteredEvents = useMemo(() => {
@@ -147,70 +78,6 @@ export default function EventRegistrationPortal() {
   const openEventModal = (event: FestEvent, tab: 'register' | 'rules' = 'register') => {
     setActiveModalEvent(event);
     setModalTab(tab);
-    setFormSuccess(null);
-    setFormError(null);
-
-    // Autofill defaults if available
-    setFormData((prev) => ({
-      ...prev,
-      subCategory: event.tags[0] || '',
-      teamName: '',
-      teamMembers: '',
-    }));
-  };
-
-  const handleRegisterSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!activeModalEvent) return;
-
-    setFormError(null);
-    setFormSubmitting(true);
-
-    if (!formData.fullName.trim() || !formData.rollNumber.trim() || !formData.phone.trim()) {
-      setFormError('Please enter your Full Name, Roll Number, and WhatsApp Number.');
-      setFormSubmitting(false);
-      return;
-    }
-
-    try {
-      const record: RegisteredRecord = {
-        eventId: activeModalEvent.id,
-        eventTitle: activeModalEvent.title,
-        clubName: activeModalEvent.clubName,
-        fullName: formData.fullName.trim(),
-        rollNumber: formData.rollNumber.trim().toUpperCase(),
-        branch: formData.branch,
-        phone: formData.phone.trim(),
-        subCategory: formData.subCategory || undefined,
-        teamName: formData.teamName ? formData.teamName.trim() : undefined,
-        registeredAt: new Date().toISOString(),
-      };
-
-      const updated = [...registrations.filter((r) => r.eventId !== activeModalEvent.id), record];
-      localStorage.setItem('aarambh_registered_events', JSON.stringify(updated));
-      setRegistrations(updated);
-
-      try {
-        confetti({
-          particleCount: 100,
-          spread: 70,
-          origin: { y: 0.6 },
-          colors: ['#fbbf24', '#f43f5e', '#3b82f6', '#10b981'],
-        });
-      } catch {
-        // Confetti fallback
-      }
-
-      setFormSuccess(`Successfully registered for ${activeModalEvent.title}! Your spot is confirmed.`);
-    } catch {
-      setFormError('Could not save registration locally. Please try again.');
-    } finally {
-      setFormSubmitting(false);
-    }
-  };
-
-  const isEventRegistered = (id: string) => {
-    return registrations.some((r) => r.eventId === id);
   };
 
   return (
@@ -234,20 +101,6 @@ export default function EventRegistrationPortal() {
           <p className="font-chewy text-xl sm:text-2xl text-purple-200 mt-2 max-w-2xl mx-auto">
             Choose your arena across all 5 student clubs. 29 major competitions with official certificates, trophies, and glory for all LNJPIT batches.
           </p>
-
-          {/* User Registration Status Badge */}
-          {registrations.length > 0 && (
-            <div className="mt-4 inline-flex items-center gap-2">
-              <button
-                onClick={() => setShowMyRegistrations(true)}
-                className="comic-btn px-4 py-1.5 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-black font-carter text-xs uppercase tracking-wide flex items-center gap-1.5 shadow-[2px_2px_0px_#000]"
-              >
-                <CheckCircle2 className="w-4 h-4" />
-                <span>You are registered for {registrations.length} {registrations.length === 1 ? 'event' : 'events'}</span>
-                <span className="underline ml-1">View list →</span>
-              </button>
-            </div>
-          )}
         </div>
       </ScrollReveal>
 
@@ -322,7 +175,7 @@ export default function EventRegistrationPortal() {
               type="text"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder="Search 29 competitions (e.g. Blind Coding, Circitron, Hackathon, BGMI, Singing)..."
+              placeholder="Search 29 competitions (e.g. Blind Coding, Circuitron, Hackathon, BGMI, Singing)..."
               className="w-full pl-10 pr-10 py-2.5 rounded-xl bg-black/50 border-2 border-black text-white placeholder-purple-300/60 text-xs sm:text-sm font-sans focus:outline-none focus:border-amber-400 transition-colors"
             />
             {searchQuery && (
@@ -401,8 +254,8 @@ export default function EventRegistrationPortal() {
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {filteredEvents.map((event, idx) => {
-            const registered = isEventRegistered(event.id);
             const rot = idx % 3 === 0 ? '-1deg' : idx % 3 === 1 ? '1deg' : '0deg';
+            const hasForm = Boolean(event.formUrl || (event.formUrls && event.formUrls.length > 0));
 
             return (
               <ScrollReveal
@@ -415,7 +268,7 @@ export default function EventRegistrationPortal() {
                   className="comic-box p-6 rounded-3xl bg-[#160c33] border-3 border-black shadow-[6px_6px_0px_#000] flex flex-col justify-between hover:scale-[1.02] active:scale-[0.99] transition-all relative group h-full"
                   style={{ transform: `rotate(${rot})` }}
                 >
-                  {/* Top Bar: Club Badge & Registered Tag */}
+                  {/* Top Bar: Club Badge & Event Badge */}
                   <div>
                     <div className="flex items-center justify-between gap-2 mb-3">
                       <span
@@ -425,15 +278,9 @@ export default function EventRegistrationPortal() {
                         {event.clubName}
                       </span>
 
-                      {registered ? (
-                        <span className="px-2.5 py-0.5 rounded-md bg-emerald-950/80 text-emerald-400 border border-emerald-500/60 font-mono text-[10px] font-bold flex items-center gap-1 shadow-sm">
-                          <Check className="w-3 h-3" /> REGISTERED
-                        </span>
-                      ) : (
-                        <span className="px-2.5 py-0.5 rounded-md bg-amber-950/60 text-amber-300 border border-amber-500/40 font-mono text-[10px] font-bold">
-                          {event.badge}
-                        </span>
-                      )}
+                      <span className="px-2.5 py-0.5 rounded-md bg-amber-950/60 text-amber-300 border border-amber-500/40 font-mono text-[10px] font-bold">
+                        {event.badge}
+                      </span>
                     </div>
 
                     {/* Event Title */}
@@ -476,11 +323,21 @@ export default function EventRegistrationPortal() {
                     </div>
 
                     {/* Live Form Status */}
-                    {event.formUrl && (
+                    {hasForm ? (
                       <div className="flex items-center justify-between text-[11px] font-mono pt-1">
                         <span className="inline-flex items-center gap-1.5 text-amber-300 font-bold bg-amber-400/10 px-2 py-0.5 rounded-md border border-amber-400/30">
                           <span className="w-1.5 h-1.5 rounded-full bg-amber-400 animate-ping" />
                           <span>Google Form Live</span>
+                        </span>
+                        <span className="text-purple-300 text-[10px]">
+                          {event.coordinators.length} {event.coordinators.length === 1 ? 'Lead' : 'Leads'}
+                        </span>
+                      </div>
+                    ) : (
+                      <div className="flex items-center justify-between text-[11px] font-mono pt-1">
+                        <span className="inline-flex items-center gap-1.5 text-purple-300 font-medium bg-purple-500/10 px-2 py-0.5 rounded-md border border-purple-500/20">
+                          <Clock className="w-3 h-3 text-amber-400" />
+                          <span>Form Releasing Soon</span>
                         </span>
                         <span className="text-purple-300 text-[10px]">
                           {event.coordinators.length} {event.coordinators.length === 1 ? 'Lead' : 'Leads'}
@@ -492,23 +349,10 @@ export default function EventRegistrationPortal() {
                     <div className="grid grid-cols-2 gap-2 pt-1">
                       <button
                         onClick={() => openEventModal(event, 'register')}
-                        className={`comic-btn py-2.5 px-3 rounded-xl font-carter text-xs uppercase tracking-wide flex items-center justify-center gap-1.5 border-2 border-black ${
-                          registered
-                            ? 'bg-emerald-500 hover:bg-emerald-400 text-black shadow-[3px_3px_0px_#000]'
-                            : 'bg-amber-400 hover:bg-amber-300 text-black shadow-[3px_3px_0px_#000]'
-                        }`}
+                        className="comic-btn py-2.5 px-3 rounded-xl bg-amber-400 hover:bg-amber-300 text-black font-carter text-xs uppercase tracking-wide flex items-center justify-center gap-1.5 border-2 border-black shadow-[3px_3px_0px_#000]"
                       >
-                        {registered ? (
-                          <>
-                            <Check className="w-3.5 h-3.5" />
-                            <span>Registered</span>
-                          </>
-                        ) : (
-                          <>
-                            <Trophy className="w-3.5 h-3.5" />
-                            <span>{event.formUrl ? 'Register / Form' : 'Register'}</span>
-                          </>
-                        )}
+                        <Trophy className="w-3.5 h-3.5" />
+                        <span>{hasForm ? 'Register' : 'Details'}</span>
                       </button>
 
                       <button
@@ -590,7 +434,7 @@ export default function EventRegistrationPortal() {
                 }`}
               >
                 <Trophy className="w-4 h-4" />
-                <span>Register for Competition</span>
+                <span>Official Registration</span>
               </button>
 
               <button
@@ -606,17 +450,20 @@ export default function EventRegistrationPortal() {
               </button>
             </div>
 
-            {/* TAB 1: REGISTRATION */}
+            {/* TAB 1: OFFICIAL REGISTRATION */}
             {modalTab === 'register' && (
-              <div>
-                {/* Check if official Google Form URL(s) are available */}
+              <div className="space-y-6">
+                {/* Multi-Division Google Forms (e.g. Cricket Boys/Girls, Esports) */}
                 {activeModalEvent.formUrls && activeModalEvent.formUrls.length > 0 ? (
-                  <div className="mb-6 p-5 sm:p-6 rounded-2xl bg-gradient-to-br from-amber-500/20 via-purple-500/20 to-pink-500/20 border-3 border-amber-400 text-center shadow-[4px_4px_0px_#000]">
-                    <span className="px-3 py-1 rounded-full bg-amber-400 text-black font-carter text-xs uppercase mb-2 inline-block shadow-[2px_2px_0px_#000]">
+                  <div className="p-5 sm:p-6 rounded-2xl bg-gradient-to-br from-amber-500/20 via-purple-500/20 to-pink-500/20 border-3 border-amber-400 text-center shadow-[4px_4px_0px_#000]">
+                    <span className="px-3 py-1 rounded-full bg-amber-400 text-black font-carter text-xs uppercase mb-3 inline-block shadow-[2px_2px_0px_#000]">
                       Official Google Forms Ready
                     </span>
-                    <p className="text-xs sm:text-sm text-purple-100 mb-4 font-sans font-medium">
-                      Select your tournament division to fill out the official registration form for <strong className="text-white">{activeModalEvent.title}</strong>:
+                    <h4 className="font-carter text-xl sm:text-2xl text-white mb-2">
+                      Choose Your Tournament Division
+                    </h4>
+                    <p className="text-xs sm:text-sm text-purple-100 mb-5 max-w-lg mx-auto font-sans font-medium leading-relaxed">
+                      Select your tournament division below to fill out the official registration form for <strong className="text-amber-300">{activeModalEvent.title}</strong>:
                     </p>
                     <div className="flex flex-col sm:flex-row gap-3 justify-center items-stretch">
                       {activeModalEvent.formUrls.map((link, idx) => (
@@ -625,205 +472,108 @@ export default function EventRegistrationPortal() {
                           href={link.url}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="comic-btn flex-1 px-4 py-3 bg-amber-400 hover:bg-amber-300 text-black font-carter text-xs sm:text-sm uppercase rounded-xl inline-flex items-center justify-center gap-2 shadow-[3px_3px_0px_#000] border-2 border-black transition-transform active:translate-x-0.5 active:translate-y-0.5"
+                          className="comic-btn flex-1 px-4 py-3.5 bg-amber-400 hover:bg-amber-300 text-black font-carter text-xs sm:text-sm uppercase rounded-xl inline-flex items-center justify-center gap-2 shadow-[3px_3px_0px_#000] border-2 border-black transition-transform active:translate-x-0.5 active:translate-y-0.5"
                         >
                           <span>{link.label}</span>
                           <ExternalLink className="w-4 h-4 shrink-0" />
                         </a>
                       ))}
                     </div>
+                    <p className="text-[10px] font-mono text-purple-300/80 mt-4">
+                      100% Free Participation • Verified LNJPIT Aarambh 2.0 Registration Form
+                    </p>
                   </div>
                 ) : activeModalEvent.formUrl ? (
-                  <div className="mb-6 p-5 sm:p-6 rounded-2xl bg-amber-500/20 border-3 border-amber-400 text-center shadow-[4px_4px_0px_#000]">
-                    <span className="px-3 py-1 rounded-full bg-amber-400 text-black font-carter text-xs uppercase mb-2 inline-block shadow-[2px_2px_0px_#000]">
+                  /* Single Official Google Form */
+                  <div className="p-5 sm:p-6 rounded-2xl bg-gradient-to-br from-amber-500/20 via-purple-500/20 to-[#1d0e3b] border-3 border-amber-400 text-center shadow-[4px_4px_0px_#000]">
+                    <span className="px-3 py-1 rounded-full bg-amber-400 text-black font-carter text-xs uppercase mb-3 inline-block shadow-[2px_2px_0px_#000]">
                       Official Google Form Ready
                     </span>
-                    <p className="text-xs sm:text-sm text-purple-100 mb-4 font-sans font-medium">
-                      The official registration Google Form is live for <strong className="text-white">{activeModalEvent.title}</strong>. Click below to register directly:
+                    <h4 className="font-carter text-xl sm:text-2xl text-white mb-2">
+                      Fill Official Registration Form
+                    </h4>
+                    <p className="text-xs sm:text-sm text-purple-100 mb-5 max-w-lg mx-auto font-sans font-medium leading-relaxed">
+                      The official registration Google Form is live for <strong className="text-amber-300">{activeModalEvent.title}</strong>. Click below to submit your details and confirm your spot:
                     </p>
                     <a
                       href={activeModalEvent.formUrl}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="comic-btn px-6 py-3.5 bg-amber-400 hover:bg-amber-300 text-black font-carter text-sm uppercase rounded-xl inline-flex items-center justify-center gap-2 shadow-[3px_3px_0px_#000] border-2 border-black"
+                      className="comic-btn w-full sm:w-auto px-8 py-4 bg-amber-400 hover:bg-amber-300 text-black font-carter text-sm sm:text-base uppercase tracking-wider rounded-2xl inline-flex items-center justify-center gap-2.5 shadow-[4px_4px_0px_#000] border-3 border-black transition-transform active:translate-x-0.5 active:translate-y-0.5"
                     >
-                      <span>Open Official Google Form</span>
-                      <ExternalLink className="w-4 h-4 shrink-0" />
+                      <Trophy className="w-5 h-5 shrink-0" />
+                      <span>OPEN OFFICIAL GOOGLE FORM</span>
+                      <ExternalLink className="w-5 h-5 shrink-0" />
                     </a>
-                  </div>
-                ) : (
-                  <div className="mb-5 p-3 rounded-xl bg-purple-900/40 border border-purple-500/30 text-purple-200 text-xs font-mono flex items-center gap-2">
-                    <Clock className="w-4 h-4 text-amber-400 shrink-0" />
-                    <span>
-                      Official Google Form is releasing shortly by coordinators. Complete this on-site pre-registration to reserve your participation spot now!
-                    </span>
-                  </div>
-                )}
-
-                {/* Success Message Banner */}
-                {formSuccess && (
-                  <div className="mb-5 p-4 rounded-2xl bg-emerald-950/80 border-2 border-emerald-500 text-emerald-200 text-xs font-mono flex items-center gap-2 shadow-[3px_3px_0px_#000]">
-                    <CheckCircle2 className="w-5 h-5 text-emerald-400 shrink-0" />
-                    <span>{formSuccess}</span>
-                  </div>
-                )}
-
-                {/* Error Banner */}
-                {formError && (
-                  <div className="mb-5 p-4 rounded-2xl bg-rose-950/80 border-2 border-rose-500 text-rose-200 text-xs font-mono flex items-center gap-2 shadow-[3px_3px_0px_#000]">
-                    <AlertCircle className="w-5 h-5 text-rose-400 shrink-0" />
-                    <span>{formError}</span>
-                  </div>
-                )}
-
-                {/* Built-in On-Site Registration Form */}
-                <form onSubmit={handleRegisterSubmit} className="space-y-4">
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    {/* Full Name */}
-                    <div>
-                      <label className="block text-xs font-mono font-bold text-amber-300 mb-1">
-                        FULL NAME *
-                      </label>
-                      <input
-                        type="text"
-                        required
-                        value={formData.fullName}
-                        onChange={(e) => setFormData({ ...formData, fullName: e.target.value })}
-                        placeholder="e.g. Adarsh Kumar"
-                        className="w-full px-3.5 py-2.5 rounded-xl bg-black/60 border-2 border-black text-white text-xs sm:text-sm font-sans focus:outline-none focus:border-amber-400"
-                      />
-                    </div>
-
-                    {/* Roll Number */}
-                    <div>
-                      <label className="block text-xs font-mono font-bold text-amber-300 mb-1">
-                        COLLEGE ROLL NUMBER *
-                      </label>
-                      <input
-                        type="text"
-                        required
-                        value={formData.rollNumber}
-                        onChange={(e) => setFormData({ ...formData, rollNumber: e.target.value })}
-                        placeholder="e.g. 23105128042"
-                        className="w-full px-3.5 py-2.5 rounded-xl bg-black/60 border-2 border-black text-white text-xs sm:text-sm font-sans focus:outline-none focus:border-amber-400"
-                      />
-                    </div>
-                  </div>
-
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    {/* Branch */}
-                    <div>
-                      <label className="block text-xs font-mono font-bold text-amber-300 mb-1">
-                        ENGINEERING BRANCH *
-                      </label>
-                      <select
-                        value={formData.branch}
-                        onChange={(e) => setFormData({ ...formData, branch: e.target.value })}
-                        className="w-full px-3 py-2.5 rounded-xl bg-black/60 border-2 border-black text-white text-xs font-sans focus:outline-none focus:border-amber-400"
-                      >
-                        {BRANCH_OPTIONS.map((b) => (
-                          <option key={b} value={b} className="bg-[#170e35] text-white">
-                            {b}
-                          </option>
-                        ))}
-                      </select>
-                    </div>
-
-                    {/* Batch Year */}
-                    <div>
-                      <label className="block text-xs font-mono font-bold text-amber-300 mb-1">
-                        BATCH YEAR *
-                      </label>
-                      <select
-                        value={formData.batchYear}
-                        onChange={(e) => setFormData({ ...formData, batchYear: e.target.value })}
-                        className="w-full px-3 py-2.5 rounded-xl bg-black/60 border-2 border-black text-white text-xs font-sans focus:outline-none focus:border-amber-400"
-                      >
-                        {BATCH_OPTIONS.map((batch) => (
-                          <option key={batch} value={batch} className="bg-[#170e35] text-white">
-                            {batch}
-                          </option>
-                        ))}
-                      </select>
-                    </div>
-                  </div>
-
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    {/* Phone / WhatsApp */}
-                    <div>
-                      <label className="block text-xs font-mono font-bold text-amber-300 mb-1">
-                        WHATSAPP / PHONE NUMBER *
-                      </label>
-                      <input
-                        type="tel"
-                        required
-                        value={formData.phone}
-                        onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                        placeholder="+91 98765 43210"
-                        className="w-full px-3.5 py-2.5 rounded-xl bg-black/60 border-2 border-black text-white text-xs sm:text-sm font-sans focus:outline-none focus:border-amber-400"
-                      />
-                    </div>
-
-                    {/* Event Format / Sub-Category */}
-                    <div>
-                      <label className="block text-xs font-mono font-bold text-amber-300 mb-1">
-                        CATEGORY / FORMAT SELECTION
-                      </label>
-                      <input
-                        type="text"
-                        value={formData.subCategory}
-                        onChange={(e) => setFormData({ ...formData, subCategory: e.target.value })}
-                        placeholder={
-                          activeModalEvent.tags[0] || 'e.g. Boys Singles, BGMI, Solo'
-                        }
-                        className="w-full px-3.5 py-2.5 rounded-xl bg-black/60 border-2 border-black text-white text-xs sm:text-sm font-sans focus:outline-none focus:border-amber-400"
-                      />
-                    </div>
-                  </div>
-
-                  {/* Team details if applicable */}
-                  {(activeModalEvent.format.toLowerCase().includes('team') ||
-                    activeModalEvent.format.toLowerCase().includes('squad') ||
-                    activeModalEvent.format.toLowerCase().includes('duo')) && (
-                    <div className="p-3.5 rounded-2xl bg-black/40 border border-white/10 space-y-3">
-                      <p className="text-xs font-mono text-purple-200 font-bold flex items-center gap-1.5">
-                        <Users className="w-3.5 h-3.5 text-amber-400" />
-                        <span>Team Information (For group competitions):</span>
-                      </p>
-                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                        <input
-                          type="text"
-                          value={formData.teamName}
-                          onChange={(e) => setFormData({ ...formData, teamName: e.target.value })}
-                          placeholder="Team / Squad Name (e.g. Phoenix Warriors)"
-                          className="w-full px-3 py-2 rounded-xl bg-black/70 border border-black text-white text-xs font-sans focus:outline-none focus:border-amber-400"
-                        />
-                        <input
-                          type="text"
-                          value={formData.teamMembers}
-                          onChange={(e) => setFormData({ ...formData, teamMembers: e.target.value })}
-                          placeholder="Teammates' Names & Roll Numbers (comma-separated)"
-                          className="w-full px-3 py-2 rounded-xl bg-black/70 border border-black text-white text-xs font-sans focus:outline-none focus:border-amber-400"
-                        />
-                      </div>
-                    </div>
-                  )}
-
-                  {/* Submit Button */}
-                  <div className="pt-2">
-                    <button
-                      type="submit"
-                      disabled={formSubmitting}
-                      className="comic-btn w-full py-3.5 bg-amber-400 hover:bg-amber-300 disabled:opacity-50 text-black font-carter text-sm uppercase tracking-wider rounded-2xl border-3 border-black shadow-[4px_4px_0px_#000] flex items-center justify-center gap-2"
-                    >
-                      <Trophy className="w-4 h-4" />
-                      <span>{formSubmitting ? 'Confirming...' : 'CONFIRM EVENT REGISTRATION'}</span>
-                    </button>
-                    <p className="text-[10px] font-mono text-purple-300 text-center mt-2">
+                    <p className="text-[10px] font-mono text-purple-300/80 mt-4">
                       100% Free Participation • Official LNJPIT Aarambh 2.0 Registration
                     </p>
                   </div>
-                </form>
+                ) : (
+                  /* Form Releasing Soon Notice */
+                  <div className="p-6 rounded-2xl bg-purple-900/40 border-2 border-purple-500/30 text-center shadow-[4px_4px_0px_#000]">
+                    <Clock className="w-8 h-8 text-amber-400 mx-auto mb-2" />
+                    <span className="px-3 py-1 rounded-full bg-purple-800 text-purple-200 font-mono text-[11px] font-bold uppercase mb-2 inline-block">
+                      Registration Form Releasing Soon
+                    </span>
+                    <h4 className="font-carter text-xl text-white mb-2">
+                      Official Form Coming Shortly
+                    </h4>
+                    <p className="text-xs sm:text-sm text-purple-200 max-w-md mx-auto font-sans leading-relaxed">
+                      The official registration Google Form for <strong className="text-amber-300">{activeModalEvent.title}</strong> is being prepared by the student coordinators and will be live shortly.
+                    </p>
+                    <button
+                      onClick={() => setModalTab('rules')}
+                      className="comic-btn mt-4 px-6 py-2.5 bg-indigo-600 hover:bg-indigo-500 text-white font-carter text-xs sm:text-sm uppercase rounded-xl inline-flex items-center justify-center gap-2 border-2 border-black shadow-[3px_3px_0px_#000]"
+                    >
+                      <FileText className="w-4 h-4" />
+                      <span>View Rules & Contact Coordinators</span>
+                    </button>
+                  </div>
+                )}
+
+                {/* Direct Coordinator Assistance Block */}
+                {activeModalEvent.coordinators.length > 0 && (
+                  <div className="p-4 sm:p-5 rounded-2xl bg-black/60 border-2 border-black shadow-[4px_4px_0px_#000]">
+                    <div className="flex items-center justify-between mb-3 border-b border-white/10 pb-2">
+                      <h5 className="font-carter text-sm text-amber-400 flex items-center gap-2">
+                        <Users className="w-4 h-4 text-amber-400" />
+                        <span>Need Help? Contact Coordinators ({activeModalEvent.coordinators.length})</span>
+                      </h5>
+                      <span className="text-[10px] font-mono text-purple-300">Direct Contact</span>
+                    </div>
+
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 max-h-56 overflow-y-auto pr-1">
+                      {activeModalEvent.coordinators.map((c, i) => (
+                        <div
+                          key={i}
+                          className="p-2.5 rounded-xl bg-[#120826] border border-purple-500/30 flex items-center justify-between gap-2 shadow-[2px_2px_0px_#000]"
+                        >
+                          <div className="min-w-0">
+                            <p className="font-bold text-white text-xs truncate">{c.name}</p>
+                            {c.role && (
+                              <p className="text-[10px] font-mono text-purple-300/80 truncate">
+                                {c.role}
+                              </p>
+                            )}
+                          </div>
+                          {c.phone ? (
+                            <a
+                              href={`tel:${c.phone.replace(/[^0-9+]/g, '')}`}
+                              className="px-2 py-1 rounded-lg bg-amber-400/10 hover:bg-amber-400 hover:text-black border border-amber-400/40 text-amber-300 font-mono text-[11px] font-bold flex items-center gap-1 shrink-0 transition-colors"
+                              title={`Call ${c.name}`}
+                            >
+                              <Phone className="w-3 h-3" />
+                              <span>{c.phone.replace('+91 ', '')}</span>
+                            </a>
+                          ) : (
+                            <span className="text-[10px] font-mono text-purple-400/60 italic">Coordinator</span>
+                          )}
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
               </div>
             )}
 
@@ -894,60 +644,8 @@ export default function EventRegistrationPortal() {
                   onClick={() => setModalTab('register')}
                   className="comic-btn w-full py-3 bg-amber-400 hover:bg-amber-300 text-black font-carter text-sm uppercase rounded-xl border-2 border-black shadow-[3px_3px_0px_#000] flex items-center justify-center gap-2"
                 >
-                  <span>Proceed to Register for {activeModalEvent.title}</span>
+                  <span>Proceed to Official Registration</span>
                   <ArrowRight className="w-4 h-4" />
-                </button>
-              </div>
-            )}
-          </div>
-        </div>
-      )}
-
-      {/* "My Registered Events" Modal */}
-      {showMyRegistrations && (
-        <div className="fixed inset-0 z-[999] flex items-center justify-center bg-black/85 backdrop-blur-md p-4">
-          <div className="relative w-full max-w-xl bg-[#170e35] rounded-3xl border-4 border-black p-6 sm:p-8 shadow-[8px_8px_0px_#000] max-h-[85vh] overflow-y-auto">
-            <button
-              onClick={() => setShowMyRegistrations(false)}
-              className="absolute top-4 right-4 p-2 rounded-xl bg-rose-600 text-white border-2 border-black"
-              aria-label="Close registered events list"
-            >
-              <X className="w-5 h-5" />
-            </button>
-
-            <div className="flex items-center gap-2 mb-4">
-              <Trophy className="w-6 h-6 text-amber-400" />
-              <h3 className="font-carter text-2xl text-white">Your Registered Events</h3>
-            </div>
-
-            {registrations.length === 0 ? (
-              <p className="text-sm font-sans text-purple-200">
-                You haven&apos;t registered for any events yet. Pick a competition above and register!
-              </p>
-            ) : (
-              <div className="space-y-3">
-                {registrations.map((r, i) => (
-                  <div
-                    key={i}
-                    className="p-3.5 rounded-2xl bg-black/50 border-2 border-black flex items-center justify-between gap-3 text-xs"
-                  >
-                    <div>
-                      <span className="font-carter text-base text-amber-300 block">{r.eventTitle}</span>
-                      <span className="font-mono text-purple-300 text-[11px]">
-                        {r.clubName} • {r.fullName} ({r.rollNumber})
-                      </span>
-                    </div>
-                    <span className="px-2.5 py-1 rounded-md bg-emerald-950 text-emerald-400 border border-emerald-500/50 font-mono text-[10px] font-bold shrink-0">
-                      CONFIRMED
-                    </span>
-                  </div>
-                ))}
-
-                <button
-                  onClick={() => setShowMyRegistrations(false)}
-                  className="comic-btn w-full mt-4 py-2.5 bg-amber-400 text-black font-carter text-xs uppercase rounded-xl border border-black"
-                >
-                  Close & Explore More Events
                 </button>
               </div>
             )}

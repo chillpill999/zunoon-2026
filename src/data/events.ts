@@ -600,6 +600,7 @@ export const FEST_EVENTS: FestEvent[] = [
       { name: 'Abhinav Singh', phone: '+91 6201404103', role: 'Lead Coordinator' },
       { name: 'Amitesh Kumar', phone: '+91 9430457719', role: 'Lead Coordinator' },
       { name: 'Saurav Kumar', phone: '+91 7766937052', role: 'Lead Coordinator' },
+      { name: 'Madhu Sinha ', phone: '+91 7250766715', role: 'Lead Coordinator' },
     ],
     formUrl: 'https://forms.gle/HsV5a7avFAdEFThz9',
     status: 'Open',
