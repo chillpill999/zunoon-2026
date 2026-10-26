@@ -263,7 +263,7 @@ export const FEST_EVENTS: FestEvent[] = [
       'Finals include Audio-Visual round, Pounce & Bounce, and Rapid-Fire Buzzer rounds.',
     ],
     coordinators: LITERARY_COORDINATORS,
-    formUrl: null,
+    formUrl: 'https://forms.gle/8XHbKzS26hTeFSSN7',
     status: 'Open',
   },
   {
