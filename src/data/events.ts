@@ -1037,9 +1037,12 @@ export const FEST_EVENTS: FestEvent[] = [
       'Judged on emotional impact, rhyme/meter craftsmanship, voice modulation, and audience connection.',
     ],
     coordinators: [
-      { name: 'Literary & Cultural Desk', phone: 'aarambh.lnjpit@gmail.com', role: 'Incharge' },
+      { name: 'Ankit Kumar', phone: '+91 8541910758', role: 'Lead Coordinator' },
+      { name: 'Abhijeet Kumar', phone: '+91 7654152349', role: 'Lead Coordinator' },
+      { name: 'Sanjana Das', role: 'Coordinator' },
+      { name: 'Bobby Kumar', role: 'Coordinator' },
     ],
-    formUrl: null,
+    formUrl: 'https://forms.gle/Lgv2Q4uK3iV6ceAy9',
     status: 'Open',
   },
   {
@@ -1063,9 +1066,12 @@ export const FEST_EVENTS: FestEvent[] = [
       'Judged on punchline timing, delivery confidence, originality, and audience laughter response.',
     ],
     coordinators: [
-      { name: 'Comedy & Entertainment Desk', phone: '+91 9122334455', role: 'Stage Manager' },
+      { name: 'Sudhanshu Kumar', phone: '+91 7488324708', role: 'Lead Coordinator' },
+      { name: 'Abhinav Aman', phone: '+91 9264117607', role: 'Lead Coordinator' },
+      { name: 'Aryan', role: 'Coordinator' },
+      { name: 'Rohit Kumar', role: 'Coordinator' },
     ],
-    formUrl: null,
+    formUrl: 'https://forms.gle/Lgv2Q4uK3iV6ceAy9',
     status: 'Open',
   },
   {
