@@ -232,7 +232,7 @@ export default function EventRegistrationPortal() {
           </h2>
 
           <p className="font-chewy text-xl sm:text-2xl text-purple-200 mt-2 max-w-2xl mx-auto">
-            Choose your arena across all 5 student clubs. 28 major competitions with official certificates, trophies, and glory for all LNJPIT batches.
+            Choose your arena across all 5 student clubs. 29 major competitions with official certificates, trophies, and glory for all LNJPIT batches.
           </p>
 
           {/* User Registration Status Badge */}
@@ -322,7 +322,7 @@ export default function EventRegistrationPortal() {
               type="text"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder="Search 28 competitions (e.g. Circitron, Debate, BGMI, Singing, Hackathon)..."
+              placeholder="Search 29 competitions (e.g. Blind Coding, Circitron, Hackathon, BGMI, Singing)..."
               className="w-full pl-10 pr-10 py-2.5 rounded-xl bg-black/50 border-2 border-black text-white placeholder-purple-300/60 text-xs sm:text-sm font-sans focus:outline-none focus:border-amber-400 transition-colors"
             />
             {searchQuery && (
