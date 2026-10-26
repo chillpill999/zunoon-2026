@@ -20,7 +20,7 @@ export default function HomePage() {
       {/* 3. ABOUT AARAMBH 2.0 & LNJPIT CHAPRA TAPESTRY (Frames 08 & 12) */}
       <AboutSection />
 
-      {/* 4. BLITZSCHLAG-STYLE CATEGORY-WISE EVENT REGISTRATION (5 Clubs & 29 Competitions) */}
+      {/* 4. BLITZSCHLAG-STYLE CATEGORY-WISE EVENT REGISTRATION (5 Clubs & 31 Competitions) */}
       <EventRegistrationPortal />
 
       {/* 5. INTERACTIVE 3D ROTATING PHOTO CUBE - STEP INTO THE AARAMBH-VERSE (Frame 09) */}

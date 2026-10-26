@@ -65,7 +65,7 @@ export const FEST_SCHEDULE: ScheduleSlot[] = [
     title: "Award Ceremony & Memento Distribution",
     category: "Honors & Felicitation",
     venue: "Main LNJPIT Ground",
-    description: "Honoring champions across all 29 competitions, awarding departmental trophies, and felicitating student organizing leads with mementos.",
+    description: "Honoring champions across all 31 competitions, awarding departmental trophies, and felicitating student organizing leads with mementos.",
     status: "Approved",
     color: "#10b981",
     date: "1 Nov 2026",

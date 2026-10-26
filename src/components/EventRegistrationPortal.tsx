@@ -99,7 +99,7 @@ export default function EventRegistrationPortal() {
           </h2>
 
           <p className="font-chewy text-xl sm:text-2xl text-purple-200 mt-2 max-w-2xl mx-auto">
-            Choose your arena across all 5 student clubs. 29 major competitions with official certificates, trophies, and glory for all LNJPIT batches.
+            Choose your arena across all 5 student clubs. 31 major competitions with official certificates, trophies, and glory for all LNJPIT batches.
           </p>
         </div>
       </ScrollReveal>
@@ -175,7 +175,7 @@ export default function EventRegistrationPortal() {
               type="text"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder="Search 29 competitions (e.g. Blind Coding, Circuitron, Hackathon, BGMI, Singing)..."
+              placeholder="Search 31 competitions (e.g. Blind Coding, Circuitron, Hackathon, Rangoli, BGMI, Singing)..."
               className="w-full pl-10 pr-10 py-2.5 rounded-xl bg-black/50 border-2 border-black text-white placeholder-purple-300/60 text-xs sm:text-sm font-sans focus:outline-none focus:border-amber-400 transition-colors"
             />
             {searchQuery && (
@@ -238,7 +238,7 @@ export default function EventRegistrationPortal() {
           <AlertCircle className="w-12 h-12 text-amber-400 mx-auto mb-3" />
           <h3 className="font-carter text-2xl text-white">No Competitions Found</h3>
           <p className="text-purple-200 text-sm font-sans mt-2">
-            No events match your current filter &ldquo;{searchQuery || selectedTag}&rdquo;. Try resetting the filters to explore all 29 events.
+            No events match your current filter &ldquo;{searchQuery || selectedTag}&rdquo;. Try resetting the filters to explore all 31 events.
           </p>
           <button
             onClick={() => {
