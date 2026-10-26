@@ -1,10 +1,10 @@
 'use client';
 
-import { Sparkles, Ticket, Trophy, Music, Zap, Theater, Disc3, Mail } from 'lucide-react';
+import { Ticket, Trophy, Music, Zap, Award, Disc3, Mail, Calendar } from 'lucide-react';
 import { FEST_CONFIG } from '@/data/config';
 
 interface MarqueeTickerItem {
-  icon: typeof Sparkles;
+  icon: any;
   label: string;
   sub: string;
   color: string;
@@ -12,6 +12,13 @@ interface MarqueeTickerItem {
 }
 
 const FESTIVAL_HIGHLIGHTS: MarqueeTickerItem[] = [
+  {
+    icon: Calendar,
+    label: '30 OCT – 1 NOV 2026',
+    sub: 'Official Festival Dates',
+    color: 'text-amber-400',
+    borderColor: 'border-amber-400/60',
+  },
   {
     icon: Ticket,
     label: '100% FREE PASSES',
@@ -41,16 +48,16 @@ const FESTIVAL_HIGHLIGHTS: MarqueeTickerItem[] = [
     borderColor: 'border-pink-400/40',
   },
   {
-    icon: Theater,
-    label: 'AWAAZ: STREET DRAMA',
-    sub: 'Central Quad Natak',
-    color: 'text-red-400',
-    borderColor: 'border-red-400/40',
+    icon: Award,
+    label: 'SPONSORS ANNOUNCEMENT',
+    sub: 'Brand Partners Stage Reveal',
+    color: 'text-yellow-400',
+    borderColor: 'border-yellow-400/40',
   },
   {
     icon: Disc3,
     label: 'EUPHORIA DJ NIGHT',
-    sub: 'Open Air Amphitheatre',
+    sub: '1 Nov • 9:15 PM Finale',
     color: 'text-emerald-400',
     borderColor: 'border-emerald-400/40',
   },

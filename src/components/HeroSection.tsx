@@ -383,12 +383,10 @@ export default function HeroSection() {
             {FEST_CONFIG.tagline}
           </p>
 
-          {/* Status Badge */}
-          <div className="mt-3 sm:mt-4 inline-flex items-center justify-center gap-2 text-[11px] sm:text-sm font-mono text-purple-200 bg-black/80 px-4 sm:px-5 py-2 rounded-2xl border-2 border-black shadow-[3px_3px_0px_#000]">
-            <span className="flex items-center gap-1.5 text-amber-300 font-bold">
-              <Calendar className="w-3.5 h-3.5 text-amber-400" />
-              <span>{FEST_CONFIG.dateStatus}</span>
-            </span>
+          {/* Blitzschlag-Style Official Festival Date Banner */}
+          <div className="mt-3 sm:mt-4 inline-flex items-center justify-center gap-2 text-xs sm:text-sm font-carter text-black bg-amber-400 px-4 sm:px-6 py-2 rounded-2xl border-3 border-black shadow-[4px_4px_0px_#000] -rotate-1 hover:rotate-0 transition-transform">
+            <Calendar className="w-4 h-4 text-black" />
+            <span className="uppercase tracking-wider">OFFICIAL DATES: 30 OCT – 1 NOV 2026</span>
           </div>
 
           {/* Call to Actions */}

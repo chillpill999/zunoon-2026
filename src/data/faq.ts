@@ -21,8 +21,13 @@ export const FAQS: FaqItem[] = [
     tag: "Community"
   },
   {
+    question: "When and where will AARAMBH 2.0 take place?",
+    answer: "AARAMBH 2.0 is officially scheduled from 30th October to 1st November 2026 at the Main LNJPIT Ground, Chapra. All flagship stage celebrations of the Chronology of Celebration are scheduled on 1st November from 5:00 PM to 10:00 PM.",
+    tag: "Dates & Schedule"
+  },
+  {
     question: "What is the recommended dress code for AARAMBH 2.0?",
-    answer: "For the morning inauguration and Mr. & Ms. Freshers pageant: Traditional Indian Ethnic wear or sharp Formals. For the evening musical celebrations: Comfortable festive party wear.",
+    answer: "For the Mr. & Ms. Freshers pageant and formal ceremonies: Traditional Indian Ethnic wear or sharp Formals. For the evening musical celebrations & DJ night: Vibrant festive or smart casual wear.",
     tag: "Guidelines"
   }
 ];

@@ -21,8 +21,8 @@ export default function StructuredData() {
     ],
     eventStatus: 'https://schema.org/EventScheduled',
     eventAttendanceMode: 'https://schema.org/OfflineEventAttendanceMode',
-    startDate: '2026-11-15T09:00:00+05:30',
-    endDate: '2026-11-17T22:00:00+05:30',
+    startDate: '2026-10-30T09:00:00+05:30',
+    endDate: '2026-11-01T22:00:00+05:30',
     location: {
       '@type': 'Place',
       name: 'LNJPIT Main Campus Ground',

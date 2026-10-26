@@ -72,20 +72,21 @@ export const FEST_CONFIG: FestConfig = {
   shortInstitution: "LNJPIT Chapra",
   location: "Chapra, Bihar",
   
-  // Official Date status (pending college administrative clearance)
-  isDateConfirmed: false,
-  dateStatus: "Dates to be announced upon administrative clearance",
-  dateAnnouncement: "Official festival dates are currently awaiting administrative clearance from LNJPIT college authorities. Stay tuned for the official notice.",
-  tentativeDate: "November 2026 (Tentative)",
+  // Official Date status
+  isDateConfirmed: true,
+  dateStatus: "30th October – 1st November 2026",
+  dateAnnouncement: "Aarambh 2.0 is officially scheduled from 30th October to 1st November 2026 at the Main LNJPIT Ground, Chapra.",
+  confirmedDate: "October 30 – November 1, 2026",
+  tentativeDate: "October 30 – November 1, 2026",
 
   // Official Venue
   isVenueConfirmed: true,
   venueStatus: "Main LNJPIT Ground, LNJPIT Chapra",
   confirmedVenue: "LNJPIT Campus, Chapra, Bihar",
 
-  // Schedule status (proposed vs confirmed)
-  isSchedulePublished: false,
-  scheduleAnnouncement: "The final chronological timetable is currently under review by the Cultural Committee and will be published upon official approval. The itinerary below represents the proposed schedule outline.",
+  // Schedule status (confirmed)
+  isSchedulePublished: true,
+  scheduleAnnouncement: "The official Chronology of Celebration is scheduled for 1st November 2026 from 5:00 PM to 10:00 PM at the Main LNJPIT Ground.",
 
   // Verified statistics (no exaggerated or unsupported claims)
   stats: {
