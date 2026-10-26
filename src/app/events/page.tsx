@@ -4,16 +4,16 @@ import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 
 export const metadata: Metadata = {
-  title: 'Official Competitions & Event Registration (29 Events) | Aarambh 2.0',
+  title: 'Official Competitions & Event Registration (28 Events) | Aarambh 2.0',
   description:
-    'Register for 29 competitions across 5 student clubs (Literary, Technical, Sports, Art, Cultural) at Aarambh 2.0, LNJPIT Chapra. Debate, Web Hackathon, BGMI, Football, Singing, Rampwalk. 100% Free Participation.',
+    'Register for 28 competitions across 5 student clubs (Literary, Technical, Sports, Art, Cultural) at Aarambh 2.0, LNJPIT Chapra. Debate, Web Hackathon, BGMI, Rangoli, Singing, Rampwalk. 100% Free Participation.',
   alternates: {
     canonical: '/events',
   },
   openGraph: {
-    title: 'Register for 29 Events & Competitions | Aarambh 2.0 — LNJPIT Chapra',
+    title: 'Register for 28 Events & Competitions | Aarambh 2.0 — LNJPIT Chapra',
     description:
-      'Official registrations open for 29 competitions across Literary, Technical, Sports, Art, and Cultural clubs at LNJPIT Chapra. 100% free entry.',
+      'Official registrations open for 28 competitions across Literary, Technical, Sports, Art, and Cultural clubs at LNJPIT Chapra. 100% free entry.',
     url: 'https://zunoon-2026.vercel.app/events',
     type: 'website',
     images: ['/aarambh_logo_official.png'],
@@ -21,7 +21,7 @@ export const metadata: Metadata = {
   twitter: {
     card: 'summary_large_image',
     title: 'Register for Events | Aarambh 2.0 — LNJPIT Chapra',
-    description: '29 competitions across 5 student clubs at LNJPIT Chapra. Register now for free.',
+    description: '28 competitions across 5 student clubs at LNJPIT Chapra. Register now for free.',
   },
 };
 

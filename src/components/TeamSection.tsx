@@ -32,7 +32,7 @@ export interface CoreMember {
 // 4) Ayush Kumar (EEE)
 // 5) Sumit Adarshi (EEE - 5th position)
 // 6) Vimal Yadav (Civil)
-// 7) DR Raju (CSE)
+// 7) Raju Kumar (CSE)
 // 8) Manish Kumar (Civil)
 // 9) Priyanshu Singh (CSE)
 // 10) Aman Raj (ME)
@@ -124,7 +124,7 @@ export const CORE_COMMITTEE: CoreMember[] = [
   },
   {
     id: 'core-cse',
-    name: 'DR Raju',
+    name: 'Raju Kumar',
     title: 'Core Committee Member',
     role: 'Core Organizing Lead',
     department: 'Computer Science & Engg.',

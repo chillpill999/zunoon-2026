@@ -4,7 +4,7 @@ export default function manifest(): MetadataRoute.Manifest {
   return {
     name: 'AARAMBH 2.0 | LNJPIT Chapra Freshers Fest',
     short_name: 'AARAMBH 2.0',
-    description: 'Official Annual Freshers & Cultural Welcome Festival of LNJPIT Chapra. 5 Student Clubs & 29 Competitions.',
+    description: 'Official Annual Freshers & Cultural Welcome Festival of LNJPIT Chapra. 5 Student Clubs & 28 Competitions.',
     start_url: '/',
     display: 'standalone',
     background_color: '#070210',

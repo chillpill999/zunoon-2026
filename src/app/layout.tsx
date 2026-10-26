@@ -37,7 +37,7 @@ export const metadata: Metadata = {
     template: "%s | AARAMBH 2.0 — LNJPIT Chapra",
   },
   description:
-    "Official website for AARAMBH 2.0, the Annual Cultural & Freshers Welcome Fest of Loknayak Jai Prakash Institute of Technology (LNJPIT), Chapra, Bihar. 5 Student Clubs, 29 Competitions, 100% Free Registration & Events.",
+    "Official website for AARAMBH 2.0, the Annual Cultural & Freshers Welcome Fest of Loknayak Jai Prakash Institute of Technology (LNJPIT), Chapra, Bihar. 5 Student Clubs, 28 Competitions, 100% Free Registration & Events.",
   keywords: [
     "Aarambh 2.0",
     "Aarambh 2026",
@@ -84,7 +84,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "AARAMBH 2.0 | Annual Freshers Fest — LNJPIT Chapra",
     description:
-      "A New Chapter. One Campus. Endless Memories. Explore 29 competitions across 5 student clubs, schedule, gallery, and register for free at LNJPIT Chapra.",
+      "A New Chapter. One Campus. Endless Memories. Explore 28 competitions across 5 student clubs, schedule, gallery, and register for free at LNJPIT Chapra.",
     url: "https://zunoon-2026.vercel.app",
     type: "website",
     locale: "en_IN",
@@ -108,7 +108,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "AARAMBH 2.0 | LNJPIT Chapra Freshers Fest",
     description:
-      "Official College Cultural Festival. 5 Student Clubs & 29 Competitions. 100% Free Participation. Register Now.",
+      "Official College Cultural Festival. 5 Student Clubs & 28 Competitions. 100% Free Participation. Register Now.",
     images: ["/aarambh_logo_official.png"],
   },
   icons: {
